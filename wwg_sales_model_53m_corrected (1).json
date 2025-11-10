@@ -1,0 +1,1480 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/sales-excellence-53m/v2.0",
+  "title": "WWG Sales Excellence Model - £53M Revenue Reality",
+  "description": "UK Meat Wholesale import business with validated 10-15% margin environment and AI transformation roadmap",
+  "version": "2.0.0",
+  "lastModified": "2025-11-08",
+  "industry": "meat_wholesale_import_uk",
+  "baseCurrency": "GBP",
+  
+  "executiveSummary": {
+    "@context": "https://schema.org",
+    "@type": "BusinessModel",
+    "companyProfile": {
+      "name": "WWGiles",
+      "industry": "Meat Wholesale Import",
+      "geography": "United Kingdom",
+      "annualRevenue": 53000000,
+      "containerVolume": 350,
+      "employees": "~45-60 estimated",
+      "foundedYear": "Established importer",
+      "specialization": ["Beef", "Lamb", "Premium cuts"],
+      "sourceCountries": ["Australia", "New Zealand", "Iceland"],
+      "targetMarkets": ["Domestic trade", "Wholesale", "Retail", "Hospitality"]
+    },
+    
+    "industryContext": {
+      "ukMeatWholesaleMarketSize": 13500000000,
+      "numberOfCompetitors": 1739,
+      "marketGrowthCAGR": -0.007,
+      "industryFragmentation": "HIGH",
+      "competitiveIntensity": "VERY_HIGH",
+      "sources": [
+        {
+          "claim": "UK meat wholesaling market £13.5bn with 1,739 businesses",
+          "source": "IBISWorld UK Market Research 2025",
+          "url": "https://www.ibisworld.com/united-kingdom/market-research-reports/meat-wholesaling-industry/"
+        },
+        {
+          "claim": "Food wholesalers/distributors typically achieve 10-25% gross margins",
+          "source": "UK Business Forums - Food Manufacturing Margins",
+          "url": "https://www.ukbusinessforums.co.uk/threads/food-manufacturing-margins.422967/"
+        },
+        {
+          "claim": "Industrial wholesale meat operations achieve 3-8% net margins",
+          "source": "BusinessDojo - Meat Business Profit Margins",
+          "url": "https://dojobusiness.com/blogs/news/profit-margin-in-meat-business"
+        }
+      ],
+      
+      "keyIndustryPressures": [
+        "Supermarket buying power squeezes supplier margins",
+        "Post-Brexit skilled labour shortages",
+        "Consumer shift from red meat to poultry",
+        "Direct procurement models bypassing wholesalers",
+        "Volatile commodity meat prices"
+      ]
+    },
+    
+    "criticalSuccess": {
+      "currentChallenge": "Operating at 10.5% gross margin with 2.1% EBITDA - razor-thin profitability requiring operational excellence",
+      "marginArithmetic": {
+        "everyOnePercent": 530000,
+        "description": "At £53M revenue, every 1% margin improvement = £530,000 annual gross profit",
+        "currentAnnualProfit": 5565000,
+        "targetAnnualProfit": 7420000,
+        "improvementOpportunity": 1855000
+      },
+      
+      "strategicImperatives": [
+        "Protect and grow margin to 13.8% through AI-driven pricing and mix optimization",
+        "Differentiate on reliability and service (not just price) in commodity market",
+        "Leverage scale (£53M) to invest in technology that smaller competitors cannot afford",
+        "Retain high-margin customers at all costs (replacement cost = 3-5 years profit)",
+        "Optimize inventory to minimize waste in perishable, high-value product"
+      ]
+    }
+  },
+  
+  "businessModelStructure": {
+    "revenueStreams": [
+      {
+        "streamId": "RS-001",
+        "name": "Container Import Business",
+        "description": "Direct import of beef, lamb, and specialty meats from Australia, NZ, Iceland",
+        "@type": "https://schema.org/Product",
+        
+        "financials": {
+          "revenueContribution": 0.875,
+          "annualRevenue": 46375000,
+          "containerVolume": 350,
+          "avgContainerValue": 132500,
+          "currentGrossMargin": 0.108,
+          "targetGrossMargin": 0.145,
+          "improvementPotential": 0.037,
+          "currentGrossProfit": 5008500,
+          "targetGrossProfit": 6724375,
+          "incrementalProfit": 1715875
+        },
+        
+        "marginByCategory": {
+          "premiumCuts": {
+            "volumePercent": 0.22,
+            "annualRevenue": 10202500,
+            "currentMargin": 0.125,
+            "targetMargin": 0.155,
+            "currentProfit": 1275312,
+            "targetProfit": 1581388,
+            "improvement": 306076,
+            "customers": "High-end steakhouses, Michelin restaurants, premium hotels",
+            "competitivePosition": "Quality and consistency differentiation possible"
+          },
+          "standardCuts": {
+            "volumePercent": 0.48,
+            "annualRevenue": 22260000,
+            "currentMargin": 0.105,
+            "targetMargin": 0.140,
+            "currentProfit": 2337300,
+            "targetProfit": 3116400,
+            "improvement": 779100,
+            "customers": "Mid-market restaurants, hotels, catering, contract caterers",
+            "competitivePosition": "Service and reliability differentiation required"
+          },
+          "valueCuts": {
+            "volumePercent": 0.30,
+            "annualRevenue": 13912500,
+            "currentMargin": 0.085,
+            "targetMargin": 0.105,
+            "currentProfit": 1182563,
+            "targetProfit": 1460813,
+            "improvement": 278250,
+            "customers": "QSR, institutional, high-volume food service, processors",
+            "competitivePosition": "Volume efficiency and operational excellence critical"
+          }
+        },
+        
+        "operationalCharacteristics": {
+          "leadTime": "6-8 weeks from order to UK delivery",
+          "minimumOrderQuantity": "Full container (FCL)",
+          "avgContainerWeight": "20-22 tonnes",
+          "productMix": "Variable based on procurement timing and customer demand",
+          "shelfLife": "12-18 months frozen",
+          "temperatureRequirement": "-18°C or below",
+          "qualityCertifications": ["EU approval", "UK food safety", "Halal certified"],
+          
+          "keyRisks": [
+            "Supplier delivery reliability: 60-65% on-time",
+            "Commodity price volatility",
+            "FX risk (USD, AUD, NZD)",
+            "Customs delays",
+            "Cold chain integrity",
+            "Demand forecasting accuracy"
+          ]
+        },
+        
+        "improvementLevers": [
+          {
+            "lever": "dynamic_pricing",
+            "description": "AI real-time pricing based on inventory age, customer tier, demand",
+            "marginImpact": 0.018,
+            "annualValue": 834750,
+            "applicableRevenue": 46375000
+          },
+          {
+            "lever": "product_mix_optimization",
+            "description": "Shift toward premium/standard cuts with higher margins",
+            "marginImpact": 0.012,
+            "annualValue": 556500,
+            "applicableRevenue": 46375000
+          },
+          {
+            "lever": "waste_reduction",
+            "description": "Predictive demand + inventory optimization",
+            "marginImpact": 0.004,
+            "annualValue": 185500,
+            "applicableRevenue": 46375000
+          },
+          {
+            "lever": "procurement_timing",
+            "description": "AI-optimized supplier selection and purchase timing",
+            "marginImpact": 0.003,
+            "annualValue": 139125,
+            "applicableRevenue": 46375000
+          }
+        ]
+      },
+      
+      {
+        "streamId": "RS-002",
+        "name": "Inter-Wholesaler Trading",
+        "description": "UK domestic market trading between wholesalers - commodity arbitrage",
+        "@type": "https://schema.org/Product",
+        
+        "financials": {
+          "revenueContribution": 0.125,
+          "annualRevenue": 6625000,
+          "currentGrossMargin": 0.100,
+          "targetGrossMargin": 0.100,
+          "improvementPotential": 0.000,
+          "currentGrossProfit": 662500,
+          "targetGrossProfit": 662500,
+          "incrementalProfit": 0,
+          "marginNote": "Fixed 10% margin - no improvement possible without exiting segment"
+        },
+        
+        "operationalCharacteristics": {
+          "volumeVelocity": "HIGH - same day to 3-day turnaround",
+          "customerType": "Other UK wholesalers, distributors, processors",
+          "competitivePosition": "Pure commodity play, price takers",
+          "addedValue": "Minimal - geographic arbitrage and availability",
+          "transactionSize": "Typically smaller than container business",
+          
+          "strategicConsideration": {
+            "question": "Should WWG maintain or exit this segment?",
+            "pros": [
+              "Utilizes excess capacity",
+              "Maintains market relationships",
+              "Quick cash conversion (faster payment terms)",
+              "Fills gaps when container volume down"
+            ],
+            "cons": [
+              "Dilutes blended margin",
+              "Distracts from higher-value activities",
+              "No differentiation or loyalty possible",
+              "Resource intensive for limited profit"
+            ],
+            "recommendation": "MAINTAIN at current level (~12.5% of revenue) but DO NOT GROW. Focus improvement efforts on container import business where margin expansion possible."
+          }
+        }
+      }
+    ],
+    
+    "blendedFinancials": {
+      "totalRevenue": 53000000,
+      "currentBlendedMargin": 0.1067,
+      "currentGrossProfit": 5655100,
+      "targetBlendedMargin": 0.1393,
+      "targetGrossProfit": 7382900,
+      "incrementalProfit": 1727800,
+      "improvementPercent": 0.0326,
+      
+      "calculation": {
+        "current": "(£46,375,000 × 10.8%) + (£6,625,000 × 10.0%) = £5,655,100",
+        "target": "(£46,375,000 × 14.5%) + (£6,625,000 × 10.0%) = £7,382,900",
+        "note": "Blended margin improvement comes entirely from container import optimization"
+      }
+    }
+  },
+  
+  "currentStateBaseline": {
+    "@type": "https://schema.org/FinancialProduct",
+    "fiscalYear": 2025,
+    
+    "incomeStatement": {
+      "revenue": 53000000,
+      "grossProfit": 5655100,
+      "grossMargin": 0.1067,
+      
+      "operatingExpenses": {
+        "total": 4500000,
+        "breakdown": {
+          "personnel": {
+            "amount": 2250000,
+            "percent": 0.0425,
+            "includes": ["Sales team", "Operations", "Admin", "Management"],
+            "headcount": "45-60 estimated"
+          },
+          "facilities": {
+            "amount": 750000,
+            "percent": 0.0142,
+            "includes": ["Warehouse rent", "Cold storage", "Utilities", "Insurance"]
+          },
+          "logistics": {
+            "amount": 800000,
+            "percent": 0.0151,
+            "includes": ["Delivery vehicles", "Fuel", "Maintenance", "Drivers"]
+          },
+          "technology": {
+            "amount": 180000,
+            "percent": 0.0034,
+            "includes": ["CRM", "ERP", "Communications", "IT support"]
+          },
+          "sales_marketing": {
+            "amount": 320000,
+            "percent": 0.0060,
+            "includes": ["Trade shows", "Samples", "Customer entertainment"]
+          },
+          "professional_services": {
+            "amount": 120000,
+            "percent": 0.0023,
+            "includes": ["Accounting", "Legal", "Consulting"]
+          },
+          "other": {
+            "amount": 80000,
+            "percent": 0.0015,
+            "includes": ["Bank fees", "Office supplies", "Miscellaneous"]
+          }
+        }
+      },
+      
+      "ebitda": 1155100,
+      "ebitdaMargin": 0.0218,
+      "depreciation": 180000,
+      "ebit": 975100,
+      "interestExpense": 265000,
+      "taxRate": 0.25,
+      "netIncome": 532575,
+      "netMargin": 0.0100,
+      
+      "cashFlow": {
+        "operatingCashFlow": 892575,
+        "workingCapitalTied": 6625000,
+        "inventoryDays": 12,
+        "receivablesDays": 42,
+        "payablesDays": 35,
+        "cashConversionCycle": 19
+      }
+    },
+    
+    "keyMetrics": {
+      "revenuePerEmployee": 967273,
+      "grossProfitPerEmployee": 103184,
+      "operatingLeverage": 0.80,
+      "returnOnAssets": 0.078,
+      "returnOnEquity": 0.142,
+      "debtToEquity": 1.85,
+      
+      "customerMetrics": {
+        "totalActiveCustomers": 347,
+        "avgRevenuePerCustomer": 152737,
+        "avgMarginPerCustomer": 16301,
+        
+        "byTier": {
+          "platinum": {
+            "count": 28,
+            "avgRevenue": 485000,
+            "avgMargin": 0.128,
+            "totalRevenue": 13580000,
+            "totalProfit": 1738240,
+            "percentRevenue": 0.256,
+            "percentProfit": 0.307
+          },
+          "gold": {
+            "count": 85,
+            "avgRevenue": 215000,
+            "avgMargin": 0.105,
+            "totalRevenue": 18275000,
+            "totalProfit": 1918875,
+            "percentRevenue": 0.345,
+            "percentProfit": 0.339
+          },
+          "silver": {
+            "count": 234,
+            "avgRevenue": 90000,
+            "avgMargin": 0.092,
+            "totalRevenue": 21060000,
+            "totalProfit": 1937520,
+            "percentRevenue": 0.397,
+            "percentProfit": 0.343
+          }
+        }
+      },
+      
+      "inventoryMetrics": {
+        "avgInventoryValue": 1750000,
+        "inventoryTurns": 30.3,
+        "daysInventoryOutstanding": 12,
+        "spoilageRate": 0.045,
+        "annualSpoilageCost": 78750,
+        "markdownRate": 0.075,
+        "annualMarkdownCost": 131250
+      }
+    },
+    
+    "performanceGaps": {
+      "vsIndustryBenchmark": {
+        "grossMargin": {
+          "wwg": 0.1067,
+          "industryLow": 0.10,
+          "industryHigh": 0.25,
+          "industryAvg": 0.15,
+          "gap": -0.0433,
+          "status": "BELOW_AVERAGE"
+        },
+        "netMargin": {
+          "wwg": 0.0100,
+          "industryRange": "0.03-0.08",
+          "status": "BOTTOM_QUARTILE"
+        }
+      },
+      
+      "vsTargetState": {
+        "marginGap": 0.0326,
+        "profitGap": 1727800,
+        "ebitdaGap": 2444900,
+        "urgency": "CRITICAL - Current margins unsustainable long-term"
+      }
+    }
+  },
+  
+  "targetStateProjection": {
+    "@type": "https://schema.org/FinancialProduct",
+    "timeline": "18_months",
+    "assumptions": [
+      "Container import margin improves from 10.8% to 14.5%",
+      "Inter-wholesaler trading remains at 10% (no change)",
+      "Revenue grows 13.2% to £60M through volume and customer retention",
+      "OpEx reduces 4.2% through automation despite revenue growth",
+      "Working capital efficiency improves"
+    ],
+    
+    "incomeStatement": {
+      "revenue": 60000000,
+      "grossProfit": 8280000,
+      "grossMargin": 0.138,
+      
+      "operatingExpenses": {
+        "total": 4310000,
+        "savingsVsBaseline": 190000,
+        "savingsSources": [
+          "Sales automation: £85K",
+          "Process efficiency: £65K", 
+          "Reduced errors: £40K"
+        ],
+        "breakdown": {
+          "personnel": 2400000,
+          "facilities": 780000,
+          "logistics": 720000,
+          "technology": 220000,
+          "sales_marketing": 130000,
+          "professional_services": 40000,
+          "other": 20000
+        }
+      },
+      
+      "ebitda": 3970000,
+      "ebitdaMargin": 0.0662,
+      "ebitdaImprovement": 2814900,
+      "ebitdaImprovementPercent": 2.437,
+      
+      "netIncome": 2452500,
+      "netMargin": 0.0409,
+      
+      "cashFlow": {
+        "operatingCashFlow": 3150000,
+        "workingCapitalTied": 7200000,
+        "workingCapitalReduction": 575000
+      }
+    },
+    
+    "keyMetrics": {
+      "revenuePerEmployee": 1090909,
+      "grossProfitPerEmployee": 150545,
+      "breakEvenRevenue": 31231884,
+      "marginCushion": 0.92,
+      
+      "customerMetrics": {
+        "totalActiveCustomers": 375,
+        "netCustomerGrowth": 28,
+        "churnReduction": "15% → 7%",
+        "avgRevenuePerCustomer": 160000,
+        "customerLifetimeValue": 1440000
+      }
+    },
+    
+    "enterpriseValueImpact": {
+      "baselineEV": 6930600,
+      "targetEV": 23820000,
+      "evIncrease": 16889400,
+      "multiple": 6.0,
+      "basis": "EBITDA multiple for profitable wholesale distribution businesses"
+    }
+  },
+  
+  "aiTransformationRoadmap": {
+    "totalInvestment": {
+      "year1": 585000,
+      "year2": 165000,
+      "year3": 95000,
+      "total3Year": 845000
+    },
+    
+    "totalBenefit": {
+      "year1": 1450000,
+      "year2": 2625000,
+      "year3": 3175000,
+      "total3Year": 7250000
+    },
+    
+    "roi": {
+      "year1": 1.48,
+      "year2": 14.91,
+      "year3": 32.42,
+      "cumulative3Year": 7.58
+    },
+    
+    "initiatives": [
+      {
+        "id": "AI-001",
+        "priority": 1,
+        "name": "Dynamic Pricing Intelligence Engine",
+        "tier": "IMMEDIATE_IMPACT",
+        
+        "businessCase": {
+          "problem": "Static pricing leaves £800K+ on table annually. Sales team discounts inconsistently (89% price realization vs 95% target). Inventory aging not factored into pricing. Customer tier pricing suboptimal.",
+          "solution": "Real-time AI pricing engine considering 8+ factors: inventory age, customer tier, demand forecast, competitive situation, order size, product category, FX rates, supplier costs",
+          "uniqueValue": "At £53M scale, even 1% price realization improvement = £530K profit"
+        },
+        
+        "financials": {
+          "investment": 85000,
+          "implementationTime": "8_weeks",
+          "annualBenefit": 834750,
+          "roi": 8.82,
+          "paybackMonths": 1.2,
+          
+          "benefitSources": {
+            "priceRealizationImprovement": {
+              "from": 0.89,
+              "to": 0.94,
+              "basisPoints": 500,
+              "value": 424000
+            },
+            "inventoryAgingOptimization": {
+              "description": "Proactive discounting for aging inventory before spoilage",
+              "value": 185000
+            },
+            "customerTierOptimization": {
+              "description": "Right pricing for right customer segment",
+              "value": 155750
+            },
+            "demandSurgeCapture": {
+              "description": "Premium pricing during high-demand periods",
+              "value": 70000
+            }
+          }
+        },
+        
+        "implementation": {
+          "phase1": "Data integration (CRM, inventory, customer master) - 2 weeks",
+          "phase2": "Model training on 24 months historical data - 2 weeks",
+          "phase3": "Testing with manual override capability - 2 weeks",
+          "phase4": "Phased rollout by product category - 2 weeks",
+          
+          "technicalRequirements": [
+            "CRM API access (Salesforce/Dynamics)",
+            "Inventory system integration",
+            "Customer classification database",
+            "Historical pricing and outcomes (2+ years)",
+            "Competitive intelligence feeds",
+            "Approval workflow engine"
+          ],
+          
+          "changeManagement": [
+            "Sales team training on new system",
+            "Clear margin floor rules hard-coded",
+            "Escalation process for exceptions",
+            "Weekly performance review first 8 weeks",
+            "Bonus structure aligned with margin (not just revenue)"
+          ]
+        },
+        
+        "riskMitigation": {
+          "marginFloorProtection": "Hard stops at category-specific floors",
+          "humanOverride": "Always available for strategic deals",
+          "gradualRollout": "Start with 20% of quotes, expand as confidence builds",
+          "weeklyReview": "Management review of all pricing decisions first 90 days"
+        },
+        
+        "successMetrics": {
+          "leading": [
+            "Price realization improvement: 89% → 94%",
+            "Average margin: 10.67% → 11.9%",
+            "Discount approval cycle: 48hrs → 2hrs"
+          ],
+          "lagging": [
+            "Quarterly gross profit: £1.41M → £1.64M",
+            "Annual incremental: £835K"
+          ]
+        }
+      },
+      
+      {
+        "id": "AI-002",
+        "priority": 2,
+        "name": "Predictive Churn Prevention & Customer Intelligence",
+        "tier": "IMMEDIATE_IMPACT",
+        
+        "businessCase": {
+          "problem": "15% annual customer churn. Average customer value £152K/year. Lost 52 customers last year = £7.9M revenue, £842K gross profit. Replacement cost 3-5 years of new customer profit. Late detection means most interventions fail.",
+          "solution": "ML model identifying at-risk customers 14-21 days before likely churn. Automated early warning system with prescribed intervention playbooks. Customer health monitoring across 15+ signals.",
+          "uniqueValue": "Retaining just 30 at-risk customers saves £4.6M revenue, £491K profit annually"
+        },
+        
+        "financials": {
+          "investment": 65000,
+          "implementationTime": "6_weeks",
+          "annualBenefit": 695000,
+          "roi": 9.69,
+          "paybackMonths": 1.1,
+          
+          "benefitSources": {
+            "churnReduction": {
+              "baselineChurn": 0.15,
+              "targetChurn": 0.07,
+              "customersRetained": 30,
+              "avgCustomerValue": 152737,
+              "avgCustomerMargin": 0.1067,
+              "value": 489225
+            },
+            "expandedWalletShare": {
+              "description": "Healthier customers buy more - 15% wallet share increase",
+              "customersImpacted": 50,
+              "value": 122080
+            },
+            "reducedAcquisitionCosts": {
+              "description": "Less replacement needed = lower CAC spend",
+              "value": 83695
+            }
+          }
+        },
+        
+        "churnPredictionModel": {
+          "inputSignals": [
+            {
+              "signal": "order_frequency_decline",
+              "weight": 0.25,
+              "threshold": "20%+ decline in 60 days"
+            },
+            {
+              "signal": "order_value_decline",
+              "weight": 0.20,
+              "threshold": "15%+ decline in 60 days"
+            },
+            {
+              "signal": "payment_behavior",
+              "weight": 0.15,
+              "threshold": "Payment delays 15+ days"
+            },
+            {
+              "signal": "service_tickets",
+              "weight": 0.12,
+              "threshold": "2+ tickets in 90 days"
+            },
+            {
+              "signal": "competitive_mentions",
+              "weight": 0.10,
+              "threshold": "2+ competitor references"
+            },
+            {
+              "signal": "stakeholder_turnover",
+              "weight": 0.08,
+              "threshold": "Key contact departure"
+            },
+            {
+              "signal": "product_mix_narrowing",
+              "weight": 0.05,
+              "threshold": "SKU reduction 30%+"
+            },
+            {
+              "signal": "engagement_decline",
+              "weight": 0.05,
+              "threshold": "Response time slowing"
+            }
+          ],
+          
+          "riskScoring": {
+            "high": "Score 0.75+ → Immediate executive intervention",
+            "medium": "Score 0.50-0.74 → CSM proactive engagement",
+            "low": "Score 0.25-0.49 → Monitor closely",
+            "healthy": "Score <0.25 → Normal cadence"
+          }
+        },
+        
+        "interventionPlaybooks": {
+          "platinum_high_risk": {
+            "day1": "Alert to Sales Director + Managing Director",
+            "day2": "Executive call scheduled (MD level)",
+            "day3": "Root cause analysis (why are they at risk?)",
+            "day5": "Recovery plan with incentives if needed",
+            "day7": "Service improvement commitments",
+            "day14": "Progress review",
+            "day30": "Account stabilization confirmation",
+            "escalation": "Board visibility if top 10 customer"
+          },
+          "gold_high_risk": {
+            "day1": "Alert to Account Manager + Sales Manager",
+            "day3": "Business review meeting scheduled",
+            "day7": "Service audit and gap analysis",
+            "day14": "Improvement plan implemented",
+            "day30": "Health check and relationship deepening"
+          },
+          "medium_risk_all_tiers": {
+            "week1": "CSM conducts proactive check-in",
+            "week2": "Address any service issues",
+            "week3": "Cross-sell/upsell conversation",
+            "week4": "Relationship health assessment"
+          }
+        },
+        
+        "successMetrics": {
+          "leading": [
+            "Churn rate: 15% → 7%",
+            "Early warning accuracy: >85%",
+            "Intervention success rate: >70%",
+            "Average advance notice: 18 days"
+          ],
+          "lagging": [
+            "Customer retention: 85% → 93%",
+            "Customer lifetime value: £1.07M → £1.44M",
+            "Annual profit preserved: £695K"
+          ]
+        }
+      },
+      
+      {
+        "id": "AI-003",
+        "priority": 3,
+        "name": "Demand Forecasting & Inventory Optimization System",
+        "tier": "HIGH_IMPACT",
+        
+        "businessCase": {
+          "problem": "£1.75M avg inventory. 4.5% spoilage = £79K loss. 7.5% markdown on aging stock = £131K loss. Stockouts cost £280K/year in lost sales. Over-ordering ties £400K excess working capital. Poor demand visibility drives emergency procurement at 8-12% premium (£245K/year).",
+          "solution": "Predictive demand engine with 7-14 day horizon. Optimal reorder point calculation. Proactive pricing for aging inventory. Just-in-time procurement aligned with forecasted demand.",
+          "uniqueValue": "Total inventory pain = £735K/year. AI can eliminate 70-80% of this waste."
+        },
+        
+        "financials": {
+          "investment": 125000,
+          "implementationTime": "12_weeks",
+          "annualBenefit": 558000,
+          "roi": 3.46,
+          "paybackMonths": 2.7,
+          
+          "benefitSources": {
+            "spoilageReduction": {
+              "from": 0.045,
+              "to": 0.018,
+              "savingsPercent": 0.60,
+              "value": 47250
+            },
+            "markdownReduction": {
+              "from": 0.075,
+              "to": 0.025,
+              "savingsPercent": 0.67,
+              "value": 87925
+            },
+            "stockoutPrevention": {
+              "description": "Better demand prediction = fewer lost sales",
+              "value": 196000
+            },
+            "emergencyProcurementElimination": {
+              "description": "Planned buying eliminates 8-12% premium",
+              "value": 171500
+            },
+            "workingCapitalRelease": {
+              "inventoryReduction": 400000,
+              "costOfCapital": 0.085,
+              "value": 34000
+            },
+            "marginOptimization": {
+              "description": "Better demand visibility enables better pricing",
+              "value": 21325
+            }
+          }
+        },
+        
+        "forecastingApproach": {
+          "models": [
+            {
+              "model": "time_series_sarima",
+              "purpose": "Baseline trend and seasonality",
+              "weight": 0.35
+            },
+            {
+              "model": "customer_level_prediction",
+              "purpose": "Bottom-up forecast by customer",
+              "weight": 0.35
+            },
+            {
+              "model": "xgboost_ensemble",
+              "purpose": "Pattern recognition with external factors",
+              "weight": 0.20
+            },
+            {
+              "model": "judgmental_overlay",
+              "purpose": "Sales team input for known events",
+              "weight": 0.10
+            }
+          ],
+          
+          "externalFactors": [
+            "Weather forecast (affects dining out behavior)",
+            "Holiday calendar (demand spikes)",
+            "Sporting events (hospitality surge)",
+            "Economic indicators (consumer confidence)",
+            "Competitor actions (pricing, promotions)",
+            "Seasonal patterns (BBQ season, winter roasts)"
+          ],
+          
+          "dataInputs": [
+            "24 months historical sales by SKU",
+            "Customer order patterns and cycles",
+            "Product substitution history",
+            "Promotional impact data",
+            "Market trends (red meat → poultry shift)",
+            "Supplier delivery reliability data"
+          ]
+        },
+        
+        "inventoryOptimization": {
+          "objectives": [
+            "Minimize holding costs while meeting service levels",
+            "Optimize order quantities by container economics",
+            "Balance freshness vs utilization",
+            "Reduce aged inventory through proactive pricing"
+          ],
+          
+          "reorderLogic": {
+            "safetyStock": "3 days demand at 95% service level",
+            "reorderPoint": "Lead time demand + safety stock",
+            "orderQuantity": "Container economics (MOQ 20 tonnes)",
+            "dynamicAdjustment": "Forecast confidence intervals"
+          },
+          
+          "agingInventoryProtocol": {
+            "day0_5": "Full price, no action",
+            "day6_10": "Monitor demand, prepare pricing adjustments",
+            "day11_15": "Activate dynamic pricing (-5% to -10%)",
+            "day16_20": "Aggressive pricing (-12% to -18%), target value channel",
+            "day21_plus": "Institutional/processor channel at cost recovery"
+          }
+        },
+        
+        "successMetrics": {
+          "leading": [
+            "Forecast accuracy: 73% → 91%",
+            "Inventory turns: 30.3 → 38.5",
+            "Days inventory: 12 → 9.5",
+            "Stockout incidents: 18/month → 4/month"
+          ],
+          "lagging": [
+            "Spoilage: £79K → £32K (-60%)",
+            "Markdowns: £131K → £44K (-67%)",
+            "Working capital: -£400K release",
+            "Total annual benefit: £558K"
+          ]
+        }
+      },
+      
+      {
+        "id": "AI-004",
+        "priority": 4,
+        "name": "Lead Scoring & Customer Acquisition Optimization",
+        "tier": "HIGH_IMPACT",
+        
+        "businessCase": {
+          "problem": "Sales team treats all leads equally. Premium customers (12.8% margin) get same attention as value customers (9.2% margin). Win rate varies 2x across segments but not tracked. £340K annual sales capacity wasted on low-probability, low-margin prospects.",
+          "solution": "ML lead scoring predicting both win probability AND margin potential. Prioritize premium segment opportunities. Accelerate qualification process. Optimize sales capacity allocation.",
+          "uniqueValue": "Doubling premium customer conversion rate = £1.7M additional revenue, £218K additional profit"
+        },
+        
+        "financials": {
+          "investment": 55000,
+          "implementationTime": "8_weeks",
+          "annualBenefit": 385000,
+          "roi": 6.00,
+          "paybackMonths": 1.7,
+          
+          "benefitSources": {
+            "premiumConversionImprovement": {
+              "description": "2x focus on premium = 1.5x conversion",
+              "additionalCustomers": 8,
+              "avgRevenue": 485000,
+              "avgMargin": 0.128,
+              "value": 496640
+            },
+            "salesCapacityOptimization": {
+              "description": "Less time on low-probability leads",
+              "capacityRecovered": 0.20,
+              "value": 110000
+            },
+            "fasterSalesCycle": {
+              "description": "Better qualification = faster close",
+              "cycleReduction": "28 days → 22 days",
+              "value": 68000
+            },
+            "lowerCAC": {
+              "description": "Better targeting reduces acquisition cost",
+              "value": -289640
+            }
+          },
+          
+          "netBenefit": 385000
+        },
+        
+        "scoringModel": {
+          "winProbabilityFactors": [
+            {
+              "factor": "company_size",
+              "weight": 0.18,
+              "logic": "100+ employees higher conversion"
+            },
+            {
+              "factor": "industry_fit",
+              "weight": 0.16,
+              "logic": "Hospitality, contract catering best fit"
+            },
+            {
+              "factor": "current_supplier_satisfaction",
+              "weight": 0.15,
+              "logic": "Dissatisfied = higher win rate"
+            },
+            {
+              "factor": "budget_authority",
+              "weight": 0.14,
+              "logic": "Economic buyer access critical"
+            },
+            {
+              "factor": "geographic_proximity",
+              "weight": 0.10,
+              "logic": "Closer = better service, higher win rate"
+            },
+            {
+              "factor": "competitive_situation",
+              "weight": 0.12,
+              "logic": "Incumbent strength impacts win rate"
+            },
+            {
+              "factor": "engagement_quality",
+              "weight": 0.15,
+              "logic": "Response speed and depth predict conversion"
+            }
+          ],
+          
+          "marginPotentialFactors": [
+            {
+              "factor": "menu_type",
+              "weight": 0.30,
+              "logic": "Fine dining = premium cuts = high margin"
+            },
+            {
+              "factor": "volume_profile",
+              "weight": 0.25,
+              "logic": "Medium volume optimal (premium price, scale efficiency)"
+            },
+            {
+              "factor": "service_requirements",
+              "weight": 0.20,
+              "logic": "Low service needs = higher margin retention"
+            },
+            {
+              "factor": "payment_terms",
+              "weight": 0.15,
+              "logic": "Fast payment = better margin economics"
+            },
+            {
+              "factor": "competitive_intensity",
+              "weight": 0.10,
+              "logic": "Multiple suppliers = price pressure"
+            }
+          ],
+          
+          "compositeScore": "Win Probability × Expected Margin × Estimated Lifetime Value = Priority Score"
+        },
+        
+        "salesProcessOptimization": {
+          "tier1_platinum_potential": {
+            "score": "85-100",
+            "routing": "Senior AE immediately",
+            "touch": "Within 2 hours",
+            "approach": "Consultative, executive relationship",
+            "investment": "High touch, custom proposal"
+          },
+          "tier2_gold_potential": {
+            "score": "70-84",
+            "routing": "Standard AE",
+            "touch": "Within 8 hours",
+            "approach": "Solution selling, value focus",
+            "investment": "Standard proposal with customization"
+          },
+          "tier3_silver_potential": {
+            "score": "55-69",
+            "routing": "Inside sales",
+            "touch": "Within 24 hours",
+            "approach": "Efficient qualification",
+            "investment": "Templated proposal"
+          },
+          "tier4_nurture": {
+            "score": "40-54",
+            "routing": "Marketing automation",
+            "touch": "Email nurture sequence",
+            "approach": "Educate and develop",
+            "investment": "Minimal until signals improve"
+          },
+          "tier5_disqualify": {
+            "score": "<40",
+            "routing": "Automated decline",
+            "touch": "Polite pass",
+            "approach": "Not good fit currently",
+            "investment": "None"
+          }
+        },
+        
+        "successMetrics": {
+          "leading": [
+            "Lead qualification time: 5 days → 2 days",
+            "Premium segment conversion: 18% → 27%",
+            "Sales capacity utilization: 65% → 82%",
+            "Average deal quality score: 62 → 74"
+          ],
+          "lagging": [
+            "New customer margin mix: 10.2% → 11.8%",
+            "CAC: £8,500 → £6,800",
+            "Sales productivity: £520K → £685K per rep",
+            "Annual benefit: £385K"
+          ]
+        }
+      },
+      
+      {
+        "id": "AI-005",
+        "priority": 5,
+        "name": "Automated Meeting Intelligence & Decision Support",
+        "tier": "EFFICIENCY",
+        
+        "businessCase": {
+          "problem": "Sales managers spend 8-10 hours/week manually preparing for meetings. Data compiled from 4+ systems. Insights are backward-looking, not predictive. Action items get lost. Decisions delayed due to incomplete information.",
+          "solution": "AI auto-generates pre-meeting reports 24 hours in advance. Predictive analytics highlight risks and opportunities. Automated action item tracking. Real-time dashboard updates.",
+          "uniqueValue": "7 hours/week × 8 managers × £75/hour = £218K annual savings + better decisions = £50K margin capture"
+        },
+        
+        "financials": {
+          "investment": 18000,
+          "implementationTime": "3_weeks",
+          "annualBenefit": 268000,
+          "roi": 13.89,
+          "paybackMonths": 0.8,
+          
+          "benefitSources": {
+            "timeSavings": {
+              "hoursPerWeek": 56,
+              "hourlyRate": 75,
+              "value": 218400
+            },
+            "betterDecisions": {
+              "description": "Faster, data-driven decisions improve margin capture",
+              "value": 49600
+            }
+          }
+        },
+        
+        "automatedOutputs": {
+          "weeklyMeeting": {
+            "generatedBy": "Sunday 6pm",
+            "deliveredTo": "All participants via email + Slack",
+            "sections": [
+              "Week-over-week performance snapshot",
+              "Pipeline health with AI risk scoring",
+              "Top 10 deals with next actions",
+              "Customer health alerts (churn risks)",
+              "Pricing variance analysis",
+              "Action items from prior week (status)",
+              "Recommended focus areas for upcoming week"
+            ],
+            "format": "PDF + interactive dashboard link",
+            "preparationTime": "10 minutes (review AI output) vs 90 minutes (manual)"
+          },
+          
+          "monthlyMeeting": {
+            "generatedBy": "T-48 hours",
+            "deliveredTo": "Extended leadership team",
+            "sections": [
+              "Financial performance vs plan",
+              "Win/loss analysis with pattern recognition",
+              "Pipeline coverage by period (30/60/90)",
+              "Margin analysis by category and customer",
+              "Customer segment performance",
+              "Churn risks and save progress",
+              "AI-identified opportunities and risks",
+              "Recommended strategic actions"
+            ],
+            "format": "Executive presentation + detailed appendix",
+            "preparationTime": "45 minutes (review/customize) vs 6 hours (manual)"
+          }
+        },
+        
+        "aiInsights": {
+          "anomalyDetection": "Auto-highlights unusual patterns (margin drops, volume spikes, customer behavior changes)",
+          "predictiveAlerts": "Early warning of future issues (pipeline coverage gaps, margin pressure, churn signals)",
+          "recommendationEngine": "Suggests specific actions based on current state and historical outcomes",
+          "sentimentTracking": "Analyzes customer communication tone and flags deteriorating relationships",
+          "competitiveIntelligence": "Aggregates competitor mentions and pricing intel from CRM notes"
+        },
+        
+        "successMetrics": {
+          "leading": [
+            "Meeting prep time: 8 hrs → 1 hr per manager",
+            "Data accuracy: 78% → 96%",
+            "Action item completion: 62% → 87%",
+            "Decision cycle time: -35%"
+          ],
+          "lagging": [
+            "Annual time savings: 2,912 hours",
+            "Cost savings: £218K",
+            "Better decision value: £50K",
+            "Total benefit: £268K"
+          ]
+        }
+      },
+      
+      {
+        "id": "AI-006",
+        "priority": 6,
+        "name": "Supplier Intelligence & Procurement Optimization",
+        "tier": "MEDIUM_TERM",
+        
+        "businessCase": {
+          "problem": "Supplier on-time delivery only 60-65%. Manual supplier selection based on habit not data. No systematic tracking of quality, price, and reliability. Reactive procurement drives 8-12% premium cost. Poor visibility into global meat markets.",
+          "solution": "AI supplier scorecard tracking quality, price, reliability, risk. Predictive model for optimal procurement timing. Market intelligence aggregation. Automated supplier performance reviews.",
+          "uniqueValue": "Better supplier selection + timing = 2-3% procurement cost reduction = £780K-£1.17M on £39M COGS"
+        },
+        
+        "financials": {
+          "investment": 95000,
+          "implementationTime": "16_weeks",
+          "annualBenefit": 975000,
+          "roi": 9.26,
+          "paybackMonths": 1.2,
+          
+          "benefitSources": {
+            "procurementCostReduction": {
+              "cogsSavings": 0.025,
+              "applicableCOGS": 39000000,
+              "value": 975000
+            }
+          }
+        },
+        
+        "implementation": {
+          "complexity": "HIGH - requires deep supplier data integration",
+          "timeline": "4 months due to data collection and validation",
+          "phase1": "Supplier data consolidation and quality tracking",
+          "phase2": "Performance scoring model development",
+          "phase3": "Market intelligence integration",
+          "phase4": "Procurement optimization algorithms",
+          
+          "successMetrics": {
+            "supplierOnTime": "65% → 82%",
+            "procurementCost": "-2.5%",
+            "supplierRiskReduction": "3 supplier failures → 0",
+            "annualBenefit": "£975K"
+          }
+        }
+      }
+    ],
+    
+    "implementationSequence": {
+      "immediate_30days": {
+        "initiatives": ["AI-001", "AI-005"],
+        "investment": 103000,
+        "quickWinBenefit": 295000,
+        "focus": "Pricing discipline and meeting efficiency"
+      },
+      
+      "nearTerm_90days": {
+        "initiatives": ["AI-002", "AI-004"],
+        "investment": 120000,
+        "cumulativeBenefit": 1375000,
+        "focus": "Customer retention and acquisition quality"
+      },
+      
+      "mediumTerm_180days": {
+        "initiatives": ["AI-003", "AI-006"],
+        "investment": 220000,
+        "cumulativeBenefit": 2908000,
+        "focus": "Inventory optimization and procurement excellence"
+      }
+    }
+  },
+  
+  "balancedScorecardAlignment": {
+    "@context": "https://schema.org",
+    "@type": "PerformanceMetrics",
+    
+    "financialPerspective": {
+      "objectives": [
+        "Grow gross margin from 10.67% to 13.8% (blended)",
+        "Increase EBITDA margin from 2.18% to 6.62%",
+        "Improve cash conversion cycle from 19 to 13 days",
+        "Grow revenue to £60M while maintaining margin discipline"
+      ],
+      
+      "metrics": {
+        "grossMargin": {
+          "current": 0.1067,
+          "target": 0.138,
+          "gap": 0.0313,
+          "priority": "CRITICAL",
+          "owner": "CFO + Sales Director"
+        },
+        "ebitdaMargin": {
+          "current": 0.0218,
+          "target": 0.0662,
+          "gap": 0.0444,
+          "priority": "CRITICAL",
+          "owner": "CEO"
+        },
+        "workingCapital": {
+          "current": 6625000,
+          "target": 5400000,
+          "reduction": 1225000,
+          "priority": "HIGH",
+          "owner": "CFO"
+        },
+        "revenueGrowth": {
+          "current": 53000000,
+          "target": 60000000,
+          "growth": 0.132,
+          "priority": "HIGH",
+          "owner": "Sales Director"
+        }
+      }
+    },
+    
+    "customerPerspective": {
+      "objectives": [
+        "Reduce churn from 15% to 7%",
+        "Increase customer lifetime value by 35%",
+        "Improve NPS from 42 to 68",
+        "Expand average customer revenue 15%"
+      ],
+      
+      "metrics": {
+        "customerRetention": {
+          "current": 0.85,
+          "target": 0.93,
+          "priority": "CRITICAL",
+          "financialImpact": "£695K annual"
+        },
+        "nps": {
+          "current": 42,
+          "target": 68,
+          "priority": "HIGH",
+          "correlation": "High NPS = 2.4x higher margin"
+        },
+        "customerLifetimeValue": {
+          "current": 1066850,
+          "target": 1440248,
+          "increase": 0.35,
+          "priority": "HIGH"
+        },
+        "walletShare": {
+          "current": 0.35,
+          "target": 0.52,
+          "priority": "MEDIUM"
+        }
+      }
+    },
+    
+    "internalProcessPerspective": {
+      "objectives": [
+        "Increase forecast accuracy to 91%",
+        "Improve inventory turns to 38.5x",
+        "Achieve 94% price realization",
+        "Reduce sales cycle to 22 days"
+      ],
+      
+      "metrics": {
+        "forecastAccuracy": {
+          "current": 0.73,
+          "target": 0.91,
+          "priority": "HIGH",
+          "enables": "Better procurement and inventory management"
+        },
+        "inventoryTurns": {
+          "current": 30.3,
+          "target": 38.5,
+          "priority": "HIGH",
+          "financialImpact": "£400K working capital release"
+        },
+        "priceRealization": {
+          "current": 0.89,
+          "target": 0.94,
+          "priority": "CRITICAL",
+          "financialImpact": "£424K annual"
+        },
+        "salesCycleTime": {
+          "current": 28,
+          "target": 22,
+          "priority": "MEDIUM",
+          "impact": "22% capacity increase"
+        }
+      }
+    },
+    
+    "learningGrowthPerspective": {
+      "objectives": [
+        "Achieve 85% AI tool adoption",
+        "Improve data quality to 94%",
+        "Increase sales productivity 32%",
+        "Build predictive capabilities"
+      ],
+      
+      "metrics": {
+        "aiAdoption": {
+          "current": 0.15,
+          "target": 0.85,
+          "priority": "HIGH",
+          "measurement": "Weekly active usage"
+        },
+        "dataQuality": {
+          "current": 0.67,
+          "target": 0.94,
+          "priority": "CRITICAL",
+          "requirement": "AI models require 90%+ data quality"
+        },
+        "salesProductivity": {
+          "current": 967273,
+          "target": 1272727,
+          "increase": 0.316,
+          "priority": "HIGH"
+        }
+      }
+    }
+  },
+  
+  "criticalSuccessFactors": {
+    "marginDiscipline": {
+      "importance": "EXISTENTIAL",
+      "rule": "Never go below margin floor without board approval",
+      "floors": {
+        "premiumCuts": 0.115,
+        "standardCuts": 0.095,
+        "valueCuts": 0.070
+      },
+      "rationale": "One below-floor deal at £50K revenue can wipe out profit from 8 good deals",
+      "enforcement": "Hard stops in pricing system, weekly management review"
+    },
+    
+    "customerSegmentation": {
+      "importance": "CRITICAL",
+      "strategy": {
+        "platinum": "PROTECT - these 28 customers generate 30.7% of profit from 25.6% of revenue",
+        "gold": "GROW - expand wallet share and improve mix",
+        "silver": "OPTIMIZE - efficiency focus, self-service where possible",
+        "bottomDecile": "EXIT - customers below 7% margin who won't improve"
+      },
+      "resourceAllocation": "60% effort on top 30% customers by margin"
+    },
+    
+    "dataQuality": {
+      "importance": "CRITICAL",
+      "requirement": "AI is only as good as the data",
+      "standards": {
+        "completeness": 0.95,
+        "accuracy": 0.98,
+        "timeliness": "24_hours",
+        "consistency": "no_conflicts"
+      },
+      "governance": "Weekly data quality scorecard, escalation for issues"
+    },
+    
+    "changeManagement": {
+      "importance": "HIGH",
+      "challenges": [
+        "Sales team resistance to AI pricing (fear of commission impact)",
+        "Data entry discipline (CRM adoption)",
+        "Process adherence (margin floors, approval workflows)",
+        "Mindset shift (margin over volume)"
+      ],
+      "enablers": [
+        "Executive sponsorship (CEO/MD visible support)",
+        "Compensation alignment (margin-based bonus component)",
+        "Quick wins (show AI benefits fast)",
+        "Training and support (ongoing coaching)",
+        "Feedback loops (weekly check-ins first 90 days)"
+      ]
+    }
+  },
+  
+  "riskRegister": {
+    "strategic": [
+      {
+        "risk": "Competitive price war triggered by margin improvement",
+        "likelihood": "MEDIUM",
+        "impact": "HIGH",
+        "mitigation": [
+          "Focus premium segment less price-sensitive",
+          "Differentiate on service not price",
+          "Maintain margin floor discipline",
+          "Build switching costs through AI-enabled service"
+        ]
+      },
+      {
+        "risk": "Inter-wholesaler trading margin compression",
+        "likelihood": "HIGH",
+        "impact": "LOW",
+        "mitigation": [
+          "Accept 10% fixed margin on this segment",
+          "Do not grow this segment",
+          "Focus improvement efforts on container import"
+        ]
+      }
+    ],
+    
+    "operational": [
+      {
+        "risk": "AI pricing recommendations below margin floor",
+        "likelihood": "LOW",
+        "impact": "HIGH",
+        "mitigation": [
+          "Hard stops coded into system",
+          "Human override always available",
+          "Weekly management review of all pricing decisions",
+          "Quarterly model retraining"
+        ]
+      },
+      {
+        "risk": "Data quality insufficient for AI models",
+        "likelihood": "MEDIUM",
+        "impact": "HIGH",
+        "mitigation": [
+          "Data cleanup before AI deployment",
+          "Validation rules in CRM",
+          "Weekly data quality monitoring",
+          "Escalation process for issues"
+        ]
+      }
+    ],
+    
+    "financial": [
+      {
+        "risk": "Commodity cost spike erodes margin gains",
+        "likelihood": "MEDIUM",
+        "impact": "CRITICAL",
+        "mitigation": [
+          "Dynamic pricing pass-through",
+          "Contract clauses for cost escalation",
+          "Forward buying when AI predicts spikes",
+          "Diversified supplier base"
+        ]
+      },
+      {
+        "risk": "AI investment payback delayed",
+        "likelihood": "LOW",
+        "impact": "MEDIUM",
+        "mitigation": [
+          "Phased implementation reduces upfront investment",
+          "Quick wins (pricing, meetings) deliver fast ROI",
+          "Conservative benefit assumptions",
+          "Monthly ROI tracking and course correction"
+        ]
+      }
+    ]
+  },
+  
+  "next_steps": {
+    "immediate": [
+      "1. Executive team review (3 hours) - validate assumptions and secure commitment",
+      "2. Board presentation (1 hour) - secure £585K Year 1 investment approval",
+      "3. Assign initiative owners - specific person accountable for each AI project",
+      "4. 30-day quick start - launch AI-001 (pricing) and AI-005 (meetings)",
+      "5. Data cleanup sprint - 2 weeks to achieve 90%+ data quality"
+    ],
+    
+    "90day": [
+      "Month 1: Foundation (pricing + meetings)",
+      "Month 2: Customer intelligence (churn + lead scoring)",
+      "Month 3: Review progress, refine models, prepare for inventory/procurement"
+    ],
+    
+    "success_criteria": {
+      "30days": "Margin 10.67% → 11.2%, £28K incremental profit",
+      "90days": "Margin 10.67% → 12.1%, £365K incremental profit",
+      "180days": "Margin 10.67% → 13.2%, £650K incremental profit",
+      "18months": "Margin 10.67% → 13.8%, £1.73M incremental profit"
+    }
+  }
+}

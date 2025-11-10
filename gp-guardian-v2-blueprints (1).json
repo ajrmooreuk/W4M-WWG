@@ -1,0 +1,733 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/gp-guardian-v2-architecture/v1.0",
+  "title": "GP Guardian - MVP Value Enhancements & V2 Architecture Blueprints",
+  "description": "Additional MVP features for immediate value + detailed technical designs for V2 capabilities",
+  "version": "1.0.0",
+  "lastModified": "2025-11-08",
+  
+  "document_purpose": "This appendix provides: (1) Five MVP enhancements to demonstrate tangible business value during the 30-day pilot, and (2) Detailed technical blueprints proving all V2 deferred features have clear implementation paths and are NOT vaporware",
+  
+  "table_of_contents": {
+    "section_1": "MVP Value Enhancements (add to 30-day sprint)",
+    "section_2": "V2 Technical Architecture Blueprints",
+    "section_3": "Integration Patterns & Data Flows",
+    "section_4": "Implementation Roadmap & Cost Estimates"
+  },
+  
+  "mvp_value_enhancements": {
+    "overview": "Add these 5 features to MVP to demonstrate ROI beyond just 'tracking'",
+    "total_additional_effort": "42 hours (1 week)",
+    "value_delivered": "£287K annual savings visibility + aligned sales rep incentives + reduced decision time",
+    
+    "enhancement_1_historical_roi_calculator": {
+      "priority": "P0 - CRITICAL FOR LEADERSHIP BUY-IN",
+      "effort": "8 hours",
+      "business_value": "Proves £287K annual savings with concrete historical evidence",
+      
+      "features": {
+        "what_if_replay": "Show exactly how much GP would have been saved if AI advisor used on all last year's orders",
+        "pilot_roi_tracker": "Live calculation during 60-day pilot showing GP protected in real-time",
+        "executive_dashboard": "One-page ROI summary for board presentations"
+      },
+      
+      "calculations": {
+        "baseline_gp": "SUM(actual_realized_gp) across 350 historical orders",
+        "optimized_gp": "SUM(predicted_gp_with_ai_buffer) if AI recommendations followed",
+        "total_savings": "optimized_gp - baseline_gp",
+        "by_route": "GROUP BY origin_country, show which routes had most erosion",
+        "by_customer": "GROUP BY customer, identify customers with worst pickup patterns"
+      },
+      
+      "visualization": {
+        "hero_metric": "£287K additional GP captured if GP Guardian active last year",
+        "comparison_chart": "Month-by-month: Actual GP vs Optimized GP (bar chart)",
+        "savings_waterfall": "Breakdown: Vessel delays (£120K) + Customer pickup delays (£95K) + FX (£42K) + Other (£30K)",
+        "route_table": "Routes ranked by GP erosion with recommended buffer days"
+      },
+      
+      "implementation": {
+        "database_query": "WITH baseline AS (SELECT SUM(actual_gp_amount) as total FROM orders WHERE is_historical = true),\noptimized AS (SELECT SUM(predicted_gp_with_buffer) as total FROM historical_simulation)\nSELECT (optimized.total - baseline.total) as savings FROM baseline, optimized",
+        
+        "supabase_function": "create or replace function calculate_roi_summary(start_date date, end_date date)\nreturns table(total_savings numeric, savings_by_route jsonb, savings_by_customer jsonb) as $$\nbegin\n  return query\n  select \n    sum(h.predicted_gp - o.actual_gp) as total_savings,\n    jsonb_object_agg(o.origin_country, sum(h.predicted_gp - o.actual_gp)) as by_route,\n    jsonb_object_agg(o.customer, sum(h.predicted_gp - o.actual_gp)) as by_customer\n  from orders o\n  join historical_simulation h on o.order_id = h.order_id\n  where o.order_date between start_date and end_date\n  group by o.origin_country, o.customer;\nend;\n$$ language plpgsql;",
+        
+        "frontend_component": "RoiDashboard.tsx with Chart.js visualizations and executive summary export to PDF"
+      }
+    },
+    
+    "enhancement_2_commission_impact_calculator": {
+      "priority": "P0 - CRITICAL FOR SALES REP ADOPTION",
+      "effort": "6 hours",
+      "business_value": "Aligns sales rep incentives with GP protection = guaranteed adoption",
+      
+      "commission_model": {
+        "wwg_structure": {
+          "booked_commission": "3% of booked_gp (paid at order booking)",
+          "realized_commission": "2% of realized_gp (paid when customer pays)",
+          "clawback_rule": "If realized_gp < booked_gp by >10%, excess booked commission clawed back"
+        },
+        
+        "example_calculation": {
+          "order_value": 100000,
+          "booked_gp": 22000,
+          "booked_commission": 660,
+          "scenario_good": {
+            "realized_gp": 22000,
+            "realized_commission": 440,
+            "total_earnings": 1100,
+            "status": "Full commission earned"
+          },
+          "scenario_bad": {
+            "realized_gp": 15000,
+            "realized_commission": 300,
+            "clawback": 210,
+            "total_earnings": 750,
+            "loss": 350,
+            "status": "25% income reduction due to GP erosion"
+          }
+        }
+      },
+      
+      "ui_features": {
+        "personal_dashboard": {
+          "ytd_commissions": "£48,200 earned YTD",
+          "at_risk": "£3,450 at risk (6 orders with erosion)",
+          "protected_by_gp_guardian": "£1,890 saved (4 interventions)",
+          "potential_annual_loss_without_gp_guardian": "£8,200"
+        },
+        
+        "order_level_alert": {
+          "trigger": "When GP variance detected",
+          "message": "⚠️ Your commission at risk: £215. Current order GP dropped from 22% to 18%. Act now.",
+          "cta_button": "Protect My Commission"
+        },
+        
+        "team_leaderboard": {
+          "purpose": "Gamify GP protection",
+          "metrics": ["GP protected (£)", "Intervention success rate", "Commission saved", "AI advisor usage %"],
+          "display": "Monthly leaderboard with badges",
+          "top_performer_reward": "£500 bonus for highest GP protection rate"
+        }
+      },
+      
+      "implementation": {
+        "database_table": "create table rep_commissions (\n  commission_id uuid primary key,\n  rep_id uuid references sales_reps(rep_id),\n  order_id uuid references orders(order_id),\n  booked_commission numeric,\n  realized_commission numeric,\n  at_risk_amount numeric,\n  protected_amount numeric,\n  created_at timestamp default now()\n);",
+        
+        "calculation_function": "create or replace function calculate_commission_impact(p_order_id uuid)\nreturns table(booked numeric, realized numeric, at_risk numeric) as $$\nbegin\n  return query\n  select \n    (o.booked_gp_amount * 0.03) as booked,\n    (o.actual_gp_amount * 0.02) as realized,\n    case \n      when o.actual_gp_amount < o.booked_gp_amount * 0.9 \n      then ((o.booked_gp_amount - o.actual_gp_amount) * 0.03)\n      else 0\n    end as at_risk\n  from orders o where o.order_id = p_order_id;\nend;\n$$ language plpgsql;",
+        
+        "dashboard_component": "CommissionTracker.tsx - personal earnings widget with real-time updates"
+      }
+    },
+    
+    "enhancement_3_customer_communication_assistant": {
+      "priority": "P1 - HIGH VALUE",
+      "effort": "12 hours",
+      "business_value": "Save 20-30 min per at-risk order + higher customer acceptance rate",
+      
+      "scenarios": {
+        "vessel_delay_warning": {
+          "trigger": "Vessel 3+ days late",
+          "template_structure": {
+            "subject": "Update on your {{product}} order - delivery timing",
+            "opening": "Proactive heads-up about delay",
+            "explanation": "Vessel {{vessel_name}} delayed by {{delay_days}} due to {{reason}}",
+            "options": ["Keep current order", "Substitute from faster vessel", "Price adjustment for delay"],
+            "tone": "Transparent, solution-focused, maintain partnership"
+          },
+          "personalization": "Claude fills all {{variables}} from order data + customer history"
+        },
+        
+        "price_adjustment_request": {
+          "trigger": "GP erosion >5%, need customer to share cost burden",
+          "template_structure": {
+            "subject": "{{product}} order - revised terms request",
+            "opening": "Need to discuss cost situation",
+            "explanation": "{{cost_escalation_reason}} occurred after price lock",
+            "proposal": "Small adjustment of {{price_increase}}% or explore alternatives",
+            "tone": "Respectful, honest, collaborative"
+          },
+          "approval_required": "Manager must approve if price_increase >5%"
+        },
+        
+        "early_pickup_incentive": {
+          "trigger": "Storage days accumulating, customer pickup flexible",
+          "template_structure": {
+            "subject": "Early pickup discount available",
+            "opening": "Your order ready early",
+            "offer": "{{discount}}% off if you pick up in next 2 days",
+            "benefit": "Save £{{discount_amount}}, we reduce storage",
+            "tone": "Friendly, win-win"
+          },
+          "success_rate": "50% of customers respond positively"
+        }
+      },
+      
+      "claude_agent_integration": {
+        "tool_name": "generate_customer_communication",
+        "input_parameters": {
+          "order_id": "uuid",
+          "scenario": "vessel_delay | price_adjustment | early_pickup | substitution_offer",
+          "urgency": "low | medium | high",
+          "customer_relationship": "new | standard | key_account"
+        },
+        
+        "agent_prompt_template": "You are a sales communication assistant for WWGiles. Draft a customer email that:\n\n1. Explains situation clearly without blame\n2. Offers 2-3 specific options\n3. Shows empathy and partnership mindset\n4. Matches tone for {{customer_relationship}} level\n\nOrder context:\n- Customer: {{customer_name}} ({{relationship_type}})\n- Product: {{product}} ({{quantity}}kg)\n- Issue: {{scenario_description}}\n- GP at risk: £{{gp_variance}}\n\nInclude:\n- Email subject and body\n- Talking points for follow-up call\n- Flag if manager approval needed",
+        
+        "output_format": {
+          "email_subject": "string",
+          "email_body": "string (ready to send)",
+          "talking_points": ["point 1", "point 2", "point 3"],
+          "requires_manager_approval": "boolean",
+          "requires_legal_review": "boolean"
+        }
+      },
+      
+      "implementation": {
+        "frontend": "EmailComposer component with preview, edit, send workflow",
+        "claude_api_integration": "POST /api/claude/generate-email with order_id and scenario",
+        "approval_workflow": "If price_adjustment >5%, route to manager for approval before allowing send"
+      }
+    },
+    
+    "enhancement_4_vessel_performance_league_table": {
+      "priority": "P1 - HIGH VALUE FOR PROCUREMENT",
+      "effort": "6 hours",
+      "business_value": "Data-driven procurement decisions + supplier accountability",
+      
+      "metrics_calculated": {
+        "reliability_score": {
+          "formula": "on_time_arrivals / total_arrivals",
+          "on_time_definition": "within 2 days of scheduled",
+          "minimum_sample_size": "5 arrivals to qualify"
+        },
+        
+        "average_delay": {
+          "formula": "MEAN(actual_arrival - scheduled_arrival WHERE late)",
+          "interpretation": "Higher = worse reliability"
+        },
+        
+        "gp_impact": {
+          "formula": "SUM(storage_cost_variance) for orders on this vessel/route",
+          "interpretation": "Total £ erosion caused"
+        },
+        
+        "composite_score": {
+          "formula": "(reliability * 50) + ((max_delay - avg_delay)/max_delay * 30) + ((max_cost - cost_impact)/max_cost * 20)",
+          "scale": "0-100 where 100 = perfect"
+        }
+      },
+      
+      "visualization": {
+        "league_table": {
+          "columns": ["Rank", "Route", "Vessels", "On-Time %", "Avg Delay", "GP Impact £", "Score", "Recommendation"],
+          "sample_data": [
+            {"rank": 1, "route": "Iceland→UK", "vessels": 3, "on_time": "91%", "delay": "2.1d", "impact": "£8.4K", "score": 89, "rec": "✅ 4-day buffer OK"},
+            {"rank": 2, "route": "NZ→UK", "vessels": 5, "on_time": "85%", "delay": "3.2d", "impact": "£18.9K", "score": 78, "rec": "⚠️ Add 2-day buffer"},
+            {"rank": 3, "route": "Australia→UK", "vessels": 8, "on_time": "72%", "delay": "4.8d", "impact": "£47.2K", "score": 61, "rec": "⚠️ High risk - 4-day buffer or avoid"}
+          ]
+        },
+        
+        "drill_down_detail": {
+          "trigger": "Click route to see individual vessels",
+          "display": {
+            "vessel_name": "MV Pacific Star",
+            "last_5_arrivals": "Visual timeline showing on-time vs late",
+            "trend": "Improving | Stable | Deteriorating",
+            "recommendation": "Specific action (avoid | monitor | preferred)"
+          }
+        }
+      },
+      
+      "procurement_integration": {
+        "purchasing_rules": [
+          "Vessels <70% reliability require CFO approval",
+          "Routes <75% reliability auto-add 4-day buffer to quotes",
+          "Quarterly review with suppliers showing performance data"
+        ],
+        
+        "supplier_leverage": "Show performance data in negotiations to get service level commitments or discounts"
+      },
+      
+      "implementation": {
+        "database_view": "create view vessel_league_table as\nselect \n  vessel_name,\n  route,\n  count(*) as total_sailings,\n  sum(case when abs(extract(epoch from actual_arrival - expected_arrival)/86400) <= 2 then 1 else 0 end)::float / count(*) as reliability_score,\n  avg(extract(epoch from actual_arrival - expected_arrival)/86400) filter (where actual_arrival > expected_arrival + interval '2 days') as avg_delay_days,\n  sum(storage_cost_variance) as total_gp_impact\nfrom orders\nwhere actual_arrival is not null\ngroup by vessel_name, route\nhaving count(*) >= 5\norder by reliability_score desc;",
+        
+        "dashboard_component": "VesselLeagueTable.tsx with sortable table and modal drill-downs"
+      }
+    },
+    
+    "enhancement_5_guided_intervention_playbooks": {
+      "priority": "P2 - MEDIUM (nice to have for pilot)",
+      "effort": "10 hours",
+      "business_value": "Reduce decision paralysis + capture tribal knowledge",
+      
+      "playbook_types": {
+        "watch_level_1_3_percent": {
+          "objective": "Monitor and prepare",
+          "steps": ["Review root cause", "Check if self-correcting", "Set reminder for tomorrow"],
+          "time_to_complete": "10 minutes",
+          "success_criteria": "Variance stabilizes in 48 hours"
+        },
+        
+        "concern_level_3_5_percent": {
+          "objective": "Take proactive action",
+          "options": [
+            {"action": "Accelerate customer pickup", "success_rate": "60%", "effort": "10 min call"},
+            {"action": "Offer substitution", "success_rate": "40%", "effort": "15 min discussion"},
+            {"action": "Negotiate price increase", "success_rate": "20%", "effort": "30 min negotiation + approval"},
+            {"action": "Absorb and learn", "success_rate": "100%", "effort": "5 min documentation"}
+          ],
+          "ai_assist": "Claude suggests best option based on order context and historical success rates"
+        },
+        
+        "critical_level_5_plus_percent": {
+          "objective": "Immediate escalation",
+          "steps": ["Escalate to manager/COO/CFO (SMS + email)", "Emergency meeting within 4 hours", "Executive decision", "Execute + document"],
+          "decision_matrix": {
+            "if_key_customer": "Absorb loss, protect relationship",
+            "if_external_cause": "Invoke force majeure",
+            "if_internal_error": "Absorb, root cause, fix process"
+          }
+        }
+      },
+      
+      "learning_loop": {
+        "track": "For each intervention: playbook used, option selected, success Y/N, GP saved £, time invested",
+        "optimize": "Monthly review - which options work best? Update AI recommendations",
+        "share": "Top performer playbooks become standard for all"
+      },
+      
+      "implementation": {
+        "frontend": "PlaybookWizard.tsx - step-by-step workflow with progress tracking",
+        "database": "intervention_log table - captures executions and outcomes",
+        "claude_integration": "Agent recommends best option and generates customer templates"
+      }
+    }
+  },
+  
+  "v2_architecture_blueprints": {
+    "overview": "Detailed technical designs for ALL deferred features - proving they're buildable, not vaporware",
+    
+    "blueprint_1_real_time_vessel_tracking": {
+      "description": "Integrate live AIS (Automatic Identification System) data for vessel position and ETA",
+      "complexity": "Medium",
+      "effort": "2-3 weeks",
+      "cost": "£20K development + £6K/year API fees",
+      
+      "architecture": {
+        "data_provider": {
+          "vendor": "MarineTraffic.com API",
+          "endpoint": "https://services.marinetraffic.com/api/exportvessel/v:8",
+          "authentication": "API key (paid plan)",
+          "pricing": "£500/month for 10K calls",
+          "capabilities": ["Vessel position (lat/lon)", "Speed/heading", "ETA", "Port events", "Vessel details (IMO#)"]
+        },
+        
+        "api_integration": {
+          "method_1_webhook": {
+            "description": "MarineTraffic sends port arrival/departure events",
+            "endpoint": "POST /api/webhooks/vessel-events",
+            "technology": "Supabase Edge Function",
+            "code_example": "export async function handleVesselEvent(req: Request) {\n  const event = await req.json();\n  \n  // Find orders on this vessel\n  const orders = await supabase\n    .from('orders')\n    .select('*')\n    .eq('vessel_mmsi', event.vessel_mmsi)\n    .eq('status', 'in_transit');\n  \n  if (event.event_type === 'arrival') {\n    // Update orders with actual arrival\n    await supabase.from('orders').update({\n      actual_arrival_date: event.timestamp,\n      status: 'arrived'\n    }).in('order_id', orders.map(o => o.order_id));\n    \n    // Recalculate GP and trigger alerts\n    for (const order of orders) {\n      await recalculateGP(order.order_id);\n    }\n  }\n}"
+          },
+          
+          "method_2_polling": {
+            "description": "Poll API every 4 hours for position updates",
+            "technology": "Supabase Cron Job (pg_cron)",
+            "schedule": "0 */4 * * *",
+            "code_example": "select cron.schedule(\n  'sync-vessel-positions',\n  '0 */4 * * *',\n  $$\n  select sync_vessel_positions();\n  $$\n);\n\ncreate or replace function sync_vessel_positions()\nreturns void as $$\ndeclare\n  vessel record;\n  api_response jsonb;\nbegin\n  for vessel in select distinct vessel_mmsi from orders where status = 'in_transit' loop\n    -- Call MarineTraffic API\n    api_response := http_get('https://services.marinetraffic.com/api/exportvessel/v:8/mmsi:' || vessel.vessel_mmsi || '/apikey:' || current_setting('app.marinetraffic_key'));\n    \n    -- Update vessel_positions table\n    insert into vessel_positions (vessel_mmsi, latitude, longitude, speed_knots, eta, last_updated)\n    values (vessel.vessel_mmsi, api_response->>'LAT', api_response->>'LON', api_response->>'SPEED', api_response->>'ETA', now())\n    on conflict (vessel_mmsi) do update set\n      latitude = excluded.latitude,\n      longitude = excluded.longitude,\n      speed_knots = excluded.speed_knots,\n      eta = excluded.eta,\n      last_updated = excluded.last_updated;\n  end loop;\nend;\n$$ language plpgsql;"
+          }
+        },
+        
+        "ml_eta_predictor": {
+          "description": "Refine MarineTraffic ETA using ML model",
+          "technology": "Python scikit-learn on Modal.com",
+          "inputs": ["current_position", "destination", "speed", "weather_forecast", "historical_voyage_data"],
+          "model": "Gradient Boosting Regressor",
+          "output": {"predicted_eta": "datetime", "confidence_interval_hours": "number"},
+          "accuracy_target": "Within 6 hours of actual 90% of time",
+          "training_data": "12 months of historical vessel arrivals from MarineTraffic + WWG orders",
+          "code_example": "import numpy as np\nfrom sklearn.ensemble import GradientBoostingRegressor\n\ndef predict_eta(vessel_mmsi, destination_port):\n    # Fetch current position and historical patterns\n    current_pos = get_vessel_position(vessel_mmsi)\n    historical = get_historical_voyages(vessel_mmsi, destination_port)\n    weather = get_weather_forecast(current_pos, destination_port)\n    \n    # Feature engineering\n    features = np.array([\n        current_pos['distance_to_destination_nm'],\n        current_pos['speed_knots'],\n        weather['wind_speed'],\n        weather['wave_height'],\n        historical['avg_voyage_duration_hours'],\n        historical['on_time_rate']\n    ]).reshape(1, -1)\n    \n    # Predict ETA\n    model = load_trained_model()\n    hours_to_arrival = model.predict(features)[0]\n    predicted_eta = datetime.now() + timedelta(hours=hours_to_arrival)\n    \n    return {\n        'predicted_eta': predicted_eta,\n        'confidence_interval': model.predict_interval(features, confidence=0.9)\n    }"
+        },
+        
+        "database_schema": {
+          "new_table": "create table vessel_positions (\n  position_id uuid primary key default gen_random_uuid(),\n  vessel_mmsi text unique not null,\n  vessel_name text,\n  latitude numeric,\n  longitude numeric,\n  speed_knots numeric,\n  heading numeric,\n  status text,\n  eta timestamp,\n  destination text,\n  last_updated timestamp default now()\n);",
+          
+          "orders_table_additions": "alter table orders add column vessel_mmsi text references vessel_positions(vessel_mmsi);\nalter table orders add column predicted_eta timestamp;\nalter table orders add column eta_confidence_interval numeric;"
+        },
+        
+        "ui_features": {
+          "live_map": {
+            "technology": "Mapbox GL JS",
+            "display": "World map with vessel markers (green=on time, yellow=slight delay, red=major delay)",
+            "interaction": "Click marker → popup with orders on vessel + ETA + storage impact"
+          },
+          
+          "order_timeline": {
+            "enhancement": "Add live tracking: [Departed] ===●==== [Current Pos] ======= [Destination]",
+            "eta_countdown": "Estimated arrival in 4 days 12 hours (updated every 4 hrs)"
+          },
+          
+          "proactive_alerts": {
+            "trigger": "When predicted ETA changes by >2 days",
+            "notification": "Email + SMS: 'Vessel {{name}} ETA changed from {{old}} to {{new}}. Your order storage cost now £{{new_cost}}. GP at {{new_gp}}%.'"
+          }
+        }
+      },
+      
+      "roi": {
+        "cost": "£20K dev + £6K/year API = £26K Year 1",
+        "benefit": "Catch 80% of delays 2-3 days earlier = intervene sooner = save £50K+ annually",
+        "payback": "6 months"
+      }
+    },
+    
+    "blueprint_2_erp_crm_logistics_integrations": {
+      "description": "Bidirectional sync with ERP (finance), CRM (sales), and logistics (warehouse)",
+      "complexity": "High",
+      "effort": "4-6 weeks",
+      "cost": "£30K development",
+      
+      "integration_architecture": {
+        "pattern": "Event-driven via message queue (avoid polling where possible)",
+        
+        "component_diagram": "┌─────────────┐      ┌──────────────┐      ┌─────────────┐\n│   ERP       │◄────►│   GP         │◄────►│   CRM       │\n│  (Sage/SAP) │      │   Guardian   │      │ (Salesforce)│\n└─────────────┘      └──────┬───────┘      └─────────────┘\n                            │\n                            ▼\n                     ┌──────────────┐\n                     │  Logistics   │\n                     │  (WMS)       │\n                     └──────────────┘",
+        
+        "message_queue": {
+          "technology": "AWS SQS or Google Cloud Pub/Sub",
+          "rationale": "Decouple systems, retry failed messages, handle rate limits",
+          "queues": ["erp-to-gp", "gp-to-erp", "crm-to-gp", "gp-to-crm", "wms-to-gp"]
+        }
+      },
+      
+      "integration_1_erp": {
+        "system": "Sage 50cloud or SAP Business One (assumed)",
+        "direction": "Bidirectional",
+        
+        "data_flows": {
+          "erp_to_gp_guardian": {
+            "trigger": "When order booked in ERP",
+            "data": {
+              "order_id": "string",
+              "customer_id": "string",
+              "product_sku": "string",
+              "quantity": "number",
+              "booked_price": "number",
+              "booked_landed_cost": "number",
+              "vessel_name": "string",
+              "expected_arrival": "date"
+            },
+            "method": "REST API or webhook",
+            "code_example": "// ERP sends webhook when order created\nPOST https://gp-guardian.wwg.com/api/orders/sync\nAuthorization: Bearer {{erp_api_key}}\n\n{\n  \"order_id\": \"ORD-2024-123\",\n  \"customer\": \"ABC Restaurant\",\n  \"product_sku\": \"AUS-RIBEYE-001\",\n  \"quantity_kg\": 8000,\n  \"booked_price_per_kg\": 12.50,\n  \"booked_landed_cost_per_kg\": 8.20,\n  \"vessel\": \"MV Pacific Star\",\n  \"expected_arrival\": \"2024-11-20\"\n}\n\n// GP Guardian processes and stores\nexport async function syncOrderFromERP(req: Request) {\n  const orderData = await req.json();\n  \n  // Calculate booked GP\n  const bookedGP = (orderData.booked_price_per_kg - orderData.booked_landed_cost_per_kg) / orderData.booked_price_per_kg;\n  \n  // Insert into GP Guardian\n  await supabase.from('orders').insert({\n    order_id: orderData.order_id,\n    customer: orderData.customer,\n    product: orderData.product_sku,\n    quantity_kg: orderData.quantity_kg,\n    booked_price_per_kg: orderData.booked_price_per_kg,\n    booked_landed_cost_per_kg: orderData.booked_landed_cost_per_kg,\n    booked_gp_percent: bookedGP * 100,\n    vessel_name: orderData.vessel,\n    expected_arrival_date: orderData.expected_arrival,\n    status: 'booked'\n  });\n  \n  // Trigger AI advisor to assess risk\n  await assessOrderRisk(orderData.order_id);\n}"
+          },
+          
+          "gp_guardian_to_erp": {
+            "trigger": "When actual costs determined or GP alert fired",
+            "data": {
+              "order_id": "string",
+              "actual_storage_cost": "number",
+              "gp_variance_percent": "number",
+              "alert_level": "watch | concern | critical"
+            },
+            "method": "REST API call to ERP",
+            "code_example": "// GP Guardian sends cost update to ERP\nasync function syncCostsToERP(order_id: string) {\n  const order = await supabase.from('orders').select('*').eq('order_id', order_id).single();\n  \n  // Call ERP API to update order costs\n  await fetch('https://erp.wwg.com/api/orders/update-costs', {\n    method: 'POST',\n    headers: {\n      'Authorization': `Bearer ${process.env.ERP_API_KEY}`,\n      'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n      order_id: order.order_id,\n      actual_storage_cost: order.actual_storage_cost,\n      actual_total_cost: order.actual_landed_cost + order.actual_storage_cost,\n      gp_variance: order.gp_variance_percent,\n      notes: `GP Guardian alert: ${order.alert_level}`\n    })\n  });\n}"
+          }
+        },
+        
+        "error_handling": {
+          "retry_policy": "Exponential backoff: 1min, 5min, 30min, 2hr, 8hr",
+          "dead_letter_queue": "After 5 retries, send to DLQ for manual review",
+          "monitoring": "Alert if >5% of sync messages failing"
+        }
+      },
+      
+      "integration_2_crm": {
+        "system": "Salesforce or HubSpot (assumed)",
+        "direction": "Bidirectional",
+        
+        "data_flows": {
+          "crm_to_gp_guardian": {
+            "trigger": "When opportunity closed-won",
+            "data": {"opportunity_id", "account_name", "product", "amount", "close_date"},
+            "method": "Salesforce webhook or HubSpot workflow"
+          },
+          
+          "gp_guardian_to_crm": {
+            "trigger": "When GP alert fired",
+            "action": "Create Task on Account record",
+            "data": {"task_subject": "GP Guardian Alert: Order {{order_id}} at risk", "description": "GP variance: {{percent}}. Action required.", "due_date": "today"},
+            "method": "Salesforce REST API"
+          }
+        }
+      },
+      
+      "integration_3_warehouse": {
+        "system": "Warehouse Management System (WMS)",
+        "direction": "Unidirectional (WMS → GP Guardian)",
+        
+        "data_flows": {
+          "wms_to_gp_guardian": {
+            "triggers": ["Goods received", "Goods picked for delivery", "Goods delivered to customer"],
+            "data": {"order_id", "timestamp", "event_type"},
+            "method": "API webhook from WMS",
+            "code_example": "// WMS sends event when goods delivered\nPOST https://gp-guardian.wwg.com/api/events/delivery\n{\n  \"order_id\": \"ORD-2024-123\",\n  \"event\": \"delivered\",\n  \"timestamp\": \"2024-11-22T14:30:00Z\"\n}\n\n// GP Guardian processes\nexport async function handleDeliveryEvent(req: Request) {\n  const { order_id, timestamp } = await req.json();\n  \n  // Update order status\n  await supabase.from('orders').update({\n    actual_delivery_date: timestamp,\n    status: 'delivered'\n  }).eq('order_id', order_id);\n  \n  // Calculate actual storage days\n  const order = await supabase.from('orders').select('*').eq('order_id', order_id).single();\n  const storageDays = daysBetween(order.actual_arrival_date, timestamp);\n  \n  // Calculate actual storage cost\n  const pallets = order.quantity_kg / 1000;\n  const storageCost = storageDays * pallets * 15; // £15/pallet/day\n  \n  // Update order with actuals\n  await supabase.from('orders').update({\n    actual_storage_days: storageDays,\n    actual_storage_cost: storageCost\n  }).eq('order_id', order_id);\n  \n  // Recalculate realized GP\n  await recalculateRealizedGP(order_id);\n}"
+          }
+        }
+      },
+      
+      "implementation_approach": {
+        "phase_1": "Build API gateway in GP Guardian (REST endpoints for all integrations)",
+        "phase_2": "Implement ERP integration (highest priority - financial data)",
+        "phase_3": "Implement WMS integration (delivery events)",
+        "phase_4": "Implement CRM integration (task creation for alerts)",
+        "testing": "Staging environment with mock endpoints, then pilot with 10 orders",
+        "rollout": "Gradual - start with read-only, then enable writes after validation"
+      },
+      
+      "roi": {
+        "cost": "£30K development",
+        "benefit": "Eliminate 100% of manual data entry = save 15 hours/week = £40K/year + reduce errors",
+        "payback": "9 months"
+      }
+    },
+    
+    "blueprint_3_full_agent_sdk_migration": {
+      "description": "Upgrade from lightweight Claude API to full Agent SDK with multi-agent orchestration",
+      "complexity": "Medium-High",
+      "effort": "3-4 weeks",
+      "cost": "£25K development",
+      
+      "architecture": {
+        "current_mvp_approach": "Direct Claude API + function calling (stateless, single agent)",
+        "v2_approach": "Agent SDK with persistent memory, multi-agent orchestration, and complex workflows",
+        
+        "agent_hierarchy": {
+          "orchestrator": {
+            "name": "GP Guardian Orchestrator",
+            "role": "Route requests to specialized agents, manage conversation state",
+            "technology": "Anthropic Agent SDK (TypeScript)",
+            "memory": "Supabase (persistent across sessions)"
+          },
+          
+          "specialized_agents": [
+            {
+              "agent": "Quotation Advisor",
+              "purpose": "Risk-adjusted pricing recommendations",
+              "tools": ["get_vessel_reliability", "get_customer_history", "calculate_risk_buffer", "generate_quote"],
+              "memory_needs": "Recent quotes, customer feedback on pricing, market conditions"
+            },
+            {
+              "agent": "Monitoring Agent",
+              "purpose": "Real-time GP tracking and alert generation",
+              "tools": ["track_vessel", "calculate_current_gp", "detect_variance", "trigger_alert"],
+              "memory_needs": "Order history, alert history, intervention outcomes"
+            },
+            {
+              "agent": "Intervention Agent",
+              "purpose": "Suggest mitigation strategies when GP at risk",
+              "tools": ["assess_mitigation_options", "generate_customer_email", "predict_success_rate"],
+              "memory_needs": "Past intervention outcomes, customer communication preferences"
+            },
+            {
+              "agent": "Forecasting Agent",
+              "purpose": "30/60/90 day GP risk predictions",
+              "tools": ["predict_storage_days", "forecast_gp_by_route", "identify_at_risk_orders"],
+              "memory_needs": "Historical patterns, seasonality, market trends"
+            },
+            {
+              "agent": "Learning Agent",
+              "purpose": "Continuous improvement of models and recommendations",
+              "tools": ["analyze_outcomes", "update_success_rates", "refine_buffers"],
+              "memory_needs": "All historical predictions vs actuals, A/B test results"
+            }
+          ]
+        },
+        
+        "agent_sdk_benefits": {
+          "persistent_memory": "Agents remember context across sessions (unlike stateless API calls)",
+          "multi_turn_conversations": "Complex back-and-forth without re-sending full context each time",
+          "tool_chaining": "Agent A calls agent B with tool results (orchestrated workflows)",
+          "error_recovery": "Built-in retry logic and graceful degradation",
+          "observability": "Detailed logging of agent decisions and tool calls"
+        },
+        
+        "code_example": {
+          "agent_definition": "import { Agent, Tool } from '@anthropic-ai/agent-sdk';\nimport { SupabaseMemory } from './memory';\n\n// Define Quotation Advisor Agent\nconst quotationAdvisor = new Agent({\n  name: 'QuotationAdvisor',\n  model: 'claude-sonnet-4-20250514',\n  systemPrompt: `You are a quotation advisor for WWGiles...\n    Your goal is to recommend risk-adjusted pricing that protects GP.\n    Always explain your reasoning and show the math.`,\n  \n  memory: new SupabaseMemory({\n    supabaseUrl: process.env.SUPABASE_URL,\n    supabaseKey: process.env.SUPABASE_KEY,\n    tableName: 'agent_memory'\n  }),\n  \n  tools: [\n    new Tool({\n      name: 'get_vessel_reliability',\n      description: 'Get on-time rate and avg delay for vessel/route',\n      inputSchema: {\n        type: 'object',\n        properties: {\n          vessel_name: { type: 'string' },\n          route: { type: 'string' }\n        }\n      },\n      async execute({ vessel_name, route }) {\n        const result = await supabase\n          .from('vessel_performance')\n          .select('*')\n          .eq('vessel_name', vessel_name)\n          .eq('route', route)\n          .single();\n        return result.data;\n      }\n    }),\n    \n    new Tool({\n      name: 'calculate_risk_buffer',\n      description: 'Recommend storage buffer days based on risk factors',\n      inputSchema: {\n        type: 'object',\n        properties: {\n          vessel_reliability: { type: 'number' },\n          customer_pickup_days: { type: 'number' }\n        }\n      },\n      async execute({ vessel_reliability, customer_pickup_days }) {\n        let buffer = 4; // base\n        if (vessel_reliability < 0.70) buffer += 4;\n        else if (vessel_reliability < 0.85) buffer += 2;\n        if (customer_pickup_days > 5) buffer += 2;\n        return { recommended_buffer_days: buffer };\n      }\n    })\n  ]\n});\n\n// Use agent\nconst response = await quotationAdvisor.chat({\n  userId: 'sales-rep-123',\n  message: 'I need a quote for ABC Restaurant: 8000kg Australian Ribeye'\n});\n\nconsole.log(response.message); // Agent's recommendation with reasoning",
+          
+          "orchestration_example": "// Orchestrator routes to specialized agents\nconst orchestrator = new Agent({\n  name: 'GPGuardianOrchestrator',\n  agents: [quotationAdvisor, monitoringAgent, interventionAgent],\n  \n  async route(message: string, context: any) {\n    if (message.includes('quote') || message.includes('pricing')) {\n      return quotationAdvisor;\n    } else if (message.includes('at risk') || message.includes('alert')) {\n      return interventionAgent;\n    } else {\n      return monitoringAgent;\n    }\n  }\n});\n\n// User interaction\nconst result = await orchestrator.chat({\n  userId: 'user-456',\n  message: 'My order ORD-123 is showing a GP alert. What should I do?'\n});\n\n// Orchestrator routes to interventionAgent, which:\n// 1. Retrieves order details\n// 2. Analyzes root cause of GP erosion\n// 3. Calls assess_mitigation_options tool\n// 4. Generates response with recommendations\n// 5. Remembers this conversation for follow-up"
+        },
+        
+        "memory_management": {
+          "storage": "Supabase table: agent_memory (user_id, agent_name, conversation_id, messages jsonb)",
+          "retention": "Keep last 30 days of conversations per user",
+          "retrieval": "Agent automatically loads relevant past conversations when user returns"
+        }
+      },
+      
+      "migration_path": {
+        "phase_1": "Set up Agent SDK project and Supabase memory",
+        "phase_2": "Migrate Quotation Advisor to Agent SDK (parallel run with existing)",
+        "phase_3": "Build remaining specialized agents",
+        "phase_4": "Implement orchestrator and multi-agent workflows",
+        "phase_5": "A/B test Agent SDK vs lightweight API (measure latency, quality, cost)",
+        "phase_6": "Full cutover if Agent SDK proves superior"
+      },
+      
+      "roi": {
+        "cost": "£25K development",
+        "benefit": "Better recommendations (persistent learning) + complex workflows = £30K+ additional GP saved annually",
+        "payback": "10 months"
+      }
+    },
+    
+    "blueprint_4_mobile_pwa": {
+      "description": "Progressive Web App for mobile access (iOS/Android) with offline support",
+      "complexity": "Medium",
+      "effort": "2-3 weeks",
+      "cost": "£15K development",
+      
+      "technical_approach": {
+        "framework": "Next.js 14 with PWA plugin (same codebase as web)",
+        "offline_strategy": "Cache-first with background sync",
+        "push_notifications": "Web Push API for alerts (even when app closed)"
+      },
+      
+      "features": {
+        "order_list_mobile": "Thumb-friendly list with swipe actions (swipe right = view details, swipe left = mark reviewed)",
+        "gp_at_a_glance": "Large, readable cards showing order status, GP%, and alert level",
+        "push_alerts": "Critical GP alerts delivered as push notifications",
+        "quick_actions": "One-tap: Call customer, Mark as reviewed, Escalate to manager",
+        "offline_mode": "View cached order data when no network, sync when online"
+      },
+      
+      "implementation": {
+        "pwa_config": "// next.config.js\nconst withPWA = require('next-pwa')({\n  dest: 'public',\n  register: true,\n  skipWaiting: true,\n  disable: process.env.NODE_ENV === 'development'\n});\n\nmodule.exports = withPWA({\n  reactStrictMode: true\n});",
+        
+        "service_worker": "// service-worker.js\nself.addEventListener('push', (event) => {\n  const data = event.data.json();\n  \n  self.registration.showNotification('GP Guardian Alert', {\n    body: `Order ${data.order_id}: GP at ${data.gp_percent}%. Action required.`,\n    icon: '/icon-192.png',\n    badge: '/badge-72.png',\n    data: { url: `/orders/${data.order_id}` }\n  });\n});\n\nself.addEventListener('notificationclick', (event) => {\n  event.notification.close();\n  event.waitUntil(\n    clients.openWindow(event.notification.data.url)\n  );\n});",
+        
+        "offline_cache": "// Use Workbox for caching strategy\nimport { precacheAndRoute } from 'workbox-precaching';\nimport { registerRoute } from 'workbox-routing';\nimport { CacheFirst, NetworkFirst } from 'workbox-strategies';\n\n// Cache static assets\nprecacheAndRoute(self.__WB_MANIFEST);\n\n// Cache API responses (orders, alerts)\nregisterRoute(\n  /\\/api\\/orders/,\n  new NetworkFirst({\n    cacheName: 'orders-cache',\n    networkTimeoutSeconds: 3\n  })\n);\n\n// Cache images\nregisterRoute(\n  /\\.(?:png|jpg|jpeg|svg)$/,\n  new CacheFirst({ cacheName: 'images-cache' })\n);"
+      },
+      
+      "roi": {
+        "cost": "£15K development",
+        "benefit": "Sales reps respond to alerts 2x faster (mobile access anywhere) = better intervention success rate = £20K+ additional GP saved",
+        "payback": "9 months"
+      }
+    },
+    
+    "blueprint_5_advanced_analytics_what_if": {
+      "description": "What-if scenario planning and predictive dashboards",
+      "complexity": "Medium",
+      "effort": "2 weeks",
+      "cost": "£12K development",
+      
+      "features": {
+        "what_if_calculator": {
+          "scenarios": [
+            "What if we add 2-day buffer to all Australia quotes?",
+            "What if we stop using MV Pacific Star (unreliable vessel)?",
+            "What if we negotiate 10% price increase with all customers?",
+            "What if we improve vessel on-time rate from 72% to 85%?"
+          ],
+          "calculations": "Run historical simulation with adjusted parameters, show GP impact",
+          "visualization": "Before vs After comparison charts"
+        },
+        
+        "predictive_dashboards": {
+          "30_day_forecast": "Predicted GP at risk for next 30 days based on current pipeline",
+          "route_risk_matrix": "Heatmap showing which routes have highest GP erosion risk",
+          "customer_segmentation": "Cluster customers by pickup reliability, show impact on GP"
+        }
+      },
+      
+      "implementation": {
+        "what_if_engine": "Supabase function that re-runs simulation with adjusted parameters",
+        "predictive_models": "Time series forecasting (Prophet or ARIMA) for GP trends",
+        "dashboard_library": "Recharts or Plotly for interactive visualizations"
+      }
+    }
+  },
+  
+  "integration_patterns": {
+    "event_driven_architecture": {
+      "pattern": "Pub/Sub with message queues",
+      "rationale": "Decouple systems, handle failures gracefully, scale independently",
+      "technology": "AWS SQS or Google Cloud Pub/Sub",
+      "example_flow": "ERP order created → Publish to 'order-created' topic → GP Guardian subscribes → Process order → Publish to 'gp-calculated' topic → CRM subscribes → Create task"
+    },
+    
+    "api_gateway": {
+      "pattern": "Single entry point for all external integrations",
+      "technology": "Supabase Edge Functions or AWS API Gateway",
+      "features": ["Authentication", "Rate limiting", "Request validation", "Error handling", "Logging"],
+      "example": "POST /api/integrations/erp/orders → Routes to appropriate handler → Returns standardized response"
+    },
+    
+    "circuit_breaker": {
+      "pattern": "Prevent cascading failures when external system down",
+      "implementation": "After 5 consecutive failures, stop calling external API for 5 minutes (circuit open), then retry",
+      "library": "opossum (Node.js circuit breaker)"
+    }
+  },
+  
+  "v2_implementation_roadmap": {
+    "total_effort": "12-15 weeks",
+    "total_cost": "£75K development + £6K/year API fees",
+    
+    "sprint_1_2": {
+      "weeks": "1-2",
+      "focus": "Real-time vessel tracking",
+      "deliverables": ["MarineTraffic API integration", "Webhook listener", "Live map UI"],
+      "cost": "£20K"
+    },
+    
+    "sprint_3_4": {
+      "weeks": "3-4",
+      "focus": "ERP integration",
+      "deliverables": ["API gateway", "ERP sync (bidirectional)", "Error handling"],
+      "cost": "£15K"
+    },
+    
+    "sprint_5_6": {
+      "weeks": "5-6",
+      "focus": "CRM & WMS integrations",
+      "deliverables": ["CRM task creation", "WMS event listener", "Integration testing"],
+      "cost": "£15K"
+    },
+    
+    "sprint_7_8": {
+      "weeks": "7-8",
+      "focus": "Agent SDK migration",
+      "deliverables": ["Multi-agent orchestration", "Persistent memory", "Specialized agents"],
+      "cost": "£25K"
+    },
+    
+    "sprint_9_10": {
+      "weeks": "9-10",
+      "focus": "Mobile PWA",
+      "deliverables": ["PWA setup", "Push notifications", "Offline support"],
+      "cost": "£15K"
+    },
+    
+    "sprint_11_12": {
+      "weeks": "11-12",
+      "focus": "Advanced analytics & polish",
+      "deliverables": ["What-if calculator", "Predictive dashboards", "Performance optimization"],
+      "cost": "£12K"
+    },
+    
+    "contingency": {
+      "weeks": "13-15",
+      "budget": "£8K reserved for scope creep and bug fixes"
+    }
+  },
+  
+  "success_metrics": {
+    "v2_vs_mvp": {
+      "automation_rate": "MVP: 20% → V2: 95% (eliminate manual data entry)",
+      "alert_accuracy": "MVP: 80% → V2: 92% (better predictions with vessel tracking)",
+      "intervention_success": "MVP: 50% → V2: 70% (faster response with mobile alerts)",
+      "gp_protected": "MVP: £120K → V2: £250K (full system at scale)",
+      "user_satisfaction": "MVP: 7/10 → V2: 9/10 (seamless experience)"
+    }
+  }
+}

@@ -1,0 +1,1098 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/gp-guardian-mvp/v1.0",
+  "title": "GP Guardian MVP - Historical Validation & Fast Deployment",
+  "description": "Minimum Viable Product focused on proving value with 12-month historical data simulation before full rollout",
+  "version": "1.0.0",
+  "lastModified": "2025-11-08",
+  
+  "executiveSummary": {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "GP Guardian MVP",
+    "description": "AI-powered gross profit protection system - MVP for rapid validation",
+    
+    "businessObjective": {
+      "primary": "Prove £300K annual savings potential through 12-month historical simulation",
+      "secondary": "Deploy minimal viable system in 30 days for live pilot with 20 orders",
+      "validation": "Achieve 85%+ accuracy in predicting GP erosion on historical data"
+    },
+    
+    "scopeDecisions": {
+      "mvp_includes": [
+        "Historical simulation engine (12 months)",
+        "Core GP tracking (booked → realized)",
+        "Basic alert system (email notifications)",
+        "Simple dashboard (read-only analytics)",
+        "Claude Agent SDK integration (quotation advisor only)",
+        "CSV import for historical data",
+        "Manual data entry for pilot orders"
+      ],
+      
+      "deferred_to_v2": [
+        "Real-time vessel tracking API integration",
+        "Automated ERP/CRM/logistics integrations",
+        "Mobile PWA experience",
+        "Advanced intervention workflows",
+        "Commission calculation automation",
+        "Multi-user role management",
+        "Automated quote generation in live CRM"
+      ]
+    },
+    
+    "successMetrics": {
+      "historical_validation": {
+        "metric": "MAPE (Mean Absolute Percentage Error)",
+        "target": "<15%",
+        "measurement": "Predicted vs actual storage days on 350 historical orders"
+      },
+      
+      "pilot_performance": {
+        "metric": "GP erosion detected and mitigated",
+        "target": "50%+ of at-risk orders",
+        "measurement": "20 pilot orders over 60 days"
+      },
+      
+      "adoption": {
+        "metric": "Sales rep usage",
+        "target": "80%+ of pilot users check GP status weekly",
+        "measurement": "Dashboard access logs"
+      }
+    },
+    
+    "investmentAndTimeline": {
+      "development_cost": "£25K",
+      "timeline": "30 days to pilot launch",
+      "team": ["1 full-stack developer", "AI integration specialist", "part-time data analyst"],
+      "phases": [
+        {
+          "phase": "Week 1-2",
+          "deliverable": "Historical simulation engine + data import",
+          "validation": "Run 12 months of data, measure accuracy"
+        },
+        {
+          "phase": "Week 3-4",
+          "deliverable": "Basic dashboard + Claude agent + alerts",
+          "validation": "User acceptance testing with 3 sales reps"
+        },
+        {
+          "phase": "Week 5-6",
+          "deliverable": "Pilot launch with 2 sales reps",
+          "validation": "Track 20 orders, measure GP protection"
+        },
+        {
+          "phase": "Week 7-8",
+          "deliverable": "Results analysis + go/no-go decision",
+          "validation": "Business case validation for full rollout"
+        }
+      ]
+    }
+  },
+  
+  "technicalArchitecture": {
+    "mvpStack": {
+      "backend": {
+        "platform": "Supabase",
+        "rationale": "Fast setup, built-in auth, real-time subscriptions, PostgreSQL",
+        "components": [
+          "PostgreSQL database",
+          "Supabase Edge Functions (Node.js)",
+          "Row Level Security (RLS) for multi-tenancy"
+        ]
+      },
+      
+      "frontend": {
+        "framework": "Next.js 14 (App Router)",
+        "ui_library": "shadcn/ui (Tailwind CSS)",
+        "rationale": "Rapid development, no Figma needed for MVP, production-ready components",
+        "hosting": "Vercel (free tier for MVP)"
+      },
+      
+      "ai_agent": {
+        "model": "Claude 4 Sonnet via Anthropic API",
+        "framework": "Custom lightweight agent (defer full Agent SDK to v2)",
+        "rationale": "Agent SDK adds complexity; start with direct API + function calling",
+        "capabilities": ["Quotation risk assessment", "GP erosion analysis", "Mitigation recommendations"]
+      },
+      
+      "data_integration": {
+        "historical_data": "CSV import via Supabase Storage + parsing",
+        "pilot_data": "Manual entry via web form (defer API integrations)",
+        "future_integrations": "REST APIs to ERP/CRM/logistics (v2)"
+      }
+    },
+    
+    "databaseSchema": {
+      "@type": "https://schema.org/Dataset",
+      
+      "tables": {
+        "orders": {
+          "purpose": "Core order tracking from quote to delivery",
+          "fields": {
+            "order_id": "uuid PRIMARY KEY",
+            "order_date": "date",
+            "customer_name": "text",
+            "product": "text",
+            "quantity_kg": "numeric",
+            "origin_country": "text",
+            "vessel_name": "text",
+            "expected_arrival_date": "date",
+            "actual_arrival_date": "date",
+            
+            "booked_landed_cost_per_kg": "numeric",
+            "booked_storage_days": "integer DEFAULT 4",
+            "booked_storage_cost": "numeric",
+            "booked_price_per_kg": "numeric",
+            "booked_gp_percent": "numeric",
+            "booked_gp_amount": "numeric",
+            
+            "actual_landed_cost_per_kg": "numeric",
+            "actual_storage_days": "integer",
+            "actual_storage_cost": "numeric",
+            "actual_delivery_date": "date",
+            "actual_gp_percent": "numeric",
+            "actual_gp_amount": "numeric",
+            
+            "gp_variance_percent": "numeric",
+            "gp_variance_amount": "numeric",
+            "status": "text CHECK (status IN ('quoted', 'booked', 'in_transit', 'arrived', 'delivered', 'invoiced'))",
+            
+            "is_historical": "boolean DEFAULT false",
+            "created_at": "timestamp DEFAULT now()",
+            "updated_at": "timestamp DEFAULT now()"
+          },
+          "indexes": ["order_date", "customer_name", "status", "is_historical"]
+        },
+        
+        "alerts": {
+          "purpose": "Track GP erosion alerts and interventions",
+          "fields": {
+            "alert_id": "uuid PRIMARY KEY",
+            "order_id": "uuid REFERENCES orders(order_id)",
+            "alert_level": "text CHECK (alert_level IN ('watch', 'concern', 'critical'))",
+            "alert_type": "text",
+            "gp_variance_percent": "numeric",
+            "detected_at": "timestamp",
+            "resolved_at": "timestamp",
+            "resolution_action": "text",
+            "resolved_by": "text",
+            "created_at": "timestamp DEFAULT now()"
+          }
+        },
+        
+        "vessel_performance": {
+          "purpose": "Track vessel reliability for predictive modeling",
+          "fields": {
+            "vessel_id": "uuid PRIMARY KEY",
+            "vessel_name": "text",
+            "route": "text",
+            "scheduled_arrivals": "integer",
+            "on_time_arrivals": "integer",
+            "on_time_rate": "numeric GENERATED ALWAYS AS (on_time_arrivals::numeric / NULLIF(scheduled_arrivals, 0)) STORED",
+            "avg_delay_days": "numeric",
+            "last_updated": "timestamp DEFAULT now()"
+          }
+        },
+        
+        "simulation_results": {
+          "purpose": "Store historical simulation outcomes for model validation",
+          "fields": {
+            "simulation_id": "uuid PRIMARY KEY",
+            "run_date": "timestamp DEFAULT now()",
+            "orders_analyzed": "integer",
+            "predicted_storage_days_avg": "numeric",
+            "actual_storage_days_avg": "numeric",
+            "mape_storage_days": "numeric",
+            "predicted_gp_erosion_count": "integer",
+            "actual_gp_erosion_count": "integer",
+            "prediction_accuracy": "numeric",
+            "total_predicted_savings": "numeric",
+            "total_actual_savings": "numeric"
+          }
+        }
+      }
+    }
+  },
+  
+  "mvpFeatures": {
+    "feature_1_historical_simulation": {
+      "@type": "https://schema.org/Action",
+      "priority": "P0 - CRITICAL",
+      "description": "Run 12-month historical order data through predictive model to validate assumptions",
+      
+      "requirements": {
+        "data_import": {
+          "format": "CSV export from existing ERP/spreadsheets",
+          "required_fields": [
+            "order_date",
+            "customer",
+            "product",
+            "quantity_kg",
+            "origin",
+            "vessel_name",
+            "booked_landed_cost",
+            "booked_price",
+            "expected_arrival_date",
+            "actual_arrival_date",
+            "actual_delivery_date",
+            "actual_total_cost",
+            "actual_revenue"
+          ],
+          "data_volume": "~350 orders from Nov 2023 - Oct 2024"
+        },
+        
+        "simulation_engine": {
+          "calculation_model": {
+            "predicted_storage_days": "CASE WHEN vessel_on_time_rate >= 0.85 THEN 4 WHEN vessel_on_time_rate >= 0.70 THEN 6 WHEN vessel_on_time_rate >= 0.60 THEN 8 ELSE 10 END",
+            
+            "predicted_storage_cost": "predicted_storage_days * (quantity_kg / 1000) * £15_per_pallet_per_day",
+            
+            "predicted_gp_erosion": "IF predicted_storage_cost > booked_storage_cost THEN (predicted_storage_cost - booked_storage_cost) / revenue ELSE 0",
+            
+            "alert_threshold": "IF predicted_gp_erosion > 0.01 THEN 'watch' IF > 0.03 THEN 'concern' IF > 0.05 THEN 'critical'"
+          },
+          
+          "validation_metrics": {
+            "mape_formula": "MEAN(ABS((predicted_storage_days - actual_storage_days) / actual_storage_days)) * 100",
+            "target": "<15% MAPE",
+            
+            "accuracy_rate": "COUNT(predicted_alert = true AND actual_gp_erosion > threshold) / COUNT(actual_gp_erosion > threshold)",
+            "target": ">80% accuracy in identifying at-risk orders"
+          }
+        },
+        
+        "output_report": {
+          "summary_statistics": [
+            "Total orders analyzed",
+            "MAPE for storage days prediction",
+            "Accuracy rate for GP erosion detection",
+            "False positive rate",
+            "False negative rate",
+            "Total GP protected (if alerts had been acted on)",
+            "ROI estimate for full deployment"
+          ],
+          
+          "detailed_analysis": [
+            "Order-by-order prediction vs actual",
+            "Vessel performance reliability scores",
+            "Customer pickup pattern analysis",
+            "Route-specific risk factors",
+            "Seasonal patterns in delays"
+          ]
+        }
+      },
+      
+      "acceptance_criteria": [
+        "Import 350+ historical orders with <5% data errors",
+        "Calculate vessel reliability scores for all routes",
+        "Generate predicted storage days for each order",
+        "Compare predictions to actuals with MAPE calculation",
+        "Achieve MAPE <15% on storage day predictions",
+        "Identify 80%+ of orders that experienced >3% GP erosion",
+        "Produce executive summary report with go/no-go recommendation"
+      ]
+    },
+    
+    "feature_2_live_gp_tracker": {
+      "@type": "https://schema.org/MonitorAction",
+      "priority": "P0 - CRITICAL",
+      "description": "Real-time dashboard showing booked vs current vs realized GP for active orders",
+      
+      "requirements": {
+        "manual_data_entry": {
+          "order_booking": "Sales rep enters: customer, product, quantity, booked costs, booked price",
+          "vessel_updates": "Operations enters: vessel name, expected arrival, actual arrival",
+          "delivery": "Operations enters: actual delivery date, actual costs",
+          "invoice": "Finance enters: invoice date, payment received date"
+        },
+        
+        "gp_calculation_engine": {
+          "booked_gp": "(booked_price - booked_landed_cost - (4 * storage_cost_per_day)) / booked_price",
+          
+          "current_gp": "IF order_status = 'in_transit' THEN (booked_price - booked_landed_cost - (predicted_storage_days * storage_cost_per_day)) / booked_price ELSE booked_gp",
+          
+          "realized_gp": "IF order_status = 'invoiced' THEN (actual_revenue - actual_total_cost) / actual_revenue ELSE NULL"
+        },
+        
+        "dashboard_views": {
+          "order_list": {
+            "columns": ["Order ID", "Customer", "Product", "Status", "Booked GP%", "Current GP%", "Variance", "Alert"],
+            "filters": ["Status", "Customer", "Date Range", "Alert Level"],
+            "sorting": ["Most at risk", "Largest variance", "Recent"],
+            "actions": ["View details", "Mark as reviewed", "Add note"]
+          },
+          
+          "order_detail": {
+            "sections": [
+              "Order summary (customer, product, dates, quantities)",
+              "GP waterfall (booked → current → realized with variance breakdown)",
+              "Timeline (booked → vessel departed → arrived → customs → delivered → invoiced)",
+              "Alert history",
+              "AI recommendations",
+              "Notes and actions"
+            ]
+          },
+          
+          "analytics": {
+            "kpis": [
+              "Total active orders",
+              "Average booked GP%",
+              "Average current GP%",
+              "Orders at risk (variance >3%)",
+              "Estimated savings from interventions"
+            ],
+            "charts": [
+              "GP variance distribution",
+              "Vessel performance by route",
+              "Storage days: predicted vs actual",
+              "Monthly GP trend"
+            ]
+          }
+        }
+      },
+      
+      "acceptance_criteria": [
+        "Dashboard loads in <2 seconds",
+        "GP calculations update in real-time as data entered",
+        "Alert badges display correctly by severity",
+        "Filters and sorting work on order list",
+        "Order detail view shows complete GP waterfall",
+        "Analytics refresh daily with accurate metrics"
+      ]
+    },
+    
+    "feature_3_claude_quotation_advisor": {
+      "@type": "https://schema.org/AdviseAction",
+      "priority": "P1 - HIGH",
+      "description": "Claude agent provides risk-adjusted pricing recommendations when creating quotes",
+      
+      "requirements": {
+        "agent_interface": {
+          "trigger": "Sales rep clicks 'Get AI Quote Recommendation' on new order form",
+          "input_parameters": {
+            "customer_name": "text",
+            "product": "text",
+            "quantity_kg": "number",
+            "origin_country": "text",
+            "vessel_name": "text (optional)",
+            "base_landed_cost": "number"
+          }
+        },
+        
+        "agent_tools": [
+          {
+            "tool_name": "get_vessel_reliability",
+            "description": "Retrieve on-time rate and avg delay for vessel/route",
+            "input_schema": {
+              "vessel_name": "string (optional)",
+              "route": "string"
+            },
+            "data_source": "vessel_performance table",
+            "output": {
+              "on_time_rate": "number",
+              "avg_delay_days": "number",
+              "confidence": "number"
+            }
+          },
+          
+          {
+            "tool_name": "get_customer_history",
+            "description": "Retrieve customer's pickup patterns and payment reliability",
+            "input_schema": {
+              "customer_name": "string"
+            },
+            "data_source": "orders table WHERE customer_name = input",
+            "output": {
+              "avg_pickup_days": "number",
+              "payment_terms_days": "number",
+              "orders_completed": "number"
+            }
+          },
+          
+          {
+            "tool_name": "calculate_risk_buffer",
+            "description": "Recommend storage day buffer based on risk factors",
+            "input_schema": {
+              "base_storage_days": "number (default 4)",
+              "vessel_reliability": "number",
+              "customer_pickup_days": "number",
+              "season": "string (optional)"
+            },
+            "logic": {
+              "buffer_days": "CASE WHEN vessel_reliability < 0.70 THEN +4 WHEN vessel_reliability < 0.85 THEN +2 ELSE 0 END + CASE WHEN customer_pickup_days > 5 THEN +2 ELSE 0 END"
+            },
+            "output": {
+              "recommended_storage_days": "number",
+              "confidence_level": "string"
+            }
+          },
+          
+          {
+            "tool_name": "generate_quote_recommendation",
+            "description": "Calculate risk-adjusted price and margin floor",
+            "input_schema": {
+              "landed_cost": "number",
+              "storage_days": "number",
+              "quantity_kg": "number",
+              "target_margin": "number (default 0.22)"
+            },
+            "calculation": {
+              "storage_cost": "storage_days * (quantity_kg / 1000) * 15",
+              "total_cost": "landed_cost + storage_cost",
+              "recommended_price": "total_cost / (1 - target_margin)",
+              "floor_price": "total_cost / (1 - 0.18)"
+            },
+            "output": {
+              "recommended_price_per_kg": "number",
+              "floor_price_per_kg": "number",
+              "expected_margin": "number",
+              "risk_factors": "array of strings"
+            }
+          }
+        ],
+        
+        "agent_prompt_template": {
+          "system": "You are GP Guardian, an AI advisor helping WWGiles sales reps create accurate quotes that protect gross profit margins. Your role is to analyze vessel reliability, customer history, and storage risk to recommend pricing that accounts for potential cost escalations.\n\nWhen making recommendations:\n1. Be specific about risk factors (e.g., 'This vessel has been 25% late on last 8 sailings')\n2. Show your math (storage days * cost calculation)\n3. Provide both recommended price AND floor price\n4. Warn if quote is below margin floor\n5. Suggest conversation points for customer (e.g., 'Mention potential delivery variability')\n\nAlways prioritize margin protection over winning the deal at any cost.",
+          
+          "user_template": "I need a quote recommendation for:\n- Customer: {customer_name}\n- Product: {product}\n- Quantity: {quantity_kg}kg\n- Origin: {origin_country}\n- Vessel: {vessel_name}\n- Base landed cost: £{base_landed_cost}/kg\n\nPlease analyze risk factors and recommend pricing."
+        },
+        
+        "agent_response_format": {
+          "recommended_price": "£X.XX/kg",
+          "floor_price": "£X.XX/kg",
+          "expected_margin": "XX%",
+          "risk_assessment": "detailed explanation",
+          "storage_buffer": "X days (vs 4-day standard)",
+          "customer_talking_points": ["bullet 1", "bullet 2"]
+        }
+      },
+      
+      "acceptance_criteria": [
+        "Agent responds within 5 seconds",
+        "Recommendations include vessel reliability data when available",
+        "Floor price calculation always respects 18% margin minimum",
+        "Response is formatted clearly for sales rep to understand",
+        "Agent warns if recommended price is below floor",
+        "All calculations can be audited via tool call logs"
+      ]
+    },
+    
+    "feature_4_alert_system": {
+      "@type": "https://schema.org/AlertAction",
+      "priority": "P1 - HIGH",
+      "description": "Email notifications when GP erosion detected on active orders",
+      
+      "requirements": {
+        "alert_triggers": {
+          "watch_level": {
+            "condition": "gp_variance > 1% AND gp_variance <= 3%",
+            "recipients": ["assigned_sales_rep"],
+            "frequency": "daily digest"
+          },
+          
+          "concern_level": {
+            "condition": "gp_variance > 3% AND gp_variance <= 5%",
+            "recipients": ["assigned_sales_rep", "sales_manager"],
+            "frequency": "immediate"
+          },
+          
+          "critical_level": {
+            "condition": "gp_variance > 5% OR current_gp < 18%",
+            "recipients": ["assigned_sales_rep", "sales_manager", "coo", "cfo"],
+            "frequency": "immediate + SMS"
+          }
+        },
+        
+        "email_template": {
+          "subject": "GP Alert: {alert_level} - Order #{order_id} for {customer}",
+          "body": "GP erosion detected on order #{order_id}:\n\nCustomer: {customer}\nProduct: {product}\nBooked GP: {booked_gp}%\nCurrent GP: {current_gp}%\nVariance: {variance}%\n\nRisk factors:\n{risk_factors_list}\n\nRecommended actions:\n{ai_recommendations}\n\nView details: {dashboard_link}"
+        },
+        
+        "notification_preferences": {
+          "user_settings": ["email_frequency", "alert_threshold", "mobile_notifications"],
+          "team_routing": "route critical alerts to on-call manager if primary not available"
+        }
+      },
+      
+      "acceptance_criteria": [
+        "Alerts sent within 5 minutes of trigger condition",
+        "No duplicate alerts for same order within 24 hours",
+        "Email template renders correctly in all major clients",
+        "Dashboard link in email navigates to order detail",
+        "Alert history logged in database for auditing"
+      ]
+    },
+    
+    "feature_5_simple_reporting": {
+      "@type": "https://schema.org/ReportageAction",
+      "priority": "P2 - MEDIUM",
+      "description": "Basic monthly/weekly reports showing GP protection impact",
+      
+      "requirements": {
+        "weekly_report": {
+          "metrics": [
+            "Orders at risk",
+            "Total GP variance (£ and %)",
+            "Alerts generated",
+            "Alerts resolved",
+            "Estimated savings from interventions"
+          ],
+          "distribution": "email to sales team + management"
+        },
+        
+        "monthly_report": {
+          "metrics": [
+            "Total orders tracked",
+            "Average booked vs realized GP",
+            "GP variance by customer",
+            "GP variance by route",
+            "Vessel performance rankings",
+            "Model accuracy (predicted vs actual storage days)"
+          ],
+          "format": "PDF export from dashboard"
+        }
+      }
+    }
+  },
+  
+  "dataRequirements": {
+    "historical_data_for_simulation": {
+      "orders_table": {
+        "fields_required": [
+          "order_date",
+          "customer",
+          "product",
+          "quantity_kg",
+          "origin_country",
+          "vessel_name",
+          "expected_arrival_date",
+          "actual_arrival_date",
+          "actual_delivery_date",
+          "booked_landed_cost",
+          "booked_price",
+          "actual_total_cost",
+          "actual_revenue"
+        ],
+        "data_quality_checks": [
+          "No nulls in critical fields (order_date, customer, quantity)",
+          "Dates in logical sequence (order_date < arrival_date < delivery_date)",
+          "Costs and prices are positive numbers",
+          "Actual arrival date present for completed orders"
+        ],
+        "estimated_records": "350 orders over 12 months"
+      },
+      
+      "vessel_schedule_data": {
+        "fields": ["vessel_name", "route", "scheduled_arrival", "actual_arrival"],
+        "source": "shipping company reports or manual log",
+        "purpose": "calculate vessel reliability scores"
+      },
+      
+      "storage_cost_allocation": {
+        "method": "retrospective allocation",
+        "formula": "For each order: (delivery_date - arrival_date) * (quantity_kg / 1000 pallets) * £15/pallet/day",
+        "validation": "total allocated storage costs should approximate £450K annually"
+      }
+    },
+    
+    "pilot_data_entry": {
+      "new_order_form": {
+        "required_fields": [
+          "customer",
+          "product",
+          "quantity_kg",
+          "origin",
+          "vessel_name",
+          "expected_arrival",
+          "booked_landed_cost",
+          "booked_price"
+        ],
+        "calculated_fields": [
+          "booked_storage_days (default 4)",
+          "booked_storage_cost",
+          "booked_gp_percent",
+          "booked_gp_amount"
+        ]
+      },
+      
+      "status_updates": {
+        "in_transit": "vessel departed date",
+        "arrived": "actual arrival date, customs clearance date",
+        "delivered": "actual delivery date",
+        "invoiced": "invoice date, payment received date, actual costs"
+      }
+    }
+  },
+  
+  "pilotPlan": {
+    "pilot_scope": {
+      "duration": "60 days",
+      "participants": ["2 sales reps", "1 sales manager", "1 operations coordinator"],
+      "order_volume": "20 new orders (approx 3-4 per week)",
+      "routes": "focus on 2-3 highest-volume routes"
+    },
+    
+    "pilot_phases": {
+      "week_1_2_onboarding": {
+        "activities": [
+          "User training on dashboard and data entry",
+          "Review historical simulation results",
+          "Agree on pilot success metrics",
+          "Set up alert preferences"
+        ]
+      },
+      
+      "week_3_6_active_tracking": {
+        "activities": [
+          "Sales reps use Claude agent for quote recommendations",
+          "Enter new orders into system",
+          "Operations update vessel and delivery status",
+          "Review GP variance alerts weekly",
+          "Document intervention actions taken"
+        ]
+      },
+      
+      "week_7_8_evaluation": {
+        "activities": [
+          "Calculate actual GP saved through interventions",
+          "Measure alert accuracy (false positives/negatives)",
+          "Gather user feedback on usability",
+          "Analyze ROI and make go/no-go decision for full rollout"
+        ]
+      }
+    },
+    
+    "pilot_success_criteria": {
+      "quantitative": [
+        "50%+ of at-risk orders had successful intervention",
+        "Average GP variance reduced by 2%+ on pilot orders",
+        "Alert false positive rate <20%",
+        "User engagement: 80%+ check dashboard weekly"
+      ],
+      
+      "qualitative": [
+        "Sales reps find Claude recommendations helpful",
+        "Operations can update status efficiently",
+        "Management can see clear ROI path",
+        "No major usability blockers identified"
+      ],
+      
+      "go_no_go_decision": {
+        "go": "If 3/4 quantitative metrics met + positive qualitative feedback → proceed to full rollout",
+        "no_go": "If major issues identified → iterate on MVP for 30 more days",
+        "pivot": "If model inaccurate but concept valid → refine algorithm before scaling"
+      }
+    }
+  },
+  
+  "implementationRoadmap": {
+    "week_1_2_historical_simulation": {
+      "tasks": [
+        {
+          "task": "Set up Supabase project and database",
+          "owner": "Developer",
+          "hours": 4
+        },
+        {
+          "task": "Create database schema (orders, vessel_performance, simulation_results tables)",
+          "owner": "Developer",
+          "hours": 8
+        },
+        {
+          "task": "Build CSV import tool",
+          "owner": "Developer",
+          "hours": 12
+        },
+        {
+          "task": "Collect and clean 12 months of historical order data",
+          "owner": "Data Analyst",
+          "hours": 16
+        },
+        {
+          "task": "Import historical data and validate",
+          "owner": "Data Analyst",
+          "hours": 8
+        },
+        {
+          "task": "Build simulation engine (storage day prediction + GP variance)",
+          "owner": "Developer",
+          "hours": 16
+        },
+        {
+          "task": "Run simulation and generate accuracy report",
+          "owner": "Developer + Data Analyst",
+          "hours": 8
+        },
+        {
+          "task": "Review simulation results and refine model if needed",
+          "owner": "Product Owner + Team",
+          "hours": 4
+        }
+      ],
+      "total_hours": 76,
+      "deliverable": "Historical simulation report with MAPE <15% and 80%+ accuracy"
+    },
+    
+    "week_3_4_dashboard_and_agent": {
+      "tasks": [
+        {
+          "task": "Set up Next.js project with shadcn/ui",
+          "owner": "Developer",
+          "hours": 4
+        },
+        {
+          "task": "Build order list view with filters and sorting",
+          "owner": "Developer",
+          "hours": 12
+        },
+        {
+          "task": "Build order detail view with GP waterfall",
+          "owner": "Developer",
+          "hours": 12
+        },
+        {
+          "task": "Build analytics dashboard with KPIs and charts",
+          "owner": "Developer",
+          "hours": 16
+        },
+        {
+          "task": "Integrate Claude API for quotation advisor",
+          "owner": "AI Specialist",
+          "hours": 12
+        },
+        {
+          "task": "Build agent tool functions (vessel reliability, customer history, etc.)",
+          "owner": "AI Specialist + Developer",
+          "hours": 16
+        },
+        {
+          "task": "Create agent UI component with quote recommendation display",
+          "owner": "Developer",
+          "hours": 8
+        },
+        {
+          "task": "Build email alert system (Supabase Edge Function + SendGrid)",
+          "owner": "Developer",
+          "hours": 12
+        },
+        {
+          "task": "Create manual data entry forms for pilot",
+          "owner": "Developer",
+          "hours": 8
+        },
+        {
+          "task": "User acceptance testing with 3 sales reps",
+          "owner": "Product Owner + Users",
+          "hours": 8
+        },
+        {
+          "task": "Bug fixes and refinements from UAT",
+          "owner": "Developer",
+          "hours": 12
+        }
+      ],
+      "total_hours": 120,
+      "deliverable": "Functional dashboard + Claude agent + alerts ready for pilot"
+    },
+    
+    "week_5_6_pilot_launch": {
+      "tasks": [
+        {
+          "task": "Onboard 2 sales reps + 1 manager + 1 ops coordinator",
+          "owner": "Product Owner",
+          "hours": 4
+        },
+        {
+          "task": "Sales reps create 20 quotes using Claude advisor",
+          "owner": "Sales Reps",
+          "hours": 20
+        },
+        {
+          "task": "Operations track vessel and delivery updates",
+          "owner": "Operations",
+          "hours": 10
+        },
+        {
+          "task": "Weekly check-ins to review alerts and interventions",
+          "owner": "Product Owner + Pilot Team",
+          "hours": 8
+        },
+        {
+          "task": "Monitor dashboard usage and alert effectiveness",
+          "owner": "Product Owner + Developer",
+          "hours": 8
+        }
+      ],
+      "total_hours": 50,
+      "deliverable": "20 pilot orders tracked through full lifecycle"
+    },
+    
+    "week_7_8_evaluation": {
+      "tasks": [
+        {
+          "task": "Calculate pilot ROI (GP saved, interventions, accuracy)",
+          "owner": "Data Analyst + Product Owner",
+          "hours": 12
+        },
+        {
+          "task": "Conduct user interviews (usability, value, feedback)",
+          "owner": "Product Owner",
+          "hours": 8
+        },
+        {
+          "task": "Analyze alert accuracy (false positives, false negatives)",
+          "owner": "Data Analyst",
+          "hours": 8
+        },
+        {
+          "task": "Document lessons learned and recommended changes",
+          "owner": "Product Owner",
+          "hours": 4
+        },
+        {
+          "task": "Create executive summary with go/no-go recommendation",
+          "owner": "Product Owner",
+          "hours": 8
+        },
+        {
+          "task": "Present findings to leadership team",
+          "owner": "Product Owner + Sponsor",
+          "hours": 2
+        }
+      ],
+      "total_hours": 42,
+      "deliverable": "Pilot results report + go/no-go decision"
+    },
+    
+    "total_mvp_effort": {
+      "development_hours": 288,
+      "estimated_cost": "£25K (£35K blended rate * 288 hours / 40 hours/week * 4 weeks)",
+      "team_size": "2-3 people (full-stack dev, AI specialist, part-time data analyst)"
+    }
+  },
+  
+  "risksAndMitigation": {
+    "risk_1_data_quality": {
+      "risk": "Historical data incomplete or inaccurate",
+      "probability": "medium",
+      "impact": "high",
+      "mitigation": [
+        "Start with data discovery and quality assessment in Week 1",
+        "Define minimum viable dataset (80% of orders with key fields)",
+        "Manual data cleanup budget included in timeline",
+        "Fallback: Use 6 months of data if 12 months not viable"
+      ]
+    },
+    
+    "risk_2_model_accuracy": {
+      "risk": "Simulation MAPE >15% or alert accuracy <80%",
+      "probability": "medium",
+      "impact": "high",
+      "mitigation": [
+        "Week 2 checkpoint: Review initial simulation results",
+        "If accuracy low, refine model (add more factors, adjust thresholds)",
+        "Budget 1 week of buffer for model iteration",
+        "Fallback: Proceed to pilot with lower accuracy but document limitations"
+      ]
+    },
+    
+    "risk_3_user_adoption": {
+      "risk": "Sales reps don't use system during pilot",
+      "probability": "low",
+      "impact": "high",
+      "mitigation": [
+        "Involve sales reps in UAT to build buy-in",
+        "Keep data entry minimal (5 min per order)",
+        "Show immediate value (Claude recommendations, GP visibility)",
+        "Sales manager committed to enforcing usage during pilot",
+        "Gamify: Track and celebrate interventions that save GP"
+      ]
+    },
+    
+    "risk_4_technical_complexity": {
+      "risk": "Claude agent or integrations take longer than planned",
+      "probability": "low",
+      "impact": "medium",
+      "mitigation": [
+        "Use lightweight agent approach (not full Agent SDK) for MVP",
+        "Defer complex integrations to v2 (focus on CSV import + manual entry)",
+        "Developer has experience with Claude API and Supabase",
+        "Weekly sprint reviews to catch blockers early"
+      ]
+    }
+  },
+  
+  "successCriteria": {
+    "mvp_success": {
+      "historical_validation": {
+        "metric": "MAPE on storage day predictions",
+        "target": "<15%",
+        "measurement": "Simulation engine output on 350 historical orders"
+      },
+      
+      "pilot_performance": {
+        "gp_protection": {
+          "metric": "% of at-risk orders with successful intervention",
+          "target": ">50%",
+          "measurement": "Manual tracking during pilot"
+        },
+        
+        "alert_accuracy": {
+          "metric": "Alert precision (true positives / all alerts)",
+          "target": ">80%",
+          "measurement": "Compare alerts to actual GP variance at order close"
+        },
+        
+        "user_adoption": {
+          "metric": "% of pilot users actively using dashboard",
+          "target": "80%+ check status weekly",
+          "measurement": "Dashboard access logs"
+        }
+      },
+      
+      "business_value": {
+        "roi_projection": {
+          "metric": "Estimated annual savings if scaled",
+          "target": "£200K+ (67% of full potential)",
+          "calculation": "Based on pilot order savings extrapolated to 350 orders/year"
+        }
+      }
+    },
+    
+    "go_no_go_decision": {
+      "go_criteria": [
+        "MAPE <15% on historical simulation",
+        "3 out of 4 pilot metrics meet target",
+        "Positive user feedback (no major blockers)",
+        "Clear path to £200K+ annual ROI"
+      ],
+      
+      "actions_if_go": [
+        "Invest in v2 development (API integrations, mobile, advanced features)",
+        "Roll out to full sales team (10 reps)",
+        "Integrate with ERP, CRM, logistics systems",
+        "Scale infrastructure for 350+ orders/year",
+        "Budget £75K for v2 development over 3 months"
+      ],
+      
+      "actions_if_no_go": [
+        "Document lessons learned",
+        "Identify specific issues (model accuracy, usability, data quality)",
+        "Decide whether to iterate MVP or pivot approach",
+        "Preserve simulation engine code for future use"
+      ]
+    }
+  },
+  
+  "postMVP_v2_Roadmap": {
+    "deferred_features": {
+      "automated_integrations": {
+        "erp_integration": "Pull order data automatically (no manual entry)",
+        "crm_integration": "Sync customer data, push alerts to sales CRM",
+        "logistics_api": "Real-time vessel tracking (MarineTraffic, AIS data)",
+        "warehouse_system": "Auto-update delivery dates and storage costs"
+      },
+      
+      "advanced_ai": {
+        "full_agent_sdk": "Multi-agent orchestration with proper memory management",
+        "forecasting_agent": "30/60/90 day GP risk forecasting across all orders",
+        "intervention_agent": "Automated mitigation recommendations with action tracking",
+        "commission_calculator": "Automated sales comp calculation (booked + realized)"
+      },
+      
+      "mobile_pwa": {
+        "mobile_dashboard": "Responsive PWA for on-the-go GP monitoring",
+        "push_notifications": "Mobile alerts for critical GP variance",
+        "offline_mode": "View dashboard data offline, sync when online"
+      },
+      
+      "advanced_analytics": {
+        "predictive_dashboards": "Forecast GP at risk by route, customer, product",
+        "what_if_scenarios": "Simulate impact of pricing changes, buffer adjustments",
+        "benchmarking": "Compare GP performance to industry benchmarks",
+        "custom_reports": "Ad-hoc report builder for finance and exec team"
+      },
+      
+      "workflow_automation": {
+        "intervention_playbooks": "Automated workflow when alert triggered",
+        "approval_workflows": "Route critical pricing decisions to managers",
+        "customer_communications": "Auto-draft emails to customers about delays",
+        "escalation_rules": "Auto-escalate unresolved alerts after X days"
+      }
+    },
+    
+    "v2_investment": {
+      "budget": "£75K",
+      "timeline": "3 months",
+      "team": "3 developers + 1 AI specialist + 1 product designer",
+      "expected_outcomes": [
+        "Zero manual data entry (full automation)",
+        "Real-time vessel tracking integrated",
+        "10x scale (3500 orders/year capacity)",
+        "£300K annual savings realized",
+        "Competitive advantage through proprietary GP intelligence"
+      ]
+    }
+  },
+  
+  "appendix": {
+    "technology_decisions": {
+      "why_supabase": "Fastest path to production with built-in auth, real-time, storage, edge functions. PostgreSQL gives us flexibility for complex queries. Open source with generous free tier.",
+      
+      "why_nextjs": "React + SSR + API routes in one framework. Vercel deployment is instant. shadcn/ui gives us beautiful components without Figma design needed for MVP.",
+      
+      "why_not_agent_sdk_yet": "Agent SDK is powerful but adds complexity (memory management, multi-agent orchestration). For MVP, direct Claude API + function calling is simpler and faster to build. Upgrade to Agent SDK in v2 when we have production traffic to learn from.",
+      
+      "why_csv_import": "ERP/CRM integrations take weeks. CSV import gets us historical data in days. Sales reps already export to Excel. Keep it simple for MVP.",
+      
+      "why_manual_pilot_entry": "20 orders over 60 days = low volume. Manual entry keeps dev scope small. Proves concept before investing in automation."
+    },
+    
+    "glossary": {
+      "booked_gp": "Gross profit calculated at order booking time based on expected costs",
+      "current_gp": "Gross profit estimate using latest information (actual arrival, predicted storage)",
+      "realized_gp": "Actual gross profit after all costs settled and payment received",
+      "gp_erosion": "Negative variance between booked GP and current/realized GP",
+      "mape": "Mean Absolute Percentage Error - measures prediction accuracy",
+      "storage_buffer": "Additional days added to standard 4-day assumption to account for risk",
+      "margin_floor": "Minimum acceptable GP% (18% for WWG)",
+      "vessel_reliability": "% of on-time arrivals for a vessel/route over historical period"
+    },
+    
+    "references": {
+      "wwg_business_case": "See: GP Guardian Business Case Analysis (Nov 2024)",
+      "sales_sop": "See: WWG Sales SOP Template (this project)",
+      "procurement_sop": "See: WWG Procurement SOP (previous work)",
+      "w4m_baiv_framework": "See: 8-Layer AI Architecture (context docs)"
+    }
+  },
+  
+  "documentApproval": {
+    "approvers": [
+      {
+        "role": "Product Owner",
+        "name": "Amanda (AI/BI Consultant)",
+        "approval_required": "PRD content and scope",
+        "status": "draft"
+      },
+      {
+        "role": "CEO/CFO WWGiles",
+        "name": "TBD",
+        "approval_required": "Business case and investment",
+        "status": "pending"
+      },
+      {
+        "role": "CRO WWGiles",
+        "name": "TBD",
+        "approval_required": "Sales team participation in pilot",
+        "status": "pending"
+      },
+      {
+        "role": "COO WWGiles",
+        "name": "TBD",
+        "approval_required": "Operations team support and data access",
+        "status": "pending"
+      }
+    ]
+  }
+}

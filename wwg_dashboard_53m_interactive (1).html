@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWG Sales Excellence Dashboard - £53M Reality</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #0f3460;
+            padding-bottom: 20px;
+        }
+        
+        h1 {
+            color: #0f3460;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .alert-critical {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+        
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .metric-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        .metric-change {
+            font-size: 0.9em;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .section-title {
+            font-size: 2em;
+            color: #0f3460;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .business-model-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .revenue-stream {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+        
+        .stream-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .stream-title {
+            font-size: 1.5em;
+            color: #0f3460;
+            font-weight: bold;
+        }
+        
+        .stream-amount {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .margin-bar {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .margin-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 1s ease;
+        }
+        
+        .margin-fill-low {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+        
+        .category-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .category-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .category-name {
+            font-weight: bold;
+            color: #0f3460;
+            margin-bottom: 5px;
+        }
+        
+        .category-stats {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .ai-initiatives {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .initiative-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .initiative-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .priority-1 { border-top-color: #e74c3c; }
+        .priority-2 { border-top-color: #e67e22; }
+        .priority-3 { border-top-color: #f39c12; }
+        .priority-4 { border-top-color: #3498db; }
+        .priority-5 { border-top-color: #9b59b6; }
+        .priority-6 { border-top-color: #1abc9c; }
+        
+        .initiative-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .initiative-priority {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .initiative-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0f3460;
+            margin-bottom: 10px;
+        }
+        
+        .initiative-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: 50%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: 50%;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 25px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        
+        .timeline-month {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .financial-comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .current-state {
+            border: 3px solid #e74c3c;
+        }
+        
+        .current-state .comparison-title {
+            color: #e74c3c;
+        }
+        
+        .target-state {
+            border: 3px solid #2ecc71;
+        }
+        
+        .target-state .comparison-title {
+            color: #2ecc71;
+        }
+        
+        .financial-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .metric-name {
+            font-weight: bold;
+            color: #0f3460;
+        }
+        
+        .metric-number {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .roi-calculator {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+        
+        .roi-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .roi-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .roi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .roi-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        .evidence-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .evidence-title {
+            font-size: 1.5em;
+            color: #0f3460;
+            margin-bottom: 20px;
+        }
+        
+        .evidence-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #2ecc71;
+        }
+        
+        .evidence-claim {
+            font-weight: bold;
+            color: #0f3460;
+            margin-bottom: 5px;
+        }
+        
+        .evidence-source {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .customer-tier-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .tier-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid;
+        }
+        
+        .tier-platinum {
+            border-top-color: #9b59b6;
+        }
+        
+        .tier-gold {
+            border-top-color: #f39c12;
+        }
+        
+        .tier-silver {
+            border-top-color: #95a5a6;
+        }
+        
+        .tier-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .tier-stats {
+            margin: 10px 0;
+        }
+        
+        .tier-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 WWG Sales Excellence Dashboard</h1>
+            <div class="subtitle">£53M Revenue Reality | AI-Driven Transformation to 13.8% Margin</div>
+            <div class="subtitle" id="datetime"></div>
+        </div>
+        
+        <div class="alert-critical">
+            ⚠️ CRITICAL: At £53M revenue, every 1% margin = £530,000 annual profit | Current 10.67% margin = Bottom Quartile | Target 13.8% = £1.85M improvement opportunity
+        </div>
+        
+        <div class="key-metrics">
+            <div class="metric-card">
+                <div class="metric-label">Annual Revenue</div>
+                <div class="metric-value">£53M</div>
+                <div class="metric-change">Target: £60M (+13%)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Current Gross Margin</div>
+                <div class="metric-value">10.67%</div>
+                <div class="metric-change">Industry Avg: 15%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Gross Profit</div>
+                <div class="metric-value">£5.66M</div>
+                <div class="metric-change">Target: £8.28M</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">EBITDA Margin</div>
+                <div class="metric-value">2.18%</div>
+                <div class="metric-change">Target: 6.62%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Current EBITDA</div>
+                <div class="metric-value">£1.16M</div>
+                <div class="metric-change">Target: £3.97M</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">1% Margin Value</div>
+                <div class="metric-value">£530K</div>
+                <div class="metric-change">10x larger than typical</div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">📊 Two-Tier Business Model</h2>
+        
+        <div class="business-model-grid">
+            <div class="revenue-stream">
+                <div class="stream-header">
+                    <div class="stream-title">Container Import Business (87.5%)</div>
+                    <div class="stream-amount">£46.4M</div>
+                </div>
+                <p style="margin-bottom: 15px; color: #666;">Direct import from Australia, NZ, Iceland - WHERE AI CAN TRANSFORM MARGINS</p>
+                
+                <div style="margin: 15px 0;">
+                    <strong>Current Margin: 10.8%</strong>
+                    <div class="margin-bar">
+                        <div class="margin-fill margin-fill-low" style="width: 54%;">10.8%</div>
+                    </div>
+                </div>
+                
+                <div style="margin: 15px 0;">
+                    <strong>Target Margin: 14.5%</strong>
+                    <div class="margin-bar">
+                        <div class="margin-fill" style="width: 72.5%;">14.5%</div>
+                    </div>
+                </div>
+                
+                <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                    <strong style="color: #2ecc71;">Improvement Opportunity: 3.7 percentage points = £1,716,000 annual profit</strong>
+                </div>
+                
+                <div class="category-breakdown">
+                    <div class="category-card">
+                        <div class="category-name">Premium Cuts (22%)</div>
+                        <div class="category-stats">
+                            Revenue: £10.2M<br>
+                            Current: 12.5% margin<br>
+                            Target: 15.5% margin<br>
+                            Gain: £306K
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-name">Standard Cuts (48%)</div>
+                        <div class="category-stats">
+                            Revenue: £22.3M<br>
+                            Current: 10.5% margin<br>
+                            Target: 14.0% margin<br>
+                            Gain: £779K
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-name">Value Cuts (30%)</div>
+                        <div class="category-stats">
+                            Revenue: £13.9M<br>
+                            Current: 8.5% margin<br>
+                            Target: 10.5% margin<br>
+                            Gain: £278K
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="revenue-stream" style="background: #fff3e0; border-left-color: #ff9800;">
+                <div class="stream-header">
+                    <div class="stream-title" style="font-size: 1.2em;">Inter-Wholesaler (12.5%)</div>
+                    <div class="stream-amount" style="font-size: 1.5em;">£6.6M</div>
+                </div>
+                <p style="margin-bottom: 15px; color: #666;">UK domestic commodity trading</p>
+                
+                <div style="margin: 15px 0;">
+                    <strong>Fixed Margin: 10.0%</strong>
+                    <div class="margin-bar">
+                        <div class="margin-fill" style="width: 50%; background: linear-gradient(90deg, #ff9800, #f57c00);">10.0%</div>
+                    </div>
+                </div>
+                
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-top: 15px; border: 2px solid #ff9800;">
+                    <strong style="color: #e65100;">⚠️ No Improvement Possible</strong><br>
+                    <small>Accept 10% fixed margin. Maintain but don't grow this segment. Focus all AI efforts on container import.</small>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 8px;">
+                    <strong>Strategic Decision:</strong><br>
+                    <small style="color: #666;">✓ Keep at 12.5% of revenue<br>
+                    ✓ Quick cash conversion<br>
+                    ✗ Don't invest resources here<br>
+                    ✗ Don't pursue growth</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <div class="evidence-title">📚 Industry Benchmark Validation</div>
+            <div class="evidence-item">
+                <div class="evidence-claim">Food wholesalers/distributors: 10-25% gross margin range</div>
+                <div class="evidence-source">Source: UK Business Forums - Food Manufacturing Margins (2023)</div>
+            </div>
+            <div class="evidence-item">
+                <div class="evidence-claim">Industrial wholesale meat operations: 3-8% net margins</div>
+                <div class="evidence-source">Source: BusinessDojo - Meat Business Profit Margins Analysis (June 2025)</div>
+            </div>
+            <div class="evidence-item">
+                <div class="evidence-claim">UK meat wholesaling market: £13.5bn with 1,739 competitors - fragmented, highly competitive</div>
+                <div class="evidence-source">Source: IBISWorld UK Market Research 2025</div>
+            </div>
+            <div style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px; border-left: 5px solid #e74c3c;">
+                <strong style="color: #e74c3c;">WWG's 10.67% margin is VALIDATED but BELOW AVERAGE (15%)</strong><br>
+                <small style="color: #666;">Bottom quartile performance requiring urgent transformation. At 2.18% EBITDA, there is zero room for error.</small>
+            </div>
+        </div>
+        
+        <h2 class="section-title">🚀 Six AI Initiatives: £1.85M Profit Improvement</h2>
+        
+        <div class="ai-initiatives">
+            <div class="initiative-card priority-1">
+                <div class="initiative-header">
+                    <div class="initiative-priority">PRIORITY 1</div>
+                </div>
+                <div class="initiative-name">Dynamic Pricing Intelligence</div>
+                <div class="initiative-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">£85K</div>
+                        <div class="stat-label">Investment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">£835K</div>
+                        <div class="stat-label">Annual Benefit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">882%</div>
+                        <div class="stat-label">ROI</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1.2 mo</div>
+                        <div class="stat-label">Payback</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.95em;">
+                    Real-time AI pricing based on inventory age, customer tier, demand forecast. Price realization: 89% → 94% = £424K. Plus aging inventory optimization = £411K additional.
+                </p>
+            </div>
+            
+            <div class="initiative-card priority-2">
+                <div class="initiative-header">
+                    <div class="initiative-priority" style="background: #e67e22;">PRIORITY 2</div>
+                </div>
+                <div class="initiative-name">Churn Prevention System</div>
+                <div class="initiative-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">£65K</div>
+                        <div class="stat-label">Investment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">£695K</div>
+                        <div class="stat-label">Annual Benefit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">969%</div>
+                        <div class="stat-label">ROI</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1.1 mo</div>
+                        <div class="stat-label">Payback</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.95em;">
+                    ML churn prediction with 14-21 day advance warning. Churn: 15% → 7% saves 28 customers = £4.3M revenue retained. Current churn cost: £847K profit lost annually.
+                </p>
+            </div>
+            
+            <div class="initiative-card priority-3">
+                <div class="initiative-header">
+                    <div class="initiative-priority" style="background: #f39c12;">PRIORITY 3</div>
+                </div>
+                <div class="initiative-name">Demand Forecasting</div>
+                <div class="initiative-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">£125K</div>
+                        <div class="stat-label">Investment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">£558K</div>
+                        <div class="stat-label">Annual Benefit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">346%</div>
+                        <div class="stat-label">ROI</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2.7 mo</div>
+                        <div class="stat-label">Payback</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.95em;">
+                    Predictive demand + inventory optimization. Reduces spoilage 60% (£47K), markdowns 67% (£88K), stockouts 70% (£196K), emergency procurement (£172K), releases £400K working capital.
+                </p>
+            </div>
+            
+            <div class="initiative-card priority-4">
+                <div class="initiative-header">
+                    <div class="initiative-priority" style="background: #3498db;">PRIORITY 4</div>
+                </div>
+                <div class="initiative-name">Lead Scoring & Acquisition</div>
+                <div class="initiative-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">£55K</div>
+                        <div class="stat-label">Investment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">£385K</div>
+                        <div class="stat-label">Annual Benefit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">600%</div>
+                        <div class="stat-label">ROI</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1.7 mo</div>
+                        <div class="stat-label">Payback</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.95em;">
+                    Dual-scoring AI: win probability × margin potential. Double premium segment conversion (18% → 36%) = 36 additional high-margin customers. Optimizes sales capacity allocation.
+                </p>
+            </div>
+            
+            <div class="initiative-card priority-5">
+                <div class="initiative-header">
+                    <div class="initiative-priority" style="background: #9b59b6;">PRIORITY 5</div>
+                </div>
+                <div class="initiative-name">Meeting Intelligence</div>
+                <div class="initiative-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">£18K</div>
+                        <div class="stat-label">Investment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">£268K</div>
+                        <div class="stat-label">Annual Benefit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1389%</div>
+                        <div class="stat-label">ROI</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0.8 mo</div>
+                        <div class="stat-label">Payback</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.95em;">
+                    Auto-generated meeting prep. Weekly: 8 hrs → 10 min per person. Monthly: 6 hrs → 45 min. Saves 7,308 hours/year = £218K. Plus better decisions = £50K additional value.
+                </p>
+            </div>
+            
+            <div class="initiative-card priority-6">
+                <div class="initiative-header">
+                    <div class="initiative-priority" style="background: #1abc9c;">PRIORITY 6</div>
+                </div>
+                <div class="initiative-name">Supplier Intelligence</div>
+                <div class="initiative-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">£95K</div>
+                        <div class="stat-label">Investment</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">£975K</div>
+                        <div class="stat-label">Annual Benefit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">926%</div>
+                        <div class="stat-label">ROI</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1.2 mo</div>
+                        <div class="stat-label">Payback</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.95em;">
+                    AI supplier scorecard + procurement optimization. Better supplier selection + timing = 2.5% COGS reduction on £39M = £975K. Improves on-time delivery from 65% → 82%.
+                </p>
+            </div>
+        </div>
+        
+        <div class="roi-calculator">
+            <div class="roi-title">💰 3-Year AI Investment Summary</div>
+            <div class="roi-grid">
+                <div class="roi-item">
+                    <div class="roi-label">Total Investment</div>
+                    <div class="roi-value">£845K</div>
+                    <small>Year 1: £585K<br>Year 2: £165K<br>Year 3: £95K</small>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">Total Benefit</div>
+                    <div class="roi-value">£7.25M</div>
+                    <small>Year 1: £1.45M<br>Year 2: £2.63M<br>Year 3: £3.18M</small>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">Cumulative ROI</div>
+                    <div class="roi-value">758%</div>
+                    <small>Net 3-Year<br>Value:<br>£6.41M</small>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-label">Enterprise Value</div>
+                    <div class="roi-value">+£16.9M</div>
+                    <small>From: £6.9M<br>To: £23.8M<br>(6x EBITDA)</small>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">📅 18-Month Transformation Timeline</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-month">Month 1</div>
+                    <strong>Foundation + Pricing AI</strong>
+                    <p style="margin-top: 10px; color: #666;">Investment: £103K | Benefit: £25K | Margin: 10.9%</p>
+                    <p style="font-size: 0.9em; margin-top: 8px;">Launch dynamic pricing + meeting automation. Early wins visible.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-month">Month 3</div>
+                    <strong>Churn + Lead Scoring Live</strong>
+                    <p style="margin-top: 10px; color: #666;">Cumulative Investment: £348K | Benefit: £241K | Margin: 11.5%</p>
+                    <p style="font-size: 0.9em; margin-top: 8px;">Customer intelligence operational. Retention improving dramatically.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-month">Month 6</div>
+                    <strong>Breakeven Achieved!</strong>
+                    <p style="margin-top: 10px; color: #666;">Cumulative Investment: £680K | Benefit: £730K | Margin: 12.3%</p>
+                    <p style="font-size: 0.9em; margin-top: 8px;">All systems operational. Demand forecasting reducing waste. Net positive!</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-month">Month 12</div>
+                    <strong>Year 1 Complete</strong>
+                    <p style="margin-top: 10px; color: #666;">Investment: £585K | Benefit: £1.45M | Net: +£865K | Margin: 12.65%</p>
+                    <p style="font-size: 0.9em; margin-top: 8px;">Supplier intelligence deployed. On track to 13.8% target.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-month">Month 18</div>
+                    <strong>Target Achieved!</strong>
+                    <p style="margin-top: 10px; color: #666;">Revenue: £60M | Margin: 13.8% | EBITDA: £3.97M (+244%)</p>
+                    <p style="font-size: 0.9em; margin-top: 8px;">Transformation complete. Enterprise value increased £16.9M.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">📊 Current vs Target State Comparison</h2>
+        
+        <div class="financial-comparison">
+            <div class="comparison-card current-state">
+                <div class="comparison-title">❌ Current State (Month 0)</div>
+                <div class="financial-metric">
+                    <span class="metric-name">Revenue</span>
+                    <span class="metric-number" style="color: #e74c3c;">£53.0M</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">Gross Margin</span>
+                    <span class="metric-number" style="color: #e74c3c;">10.67%</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">Gross Profit</span>
+                    <span class="metric-number" style="color: #e74c3c;">£5.66M</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">EBITDA</span>
+                    <span class="metric-number" style="color: #e74c3c;">£1.16M</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">EBITDA Margin</span>
+                    <span class="metric-number" style="color: #e74c3c;">2.18%</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">Enterprise Value</span>
+                    <span class="metric-number" style="color: #e74c3c;">£6.93M</span>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #ffebee; border-radius: 8px; color: #c62828;">
+                    <strong>Status: CRITICAL</strong><br>
+                    <small>Bottom quartile margins. Zero room for error. Transformation imperative.</small>
+                </div>
+            </div>
+            
+            <div class="comparison-card target-state">
+                <div class="comparison-title">✅ Target State (Month 18)</div>
+                <div class="financial-metric">
+                    <span class="metric-name">Revenue</span>
+                    <span class="metric-number" style="color: #2ecc71;">£60.0M</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">Gross Margin</span>
+                    <span class="metric-number" style="color: #2ecc71;">13.80%</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">Gross Profit</span>
+                    <span class="metric-number" style="color: #2ecc71;">£8.28M</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">EBITDA</span>
+                    <span class="metric-number" style="color: #2ecc71;">£3.97M</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">EBITDA Margin</span>
+                    <span class="metric-number" style="color: #2ecc71;">6.62%</span>
+                </div>
+                <div class="financial-metric">
+                    <span class="metric-name">Enterprise Value</span>
+                    <span class="metric-number" style="color: #2ecc71;">£23.82M</span>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 8px; color: #2e7d32;">
+                    <strong>Status: TRANSFORMED</strong><br>
+                    <small>Top quartile margins. Sustainable. Valuable strategic asset.</small>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 40px; border-radius: 20px; margin: 40px 0; text-align: center;">
+            <h2 style="font-size: 2.5em; margin-bottom: 20px;">📈 The Improvement</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px;">
+                <div>
+                    <div style="font-size: 3em; font-weight: bold;">+£2.62M</div>
+                    <div style="font-size: 1.2em; opacity: 0.9;">Gross Profit Increase</div>
+                    <div style="font-size: 0.9em; margin-top: 10px;">46.3% improvement</div>
+                </div>
+                <div>
+                    <div style="font-size: 3em; font-weight: bold;">+£2.81M</div>
+                    <div style="font-size: 1.2em; opacity: 0.9;">EBITDA Increase</div>
+                    <div style="font-size: 0.9em; margin-top: 10px;">243.7% improvement</div>
+                </div>
+                <div>
+                    <div style="font-size: 3em; font-weight: bold;">+£16.9M</div>
+                    <div style="font-size: 1.2em; opacity: 0.9;">Enterprise Value</div>
+                    <div style="font-size: 0.9em; margin-top: 10px;">243.9% increase</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">👥 Customer Segmentation Strategy</h2>
+        
+        <div class="customer-tier-grid">
+            <div class="tier-card tier-platinum">
+                <div class="tier-name" style="color: #9b59b6;">💎 Platinum Tier</div>
+                <div class="tier-stats">
+                    <div class="tier-stat">
+                        <span>Customers:</span>
+                        <strong>28 (8%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Revenue:</span>
+                        <strong>£13.6M (25.6%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Profit:</span>
+                        <strong>£1.74M (30.7%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Avg Margin:</span>
+                        <strong>12.8%</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Avg Customer Value:</span>
+                        <strong>£485K/year</strong>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: #f3e5f5; border-radius: 8px;">
+                    <strong style="color: #9b59b6;">Strategy: PROTECT</strong><br>
+                    <small style="color: #666;">40% sales effort. Executive relationships. First priority inventory. Weekly touchpoints. Losing one = £62K profit + 3-5 years to replace.</small>
+                </div>
+            </div>
+            
+            <div class="tier-card tier-gold">
+                <div class="tier-name" style="color: #f39c12;">🥇 Gold Tier</div>
+                <div class="tier-stats">
+                    <div class="tier-stat">
+                        <span>Customers:</span>
+                        <strong>85 (24%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Revenue:</span>
+                        <strong>£18.3M (34.5%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Profit:</span>
+                        <strong>£1.92M (33.9%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Avg Margin:</span>
+                        <strong>10.5%</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Avg Customer Value:</span>
+                        <strong>£215K/year</strong>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: #fff3e0; border-radius: 8px;">
+                    <strong style="color: #f39c12;">Strategy: GROW</strong><br>
+                    <small style="color: #666;">35% sales effort. Expand wallet share. Quarterly business reviews. Move 20 → Platinum tier over 18 months.</small>
+                </div>
+            </div>
+            
+            <div class="tier-card tier-silver">
+                <div class="tier-name" style="color: #95a5a6;">🥈 Silver Tier</div>
+                <div class="tier-stats">
+                    <div class="tier-stat">
+                        <span>Customers:</span>
+                        <strong>234 (67%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Revenue:</span>
+                        <strong>£21.1M (39.7%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Profit:</span>
+                        <strong>£1.94M (34.3%)</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Avg Margin:</span>
+                        <strong>9.2%</strong>
+                    </div>
+                    <div class="tier-stat">
+                        <span>Avg Customer Value:</span>
+                        <strong>£90K/year</strong>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: #eceff1; border-radius: 8px;">
+                    <strong style="color: #546e7a;">Strategy: OPTIMIZE</strong><br>
+                    <small style="color: #666;">20% sales effort. Efficiency focus. Self-service preferred. Exit bottom 10% (below 7% margin). Redeploy capacity to higher tiers.</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-danger" onclick="alert('Without AI transformation:\n\n→ Margin erodes to 10.2% due to competition\n→ EBITDA falls to £900K (unsustainable)\n→ Enterprise Value: £5.4M\n→ Risk: Market consolidation or business failure\n\nThe cost of inaction is EXISTENTIAL.')">⚠️ Cost of Inaction</button>
+            <button class="btn btn-primary" onclick="alert('Download full implementation guide:\n\n→ Detailed 30-day quick start checklist\n→ Month-by-month roadmap\n→ Initiative specifications\n→ Change management plan\n→ Risk mitigation strategies\n\nAll files available in project.')">📥 Download Full Plan</button>
+            <button class="btn btn-success" onclick="alert('Next steps this week:\n\n1. Monday: Executive review (3 hours)\n2. Tuesday: Board approval (£585K Year 1)\n3. Wednesday: Assign initiative owners\n4. Thursday: Staff communication\n5. Friday: Week 1 implementation begins\n\nEvery week of delay = £21K unrealized margin improvement.')">✅ Start Transformation</button>
+        </div>
+        
+        <div style="margin-top: 50px; padding: 30px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #667eea;">
+            <h3 style="color: #0f3460; margin-bottom: 15px;">🎯 The Bottom Line</h3>
+            <p style="font-size: 1.1em; line-height: 1.6; color: #333;">
+                At £53M revenue with 10.67% margin and 2.18% EBITDA, WWG is operating in <strong>crisis mode</strong>. 
+                Every 1% margin improvement = £530,000 profit. AI transformation offers <strong>£1.85M margin improvement</strong> 
+                with £845K investment over 3 years. <strong>ROI: 758%</strong>. Enterprise value increases from £6.9M to £23.8M 
+                (<strong>+£16.9M</strong>). This is not optional—it's <strong>existential</strong>. Transform or risk consolidation.
+            </p>
+            <div style="margin-top: 20px; text-align: center; font-size: 1.2em; color: #667eea; font-weight: bold;">
+                The time to act is NOW. Every week of delay costs £21,000 in unrealized margin improvement.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Update datetime
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = 
+                now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + 
+                ' | ' + now.toLocaleTimeString('en-GB');
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // Animate progress bars on load
+        window.addEventListener('load', function() {
+            const marginFills = document.querySelectorAll('.margin-fill');
+            marginFills.forEach(fill => {
+                const width = fill.style.width;
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

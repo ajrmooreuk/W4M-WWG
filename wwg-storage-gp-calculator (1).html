@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWG Storage Cost & GP Realization Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3d5a99 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .alert-banner {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .alert-icon {
+            font-size: 3em;
+        }
+        
+        .alert-content h2 {
+            margin-bottom: 10px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card.critical {
+            border-left-color: #e74c3c;
+        }
+        
+        .stat-card.warning {
+            border-left-color: #f39c12;
+        }
+        
+        .stat-card.success {
+            border-left-color: #2ecc71;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .stat-detail {
+            font-size: 0.9em;
+            color: #95a5a6;
+        }
+        
+        .calculator-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .input-group input,
+        .input-group select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        
+        .results-section {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .result-card h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #7f8c8d;
+        }
+        
+        .metric-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .variance-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .variance-good {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .variance-bad {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .variance-neutral {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .timeline-chart {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-bar {
+            position: relative;
+            height: 60px;
+            background: #ecf0f1;
+            border-radius: 30px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .timeline-segment {
+            position: absolute;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.5s ease;
+        }
+        
+        .segment-planned {
+            background: #3498db;
+        }
+        
+        .segment-delay {
+            background: #e74c3c;
+        }
+        
+        .segment-storage {
+            background: #f39c12;
+        }
+        
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .cost-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .cost-item.overage {
+            border-left-color: #e74c3c;
+        }
+        
+        .cost-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .cost-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .recommendations {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .recommendations h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .recommendation-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: start;
+            gap: 15px;
+        }
+        
+        .recommendation-icon {
+            font-size: 2em;
+        }
+        
+        .recommendation-content h4 {
+            margin-bottom: 8px;
+        }
+        
+        .scenario-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .scenario-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #3498db;
+        }
+        
+        .scenario-card.current {
+            border-top-color: #e74c3c;
+        }
+        
+        .scenario-card.target {
+            border-top-color: #2ecc71;
+        }
+        
+        .scenario-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .scenario-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .scenario-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-indicator {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            transition: width 1s ease;
+        }
+        
+        .savings-callout {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
+        }
+        
+        .savings-amount {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .results-grid,
+            .scenario-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Storage Cost & GP Realization Tracker</h1>
+        <div class="subtitle">Real-time tracking from Booked GP to Realized GP</div>
+        
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+                <h2>£450,000 Annual Storage Cost Challenge</h2>
+                <p>Current average: 12 days in storage | Target: 4 days | Opportunity: £300K savings</p>
+            </div>
+        </div>
+        
+        <!-- Company-Level Stats -->
+        <div class="stats-grid">
+            <div class="stat-card critical">
+                <div class="stat-label">Annual Storage Cost</div>
+                <div class="stat-value">£450K</div>
+                <div class="stat-detail">0.85% of £53M revenue</div>
+            </div>
+            
+            <div class="stat-card warning">
+                <div class="stat-label">Current Avg Storage</div>
+                <div class="stat-value">12 days</div>
+                <div class="stat-detail">Target: 4 days (3x over)</div>
+            </div>
+            
+            <div class="stat-card success">
+                <div class="stat-label">Savings Opportunity</div>
+                <div class="stat-value">£300K</div>
+                <div class="stat-detail">0.57% margin improvement</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Cost Per Container/Day</div>
+                <div class="stat-value">£3.52</div>
+                <div class="stat-detail">Based on 350 containers/year</div>
+            </div>
+        </div>
+        
+        <!-- Order Calculator -->
+        <div class="calculator-section">
+            <h2 style="margin-bottom: 20px; color: #2c3e50;">📊 Order GP Calculator</h2>
+            
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Order ID</label>
+                    <input type="text" id="orderId" value="12345" placeholder="e.g., 12345">
+                </div>
+                
+                <div class="input-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" value="ABC Restaurant Group" placeholder="Customer name">
+                </div>
+                
+                <div class="input-group">
+                    <label>Product</label>
+                    <select id="product">
+                        <option>Australian Ribeye</option>
+                        <option>NZ Lamb Legs</option>
+                        <option>Australian Striploin</option>
+                        <option>Iceland Cod</option>
+                        <option>NZ Beef Tenderloin</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label>Quantity (kg)</label>
+                    <input type="number" id="quantity" value="8000" min="100" step="100">
+                </div>
+                
+                <div class="input-group">
+                    <label>Price per kg (£)</label>
+                    <input type="number" id="price" value="12.50" min="1" step="0.1">
+                </div>
+                
+                <div class="input-group">
+                    <label>Landed Cost per kg (£)</label>
+                    <input type="number" id="landedCost" value="8.20" min="1" step="0.1">
+                </div>
+                
+                <div class="input-group">
+                    <label>Vessel Route</label>
+                    <select id="vesselRoute" onchange="updateReliability()">
+                        <option value="0.75">Australia → UK (75% on-time)</option>
+                        <option value="0.62">New Zealand → UK (62% on-time)</option>
+                        <option value="0.88">Iceland → UK (88% on-time)</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label>Expected Storage Days</label>
+                    <input type="number" id="expectedStorage" value="4" min="1" max="30">
+                </div>
+                
+                <div class="input-group">
+                    <label>Actual Storage Days</label>
+                    <input type="number" id="actualStorage" value="12" min="1" max="60">
+                </div>
+                
+                <div class="input-group">
+                    <label>Vessel Delay (days)</label>
+                    <input type="number" id="vesselDelay" value="7" min="0" max="30">
+                </div>
+                
+                <div class="input-group">
+                    <label>Customs Clearance (days)</label>
+                    <input type="number" id="customsDays" value="2" min="1" max="10">
+                </div>
+                
+                <div class="input-group">
+                    <label>Customer Pickup Delay (days)</label>
+                    <input type="number" id="pickupDelay" value="1" min="0" max="20">
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="calculateGP()">Calculate GP Impact</button>
+                <button class="btn btn-success" onclick="showScenarios()">Compare Scenarios</button>
+                <button class="btn btn-warning" onclick="resetForm()">Reset</button>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        <div class="results-section" id="results">
+            <h2 style="margin-bottom: 20px; color: #2c3e50;">📈 GP Analysis Results</h2>
+            
+            <div class="results-grid">
+                <!-- Booked GP Card -->
+                <div class="result-card">
+                    <h3>📝 Booked GP (Expected)</h3>
+                    <div class="metric-row">
+                        <span class="metric-label">Revenue</span>
+                        <span class="metric-value" id="bookedRevenue">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Total Cost</span>
+                        <span class="metric-value" id="bookedCost">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Gross Profit</span>
+                        <span class="metric-value" id="bookedGP">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Margin %</span>
+                        <span class="metric-value" id="bookedMargin">0%</span>
+                    </div>
+                </div>
+                
+                <!-- Realized GP Card -->
+                <div class="result-card">
+                    <h3>✅ Realized GP (Actual)</h3>
+                    <div class="metric-row">
+                        <span class="metric-label">Revenue</span>
+                        <span class="metric-value" id="realizedRevenue">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Total Cost</span>
+                        <span class="metric-value" id="realizedCost">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Gross Profit</span>
+                        <span class="metric-value" id="realizedGP">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Margin %</span>
+                        <span class="metric-value" id="realizedMargin">0%</span>
+                    </div>
+                </div>
+                
+                <!-- Variance Card -->
+                <div class="result-card">
+                    <h3>📊 Variance Analysis</h3>
+                    <div class="metric-row">
+                        <span class="metric-label">GP Variance</span>
+                        <span class="metric-value" id="gpVariance">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Margin Erosion</span>
+                        <span class="metric-value" id="marginVariance">0%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Storage Cost Impact</span>
+                        <span class="metric-value" id="storageCostImpact">£0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Status</span>
+                        <span class="metric-value" id="statusBadge">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cost Breakdown -->
+            <div class="result-card">
+                <h3>💷 Detailed Cost Breakdown</h3>
+                <div class="cost-breakdown">
+                    <div class="cost-item">
+                        <div class="cost-label">Landed Cost</div>
+                        <div class="cost-value" id="landedCostTotal">£0</div>
+                    </div>
+                    <div class="cost-item">
+                        <div class="cost-label">Expected Storage</div>
+                        <div class="cost-value" id="expectedStorageCost">£0</div>
+                    </div>
+                    <div class="cost-item overage">
+                        <div class="cost-label">Actual Storage</div>
+                        <div class="cost-value" id="actualStorageCost">£0</div>
+                    </div>
+                    <div class="cost-item overage">
+                        <div class="cost-label">Excess Storage</div>
+                        <div class="cost-value" id="excessStorageCost">£0</div>
+                    </div>
+                    <div class="cost-item">
+                        <div class="cost-label">Logistics</div>
+                        <div class="cost-value" id="logisticsCost">£0</div>
+                    </div>
+                    <div class="cost-item">
+                        <div class="cost-label">Storage Days Over Target</div>
+                        <div class="cost-value" id="excessDays">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Timeline Visualization -->
+            <div class="timeline-chart">
+                <div class="timeline-header">
+                    <h3>📅 Order Timeline</h3>
+                    <span id="timelineTotal">Total: 0 days</span>
+                </div>
+                
+                <div>
+                    <p style="margin-bottom: 10px;"><strong>Expected Timeline:</strong></p>
+                    <div class="timeline-bar">
+                        <div class="timeline-segment segment-planned" id="plannedTimeline" style="left: 0; width: 100%;">
+                            4 days
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <p style="margin-bottom: 10px;"><strong>Actual Timeline:</strong></p>
+                    <div class="timeline-bar">
+                        <div class="timeline-segment segment-delay" id="delaySegment" style="left: 0; width: 0;">
+                            Delay
+                        </div>
+                        <div class="timeline-segment segment-storage" id="storageSegment" style="left: 0; width: 0;">
+                            Storage
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recommendations -->
+            <div class="recommendations" id="recommendations">
+                <h3>💡 AI-Powered Recommendations</h3>
+                <div id="recommendationsList"></div>
+            </div>
+        </div>
+        
+        <!-- Scenario Comparison -->
+        <div id="scenarioSection" style="display: none;">
+            <h2 style="margin: 30px 0 20px 0; color: #2c3e50; text-align: center;">🔬 Scenario Comparison</h2>
+            
+            <div class="scenario-comparison">
+                <div class="scenario-card current">
+                    <div class="scenario-title">Current State</div>
+                    <div class="scenario-metrics">
+                        <div class="scenario-metric">
+                            <span>Storage Days</span>
+                            <strong id="currentDays">12 days</strong>
+                        </div>
+                        <div class="progress-indicator">
+                            <div class="progress-fill" style="width: 100%; background: #e74c3c;"></div>
+                        </div>
+                        
+                        <div class="scenario-metric">
+                            <span>Annual Cost</span>
+                            <strong id="currentCost">£450,000</strong>
+                        </div>
+                        
+                        <div class="scenario-metric">
+                            <span>Margin Impact</span>
+                            <strong id="currentMargin">0.85%</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-title">Improved (7 days)</div>
+                    <div class="scenario-metrics">
+                        <div class="scenario-metric">
+                            <span>Storage Days</span>
+                            <strong>7 days</strong>
+                        </div>
+                        <div class="progress-indicator">
+                            <div class="progress-fill" style="width: 58%; background: #f39c12;"></div>
+                        </div>
+                        
+                        <div class="scenario-metric">
+                            <span>Annual Cost</span>
+                            <strong>£262,500</strong>
+                        </div>
+                        
+                        <div class="scenario-metric">
+                            <span>Savings</span>
+                            <strong style="color: #2ecc71;">£187,500</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scenario-card target">
+                    <div class="scenario-title">Target (4 days)</div>
+                    <div class="scenario-metrics">
+                        <div class="scenario-metric">
+                            <span>Storage Days</span>
+                            <strong>4 days</strong>
+                        </div>
+                        <div class="progress-indicator">
+                            <div class="progress-fill" style="width: 33%; background: #2ecc71;"></div>
+                        </div>
+                        
+                        <div class="scenario-metric">
+                            <span>Annual Cost</span>
+                            <strong>£150,000</strong>
+                        </div>
+                        
+                        <div class="scenario-metric">
+                            <span>Savings</span>
+                            <strong style="color: #2ecc71;">£300,000</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="savings-callout">
+                <h3>🎯 Achieve 4-Day Target</h3>
+                <div class="savings-amount">£300,000</div>
+                <p style="font-size: 1.2em;">Annual Savings = 0.57% Margin Improvement</p>
+                <p style="margin-top: 15px; opacity: 0.9;">This entire amount flows straight to EBITDA, increasing from £1.4M to £1.7M (+21.6%)</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Company constants
+        const STORAGE_COST_PER_CONTAINER_PER_DAY = 3.52;
+        const AVERAGE_CONTAINER_WEIGHT = 25000;
+        const STORAGE_COST_PER_KG_PER_DAY = STORAGE_COST_PER_CONTAINER_PER_DAY / AVERAGE_CONTAINER_WEIGHT;
+        const LOGISTICS_COST_PER_KG = 0.15;
+        
+        function updateReliability() {
+            const route = document.getElementById('vesselRoute');
+            const reliability = parseFloat(route.value);
+            
+            // Suggest buffer based on reliability
+            let suggestedDelay = 0;
+            if (reliability < 0.70) {
+                suggestedDelay = 8;
+            } else if (reliability < 0.85) {
+                suggestedDelay = 4;
+            } else {
+                suggestedDelay = 2;
+            }
+            
+            document.getElementById('vesselDelay').value = suggestedDelay;
+        }
+        
+        function calculateGP() {
+            // Get inputs
+            const orderId = document.getElementById('orderId').value;
+            const customer = document.getElementById('customerName').value;
+            const product = document.getElementById('product').value;
+            const quantity = parseFloat(document.getElementById('quantity').value);
+            const pricePerKg = parseFloat(document.getElementById('price').value);
+            const landedCostPerKg = parseFloat(document.getElementById('landedCost').value);
+            const expectedStorageDays = parseInt(document.getElementById('expectedStorage').value);
+            const actualStorageDays = parseInt(document.getElementById('actualStorage').value);
+            const vesselDelay = parseInt(document.getElementById('vesselDelay').value);
+            const customsDays = parseInt(document.getElementById('customsDays').value);
+            const pickupDelay = parseInt(document.getElementById('pickupDelay').value);
+            
+            // Calculate booked GP (expected)
+            const revenue = quantity * pricePerKg;
+            const landedCostTotal = quantity * landedCostPerKg;
+            const expectedStorageCost = quantity * STORAGE_COST_PER_KG_PER_DAY * expectedStorageDays;
+            const logisticsCostTotal = quantity * LOGISTICS_COST_PER_KG;
+            const bookedTotalCost = landedCostTotal + expectedStorageCost + logisticsCostTotal;
+            const bookedGP = revenue - bookedTotalCost;
+            const bookedMargin = (bookedGP / revenue) * 100;
+            
+            // Calculate realized GP (actual)
+            const actualStorageCost = quantity * STORAGE_COST_PER_KG_PER_DAY * actualStorageDays;
+            const realizedTotalCost = landedCostTotal + actualStorageCost + logisticsCostTotal;
+            const realizedGP = revenue - realizedTotalCost;
+            const realizedMargin = (realizedGP / revenue) * 100;
+            
+            // Calculate variance
+            const gpVariance = realizedGP - bookedGP;
+            const marginVariance = realizedMargin - bookedMargin;
+            const excessStorageDays = actualStorageDays - expectedStorageDays;
+            const excessStorageCost = actualStorageCost - expectedStorageCost;
+            
+            // Update display
+            document.getElementById('bookedRevenue').textContent = `£${revenue.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('bookedCost').textContent = `£${bookedTotalCost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('bookedGP').textContent = `£${bookedGP.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('bookedMargin').textContent = `${bookedMargin.toFixed(2)}%`;
+            
+            document.getElementById('realizedRevenue').textContent = `£${revenue.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('realizedCost').textContent = `£${realizedTotalCost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('realizedGP').textContent = `£${realizedGP.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('realizedMargin').textContent = `${realizedMargin.toFixed(2)}%`;
+            
+            document.getElementById('gpVariance').textContent = `£${gpVariance.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('marginVariance').textContent = `${marginVariance >= 0 ? '+' : ''}${marginVariance.toFixed(2)}%`;
+            document.getElementById('storageCostImpact').textContent = `£${excessStorageCost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            
+            // Status badge
+            let status = '';
+            if (marginVariance >= 0) {
+                status = '<span class="variance-badge variance-good">✓ ON TRACK</span>';
+            } else if (marginVariance > -3) {
+                status = '<span class="variance-badge variance-neutral">⚠️ WATCH</span>';
+            } else {
+                status = '<span class="variance-badge variance-bad">❌ CRITICAL</span>';
+            }
+            document.getElementById('statusBadge').innerHTML = status;
+            
+            // Cost breakdown
+            document.getElementById('landedCostTotal').textContent = `£${landedCostTotal.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('expectedStorageCost').textContent = `£${expectedStorageCost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('actualStorageCost').textContent = `£${actualStorageCost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('excessStorageCost').textContent = `£${excessStorageCost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('logisticsCost').textContent = `£${logisticsCostTotal.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            document.getElementById('excessDays').textContent = `${excessStorageDays} days`;
+            
+            // Timeline
+            document.getElementById('timelineTotal').textContent = `Total: ${actualStorageDays} days`;
+            
+            const delayPercent = (vesselDelay / actualStorageDays) * 100;
+            const storagePercent = ((actualStorageDays - vesselDelay) / actualStorageDays) * 100;
+            
+            document.getElementById('delaySegment').style.width = `${delayPercent}%`;
+            document.getElementById('delaySegment').textContent = `Vessel Delay: ${vesselDelay}d`;
+            
+            document.getElementById('storageSegment').style.left = `${delayPercent}%`;
+            document.getElementById('storageSegment').style.width = `${storagePercent}%`;
+            document.getElementById('storageSegment').textContent = `Storage: ${actualStorageDays - vesselDelay}d`;
+            
+            // Generate recommendations
+            generateRecommendations(marginVariance, excessStorageDays, vesselDelay, pickupDelay);
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function generateRecommendations(marginVariance, excessStorageDays, vesselDelay, pickupDelay) {
+            const recommendations = [];
+            
+            if (marginVariance < -5) {
+                recommendations.push({
+                    icon: '🚨',
+                    title: 'CRITICAL GP EROSION',
+                    text: 'Margin erosion exceeds 5%. Escalate to VP Sales immediately. Consider customer price adjustment or contract renegotiation.'
+                });
+            } else if (marginVariance < -3) {
+                recommendations.push({
+                    icon: '⚠️',
+                    title: 'Significant Margin Pressure',
+                    text: 'GP erosion exceeds 3%. Manager review required. Evaluate mitigation options and root cause.'
+                });
+            }
+            
+            if (vesselDelay > 7) {
+                recommendations.push({
+                    icon: '🚢',
+                    title: 'Vessel Reliability Issue',
+                    text: `This vessel was ${vesselDelay} days late. For future quotes on this route, add ${vesselDelay + 2}-day storage buffer to protect margin.`
+                });
+            }
+            
+            if (pickupDelay > 3) {
+                recommendations.push({
+                    icon: '📞',
+                    title: 'Customer Pickup Delay',
+                    text: `Customer took ${pickupDelay} extra days to pick up. Contact customer to expedite future deliveries or include storage fees in contract.`
+                });
+            }
+            
+            if (excessStorageDays > 5) {
+                recommendations.push({
+                    icon: '💰',
+                    title: 'Excess Storage Costs',
+                    text: `${excessStorageDays} extra days in storage. Total excess cost: £${(excessStorageDays * STORAGE_COST_PER_CONTAINER_PER_DAY).toFixed(2)}. Implement proactive customer communications.`
+                });
+            }
+            
+            if (marginVariance >= 0) {
+                recommendations.push({
+                    icon: '✅',
+                    title: 'Excellent Execution',
+                    text: 'GP at or above target! Fast vessel arrival and/or quick customer pickup protected your margin. Great work!'
+                });
+            }
+            
+            // Build HTML
+            let html = '';
+            recommendations.forEach(rec => {
+                html += `
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">${rec.icon}</div>
+                        <div class="recommendation-content">
+                            <h4>${rec.title}</h4>
+                            <p>${rec.text}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('recommendationsList').innerHTML = html;
+        }
+        
+        function showScenarios() {
+            document.getElementById('scenarioSection').style.display = 'block';
+            document.getElementById('scenarioSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function resetForm() {
+            document.getElementById('quantity').value = 8000;
+            document.getElementById('price').value = 12.50;
+            document.getElementById('landedCost').value = 8.20;
+            document.getElementById('expectedStorage').value = 4;
+            document.getElementById('actualStorage').value = 12;
+            document.getElementById('vesselDelay').value = 7;
+            document.getElementById('customsDays').value = 2;
+            document.getElementById('pickupDelay').value = 1;
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('scenarioSection').style.display = 'none';
+        }
+        
+        // Initial calculation on page load
+        window.addEventListener('load', function() {
+            // Do nothing - wait for user interaction
+        });
+    </script>
+</body>
+</html>

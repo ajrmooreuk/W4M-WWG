@@ -1,0 +1,526 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/sales-operations-integration/v1.0",
+  "title": "WWG Sales-Operations Integration Ontology",
+  "description": "Comprehensive ontology linking sales bookings to realized GP through logistics cost tracking and vessel/storage variability - the critical 'sale-to-cash' reality for meat wholesale",
+  "version": "1.0.0",
+  "lastModified": "2025-11-08",
+  
+  "critical_business_reality": {
+    "problem_statement": "Sales are booked with GP based on EXPECTED landed costs and delivery dates, but ACTUAL costs vary due to vessel delays, storage accumulation, customs delays, and logistics variables - creating gap between booked GP and realized GP",
+    "impact": {
+      "financial": "Booked 18% margin becomes 10-12% realized due to post-sale cost accumulation",
+      "operational": "Forecast accuracy compromised by vessel unreliability (60-65% on-time)",
+      "working_capital": "Cash tied up longer than expected, storage costs mount",
+      "sales_effectiveness": "Sales team incentivized on booked GP but company suffers on realized GP"
+    },
+    "solution_approach": "Integrate real-time logistics/operations data into sales process, track booked-vs-realized GP, risk-adjust pricing, and create AI agents that monitor post-sale cost accumulation"
+  },
+  
+  "integrated_data_model": {
+    "@context": "https://schema.org",
+    
+    "core_entities": {
+      "sale_order": {
+        "@type": "https://schema.org/Order",
+        "identifier": "order_id",
+        "attributes": {
+          "customer": "Organization_reference",
+          "order_date": "DateTime",
+          "products": "OrderItem_array",
+          "booking_status": ["quoted", "booked", "confirmed", "in_transit", "delivered", "invoiced", "paid"],
+          
+          "financial_snapshots": {
+            "booked_gp": {
+              "revenue": "MonetaryAmount",
+              "expected_landed_cost": "MonetaryAmount",
+              "expected_storage_cost": "MonetaryAmount",
+              "expected_logistics_cost": "MonetaryAmount",
+              "booked_margin_percent": "number",
+              "booking_date": "DateTime",
+              "assumptions": {
+                "vessel_arrival_date": "Date",
+                "storage_days": "integer",
+                "customs_clearance_days": "integer",
+                "delivery_date": "Date"
+              }
+            },
+            
+            "current_gp": {
+              "description": "Real-time view as costs accumulate",
+              "revenue": "MonetaryAmount_unchanged",
+              "actual_landed_cost": "MonetaryAmount_updated",
+              "accumulated_storage_cost": "MonetaryAmount_realtime",
+              "accumulated_logistics_cost": "MonetaryAmount_realtime",
+              "current_margin_percent": "number_calculated",
+              "variance_from_booked": {
+                "cost_increase": "MonetaryAmount",
+                "margin_erosion_percent": "number",
+                "margin_erosion_gbp": "MonetaryAmount"
+              },
+              "last_updated": "DateTime"
+            },
+            
+            "realized_gp": {
+              "description": "Final actual GP when payment received and all costs settled",
+              "revenue": "MonetaryAmount_actual",
+              "final_landed_cost": "MonetaryAmount_actual",
+              "total_storage_cost": "MonetaryAmount_actual",
+              "total_logistics_cost": "MonetaryAmount_actual",
+              "other_costs": "MonetaryAmount_actual",
+              "realized_margin_percent": "number_actual",
+              "variance_from_booked": {
+                "total_variance": "MonetaryAmount",
+                "variance_percent": "number",
+                "variance_categories": {
+                  "vessel_delay_cost": "MonetaryAmount",
+                  "excess_storage": "MonetaryAmount",
+                  "customs_delay": "MonetaryAmount",
+                  "fx_movement": "MonetaryAmount",
+                  "price_concessions": "MonetaryAmount",
+                  "other": "MonetaryAmount"
+                }
+              },
+              "realized_date": "DateTime",
+              "payment_date": "DateTime"
+            }
+          },
+          
+          "supply_chain_linkage": {
+            "container_allocation": "Container_reference",
+            "vessel_booking": "Vessel_reference",
+            "storage_facility": "Warehouse_reference",
+            "customs_clearance": "Customs_reference",
+            "delivery_logistics": "Delivery_reference"
+          },
+          
+          "risk_indicators": {
+            "vessel_reliability_score": "0-100",
+            "route_stability_score": "0-100",
+            "customs_complexity_score": "0-100",
+            "storage_risk_score": "0-100",
+            "overall_execution_risk": "low_medium_high"
+          }
+        }
+      },
+      
+      "container": {
+        "@type": "https://schema.org/Product",
+        "identifier": "container_id",
+        "attributes": {
+          "vessel_booking": "Vessel_reference",
+          "origin": "Place",
+          "destination": "Place",
+          "product_mix": "OrderItem_array",
+          
+          "allocated_sales": {
+            "description": "Orders allocated from this container inventory",
+            "orders": "Order_array",
+            "total_allocated_value": "MonetaryAmount",
+            "total_booked_gp": "MonetaryAmount",
+            "allocation_status": ["fully_allocated", "partially_allocated", "unallocated"]
+          },
+          
+          "cost_tracking": {
+            "landed_cost": {
+              "fob_price": "MonetaryAmount",
+              "freight": "MonetaryAmount",
+              "insurance": "MonetaryAmount",
+              "customs_duty": "MonetaryAmount",
+              "other_import_costs": "MonetaryAmount",
+              "total_landed_cost_per_kg": "MonetaryAmount",
+              "last_updated": "DateTime"
+            },
+            
+            "storage_costs": {
+              "company_annual_storage_cost": "£450,000",
+              "company_annual_revenue": "£53,000,000",
+              "storage_as_percent_of_revenue": "0.85%",
+              "annual_containers": "350",
+              "average_storage_cost_per_container": "£1,286",
+              
+              "current_performance": {
+                "average_storage_days": "12",
+                "target_storage_days": "4",
+                "excess_storage_days": "8",
+                "waste_opportunity": "£300,000 annually if hit target"
+              },
+              
+              "container_specific": {
+                "planned_storage_days": "integer",
+                "actual_storage_days": "integer",
+                "daily_storage_rate": {
+                  "calculation": "£450,000 / 365 days / 350 containers",
+                  "value": "£3.52 per container per day",
+                  "per_kg_rate": "calculated from container weight"
+                },
+                "accumulated_storage_cost": "MonetaryAmount",
+                "variance_from_plan": "MonetaryAmount",
+                "storage_start_date": "Date",
+                "storage_facility": "Warehouse_reference"
+              },
+              
+              "storage_cost_allocation": {
+                "allocated_to_sales": {
+                  "order_id": "reference",
+                  "quantity_kg": "number",
+                  "proportion_of_container": "percentage",
+                  "allocated_storage_days": "integer",
+                  "allocated_storage_cost": "£XXX",
+                  "storage_cost_per_kg": "£X.XX"
+                },
+                "unallocated_inventory_cost": {
+                  "description": "Storage cost for unsold inventory",
+                  "quantity_kg": "number",
+                  "days_in_storage": "integer",
+                  "accumulated_cost": "MonetaryAmount",
+                  "urgency_score": "high if days > 10"
+                }
+              }
+            },
+            
+            "logistics_costs": {
+              "port_handling": "MonetaryAmount",
+              "inland_freight": "MonetaryAmount",
+              "delivery_costs": "MonetaryAmount",
+              "other_logistics": "MonetaryAmount"
+            }
+          },
+          
+          "timeline_tracking": {
+            "booking_date": "DateTime",
+            "expected_vessel_departure": "DateTime",
+            "actual_vessel_departure": "DateTime",
+            "expected_vessel_arrival": "DateTime",
+            "current_vessel_eta": "DateTime",
+            "actual_vessel_arrival": "DateTime",
+            "expected_customs_clearance": "DateTime",
+            "actual_customs_clearance": "DateTime",
+            "expected_storage_release": "DateTime",
+            "actual_storage_release": "DateTime",
+            
+            "delay_tracking": {
+              "vessel_delay_days": "integer",
+              "customs_delay_days": "integer",
+              "storage_delay_days": "integer",
+              "total_timeline_variance_days": "integer",
+              "cost_impact_of_delays": "MonetaryAmount"
+            }
+          },
+          
+          "vessel_status": {
+            "current_location": "Place",
+            "port_of_call": "string",
+            "estimated_arrival": "DateTime",
+            "status": ["scheduled", "loaded", "in_transit", "delayed", "port_arrival", "customs", "released"],
+            "delay_reason": "string",
+            "tracking_url": "URL"
+          }
+        }
+      },
+      
+      "vessel": {
+        "@type": "https://schema.org/Vehicle",
+        "identifier": "vessel_id",
+        "attributes": {
+          "vessel_name": "string",
+          "carrier": "Organization",
+          "route": "string",
+          "scheduled_departure": "DateTime",
+          "scheduled_arrival": "DateTime",
+          
+          "reliability_metrics": {
+            "historical_on_time_percentage": "number",
+            "average_delay_days": "number",
+            "route_risk_factors": "string_array",
+            "seasonal_reliability": "object"
+          },
+          
+          "current_voyage": {
+            "departure_port": "Place",
+            "arrival_port": "Place",
+            "current_location": "GeoCoordinates",
+            "current_status": "string",
+            "eta_updates": "DateTime_array",
+            "delay_notifications": "Notification_array"
+          },
+          
+          "containers_on_vessel": {
+            "wwg_containers": "Container_array",
+            "total_sales_value_at_risk": "MonetaryAmount",
+            "affected_customers": "Organization_array"
+          }
+        }
+      },
+      
+      "gp_variance_event": {
+        "@type": "https://schema.org/Event",
+        "description": "Tracks specific events that cause GP variance from booking to realization",
+        "identifier": "event_id",
+        "attributes": {
+          "order": "Order_reference",
+          "container": "Container_reference",
+          "event_type": ["vessel_delay", "customs_delay", "storage_extension", "fx_movement", "price_concession", "cost_increase", "other"],
+          "event_date": "DateTime",
+          "detected_date": "DateTime",
+          "cost_impact": "MonetaryAmount",
+          "margin_impact_percent": "number",
+          
+          "event_details": {
+            "root_cause": "string",
+            "responsible_party": ["supplier", "carrier", "customs", "warehouse", "internal", "customer"],
+            "preventable": "boolean",
+            "mitigation_applied": "string",
+            "lessons_learned": "string"
+          },
+          
+          "affected_stakeholders": {
+            "customer_impact": "string",
+            "sales_rep_notified": "boolean",
+            "operations_notified": "boolean",
+            "finance_notified": "boolean"
+          }
+        }
+      }
+    }
+  },
+  
+  "sales_process_integration_points": {
+    "description": "How sales process must integrate with operations/logistics to track GP realization",
+    
+    "at_quotation_stage": {
+      "required_data_inputs": [
+        "current_inventory_on_hand",
+        "containers_in_transit_with_eta",
+        "planned_vessel_bookings",
+        "historical_vessel_reliability_by_route",
+        "current_storage_occupancy_and_costs",
+        "recent_customs_clearance_times",
+        "fx_rates_and_trends"
+      ],
+      
+      "risk_adjusted_pricing": {
+        "base_cost": "landed_cost_per_kg",
+        "risk_buffer": {
+          "vessel_delay_buffer": "days * daily_storage_rate * probability",
+          "customs_delay_buffer": "days * daily_storage_rate * probability",
+          "fx_volatility_buffer": "percentage",
+          "minimum_margin_floor": "percentage"
+        },
+        "quoted_price": "base_cost + risk_buffer + target_margin"
+      },
+      
+      "ai_agent_role": "quotation_advisor_agent",
+      "ai_capabilities": [
+        "predict vessel arrival reliability",
+        "estimate storage days based on historical patterns",
+        "calculate risk-adjusted landed cost",
+        "recommend pricing with margin protection",
+        "flag high-risk deals"
+      ]
+    },
+    
+    "at_order_booking_stage": {
+      "capture_assumptions": {
+        "expected_vessel_arrival": "DateTime",
+        "expected_storage_days": "integer",
+        "expected_customs_days": "integer",
+        "expected_delivery_date": "DateTime",
+        "locked_costs": {
+          "landed_cost_per_kg": "MonetaryAmount",
+          "storage_budget": "MonetaryAmount",
+          "logistics_budget": "MonetaryAmount"
+        },
+        "booked_gp": {
+          "revenue": "MonetaryAmount",
+          "costs": "MonetaryAmount",
+          "margin_percent": "number",
+          "margin_gbp": "MonetaryAmount"
+        }
+      },
+      
+      "container_allocation": {
+        "allocate_from": ["existing_inventory", "container_in_transit", "planned_container"],
+        "allocation_priority": "fifo_with_age_optimization",
+        "track_allocation": {
+          "container_id": "reference",
+          "quantity_kg": "number",
+          "vessel_eta": "DateTime",
+          "risk_score": "0-100"
+        }
+      },
+      
+      "ai_agent_role": "booking_optimizer_agent",
+      "ai_capabilities": [
+        "optimal_container_allocation",
+        "inventory_age_optimization",
+        "risk_score_calculation",
+        "margin_protection_validation"
+      ]
+    },
+    
+    "post_booking_monitoring": {
+      "description": "Continuous monitoring of GP erosion from booking to realization",
+      
+      "monitoring_frequency": "real_time",
+      
+      "tracked_variables": {
+        "vessel_location_and_eta": {
+          "data_source": "vessel_tracking_api",
+          "update_frequency": "hourly",
+          "alert_on": ["eta_change_gt_2_days", "vessel_delay_status"]
+        },
+        
+        "storage_cost_accumulation": {
+          "data_source": "warehouse_management_system",
+          "update_frequency": "daily",
+          "alert_on": ["storage_days_exceed_planned", "storage_cost_exceed_budget"]
+        },
+        
+        "customs_status": {
+          "data_source": "customs_broker_api",
+          "update_frequency": "daily",
+          "alert_on": ["clearance_delayed", "additional_duties", "inspection_required"]
+        },
+        
+        "fx_rates": {
+          "data_source": "fx_rate_feed",
+          "update_frequency": "daily",
+          "alert_on": ["adverse_movement_gt_2_percent"]
+        }
+      },
+      
+      "gp_recalculation": {
+        "trigger": "any_tracked_variable_change",
+        "calculation": {
+          "current_revenue": "booked_revenue_unchanged_unless_price_concession",
+          "current_costs": "actual_landed_cost + accumulated_storage + accumulated_logistics",
+          "current_margin": "(current_revenue - current_costs) / current_revenue",
+          "variance_from_booked": "current_margin - booked_margin"
+        }
+      },
+      
+      "ai_agent_role": "gp_guardian_agent",
+      "ai_capabilities": [
+        "real_time_gp_tracking",
+        "variance_detection",
+        "cost_escalation_prediction",
+        "mitigation_recommendation",
+        "stakeholder_alerting"
+      ]
+    },
+    
+    "intervention_triggers": {
+      "description": "When post-booking cost accumulation requires action",
+      
+      "alert_levels": {
+        "level_1_watch": {
+          "condition": "gp_erosion_gt_1_percent",
+          "action": "notify_sales_rep",
+          "escalation": "none"
+        },
+        
+        "level_2_concern": {
+          "condition": "gp_erosion_gt_3_percent",
+          "action": ["notify_sales_manager", "notify_operations", "assess_mitigation"],
+          "escalation": "sales_manager"
+        },
+        
+        "level_3_critical": {
+          "condition": "gp_erosion_gt_5_percent_or_margin_below_floor",
+          "action": [
+            "escalate_to_vp_sales_and_coo",
+            "evaluate_price_increase_with_customer",
+            "evaluate_alternative_fulfillment",
+            "assess_contract_force_majeure"
+          ],
+          "escalation": "executive_team"
+        }
+      },
+      
+      "mitigation_playbook": {
+        "vessel_delay": {
+          "option_1": "communicate_proactively_with_customer",
+          "option_2": "offer_substitution_from_faster_vessel",
+          "option_3": "negotiate_price_increase_if_contractually_possible",
+          "option_4": "absorb_cost_and_learn_for_next_quote"
+        },
+        
+        "customs_delay": {
+          "option_1": "expedite_clearance_with_broker",
+          "option_2": "provide_additional_documentation",
+          "option_3": "engage_customs_agent_escalation"
+        },
+        
+        "storage_extension": {
+          "option_1": "accelerate_customer_delivery",
+          "option_2": "offer_discount_for_early_pickup",
+          "option_3": "reallocate_to_different_customer_if_possible"
+        }
+      }
+    },
+    
+    "at_delivery_and_invoicing": {
+      "final_cost_reconciliation": {
+        "actual_landed_cost": "from_finance_system",
+        "actual_storage_cost": "from_warehouse_system",
+        "actual_logistics_cost": "from_logistics_system",
+        "other_costs": "from_finance_system",
+        "total_actual_cost": "sum_of_all_actual_costs"
+      },
+      
+      "realized_gp_calculation": {
+        "actual_revenue": "invoiced_amount",
+        "actual_costs": "total_actual_cost",
+        "realized_margin": "(actual_revenue - actual_costs) / actual_revenue",
+        "variance_from_booked": "realized_margin - booked_margin"
+      },
+      
+      "variance_analysis": {
+        "categories": [
+          "vessel_delay_cost",
+          "excess_storage",
+          "customs_delay",
+          "fx_movement",
+          "price_concessions",
+          "cost_increases",
+          "other"
+        ],
+        "root_cause_analysis": "automated_and_manual",
+        "lessons_learned": "captured_for_future_quotes"
+      },
+      
+      "ai_agent_role": "variance_analyzer_agent",
+      "ai_capabilities": [
+        "automated_variance_categorization",
+        "root_cause_identification",
+        "pattern_recognition_across_deals",
+        "pricing_model_refinement",
+        "risk_buffer_calibration"
+      ]
+    }
+  },
+  
+  "crm_integration_requirements": {
+    "description": "What sales CRM must display to sales team for transparency",
+    
+    "opportunity_view": {
+      "financial_summary": {
+        "booked_gp": {
+          "display": "£XXX revenue, £XXX cost, XX% margin",
+          "timestamp": "when_booked"
+        },
+        "current_gp": {
+          "display": "£XXX revenue, £XXX actual_cost, XX% current_margin",
+          "variance": "△ -X% vs booked",
+          "color_coding": ["green_if_on_track", "yellow_if_1-3%_erosion", "red_if_gt_3%_erosion"],
+          "timestamp": "last_updated_realtime"
+        }
+      },
+      
+      "supply_chain_status": {
+        "container_allocation": "Container_ID with link",
+        "vessel_status": "In transit | ETA: DATE | On time / Delayed",
+        "current_location": "PORT or IN_TRANSIT or IN_STORAGE",
+        "days_in_storage": "X days (planned: Y days)",
+        "estimated_delivery": "DATE with confidence
