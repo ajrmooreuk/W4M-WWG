@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWGiles AI Sales & GP Guardian Integration Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --wwg-primary: #94134d;
+            --wwg-secondary: #0797d5;
+            --wwg-accent: #009b90;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--wwg-primary) 0%, var(--wwg-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header .subtitle {
+            color: #a0a0a0;
+            font-size: 1.2em;
+        }
+        
+        /* Main Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .card-title {
+            font-family: Georgia, serif;
+            font-size: 1.1em;
+            color: var(--dark);
+        }
+        
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .badge-success { background: var(--success); }
+        .badge-warning { background: var(--warning); }
+        .badge-danger { background: var(--danger); }
+        .badge-primary { background: var(--wwg-primary); }
+        .badge-secondary { background: var(--wwg-secondary); }
+        
+        /* KPI Tiles */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-tile {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kpi-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .kpi-tile.financial::before { background: var(--success); }
+        .kpi-tile.customer::before { background: var(--wwg-secondary); }
+        .kpi-tile.process::before { background: var(--warning); }
+        .kpi-tile.learning::before { background: var(--wwg-primary); }
+        
+        .kpi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--dark);
+            margin: 10px 0;
+        }
+        
+        .kpi-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .kpi-target {
+            font-size: 0.85em;
+            color: #999;
+        }
+        
+        .kpi-trend {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        
+        .trend-up { background: #d4edda; color: var(--success); }
+        .trend-down { background: #f8d7da; color: var(--danger); }
+        .trend-stable { background: #e2e3e5; color: #6c757d; }
+        
+        /* Lifecycle Pipeline */
+        .lifecycle-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .lifecycle-title {
+            font-family: Georgia, serif;
+            font-size: 1.3em;
+            color: var(--dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .pipeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .pipeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            right: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success), var(--wwg-secondary), var(--warning), var(--wwg-primary), var(--success));
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .pipeline-stage {
+            text-align: center;
+            z-index: 2;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 150px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .pipeline-stage:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stage-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .stage-name {
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .stage-days {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stage-target {
+            font-size: 0.85em;
+            color: #999;
+        }
+        
+        /* GP Guardian Section */
+        .gp-guardian {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .gp-waterfall {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .waterfall-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            padding: 20px 0;
+        }
+        
+        .waterfall-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .bar {
+            width: 80px;
+            border-radius: 5px 5px 0 0;
+            transition: height 1s ease;
+            position: relative;
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .bar-label {
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .bar.booked { background: linear-gradient(180deg, var(--success), #27ae60); }
+        .bar.storage { background: linear-gradient(180deg, var(--danger), #c0392b); }
+        .bar.finance { background: linear-gradient(180deg, var(--warning), #e67e22); }
+        .bar.realized { background: linear-gradient(180deg, var(--wwg-secondary), #2980b9); }
+        
+        .gp-alerts {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .alert-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-high {
+            background: #ffeaea;
+            border-left: 4px solid var(--danger);
+        }
+        
+        .alert-medium {
+            background: #fff8e6;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .alert-info {
+            background: #e6f4ff;
+            border-left: 4px solid var(--wwg-secondary);
+        }
+        
+        .alert-icon {
+            font-size: 1.5em;
+        }
+        
+        .alert-text {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-weight: bold;
+            color: var(--dark);
+            font-size: 0.9em;
+        }
+        
+        .alert-desc {
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        /* Customer Intelligence */
+        .customer-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .customer-tier-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .tier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .tier-name {
+            font-family: Georgia, serif;
+            font-size: 1.2em;
+            color: var(--dark);
+        }
+        
+        .tier-count {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .tier-platinum .tier-count { color: #8b7355; }
+        .tier-gold .tier-count { color: #daa520; }
+        .tier-silver .tier-count { color: #c0c0c0; }
+        
+        .tier-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .tier-metric {
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .tier-metric-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .tier-metric-label {
+            font-size: 0.75em;
+            color: #666;
+        }
+        
+        /* Action Recommendations */
+        .actions-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .action-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .action-card {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .action-card:hover {
+            border-color: var(--wwg-secondary);
+            transform: translateY(-3px);
+        }
+        
+        .action-priority {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .priority-urgent {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .priority-high {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .priority-medium {
+            background: var(--wwg-secondary);
+            color: white;
+        }
+        
+        .action-title {
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .action-desc {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .action-impact {
+            font-size: 0.9em;
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        /* ROI Summary */
+        .roi-section {
+            background: linear-gradient(135deg, var(--wwg-primary) 0%, var(--wwg-secondary) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        
+        .roi-item {
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .roi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .roi-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        /* Inventory Matching Table */
+        .matching-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: var(--light);
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            color: var(--dark);
+            border-bottom: 2px solid #ddd;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .urgency-high { color: var(--danger); font-weight: bold; }
+        .urgency-medium { color: var(--warning); font-weight: bold; }
+        .urgency-low { color: var(--success); }
+        
+        .match-score {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+        }
+        
+        .match-excellent { background: var(--success); }
+        .match-good { background: var(--wwg-secondary); }
+        .match-fair { background: var(--warning); }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>WWGiles AI-Powered Sales & GP Guardian</h1>
+            <div class="subtitle">Source to Sold to Paid Optimization Dashboard</div>
+        </div>
+        
+        <!-- KPI Summary Row -->
+        <div class="kpi-grid">
+            <div class="kpi-tile financial">
+                <div class="kpi-label">Realized GP %</div>
+                <div class="kpi-value" id="realizedGP">10.5%</div>
+                <div class="kpi-target">Target: 22%</div>
+                <div class="kpi-trend trend-up">+0.8% this month</div>
+            </div>
+            <div class="kpi-tile financial">
+                <div class="kpi-label">Days Source to Paid</div>
+                <div class="kpi-value" id="daysSourceToPaid">52</div>
+                <div class="kpi-target">Target: 35</div>
+                <div class="kpi-trend trend-down">-3 days vs last month</div>
+            </div>
+            <div class="kpi-tile customer">
+                <div class="kpi-label">Average DSO</div>
+                <div class="kpi-value" id="avgDSO">40</div>
+                <div class="kpi-target">Target: 25 days</div>
+                <div class="kpi-trend trend-down">-2 days this month</div>
+            </div>
+            <div class="kpi-tile process">
+                <div class="kpi-label">Avg Storage Days</div>
+                <div class="kpi-value" id="avgStorage">12</div>
+                <div class="kpi-target">Target: 6 days</div>
+                <div class="kpi-trend trend-stable">No change</div>
+            </div>
+            <div class="kpi-tile learning">
+                <div class="kpi-label">AI Adoption</div>
+                <div class="kpi-value" id="aiAdoption">35%</div>
+                <div class="kpi-target">Target: 80%</div>
+                <div class="kpi-trend trend-up">+15% this month</div>
+            </div>
+        </div>
+        
+        <!-- Source to Paid Pipeline -->
+        <div class="lifecycle-section">
+            <div class="lifecycle-title">📦 Source to Paid Lifecycle Pipeline</div>
+            <div class="pipeline">
+                <div class="pipeline-stage">
+                    <div class="stage-icon">🚢</div>
+                    <div class="stage-name">SOURCE</div>
+                    <div class="stage-days">0</div>
+                    <div class="stage-target">Container Purchased</div>
+                </div>
+                <div class="pipeline-stage">
+                    <div class="stage-icon">🌊</div>
+                    <div class="stage-name">TRANSIT</div>
+                    <div class="stage-days">24</div>
+                    <div class="stage-target">~21-28 days</div>
+                </div>
+                <div class="pipeline-stage">
+                    <div class="stage-icon">🏭</div>
+                    <div class="stage-name">STORAGE</div>
+                    <div class="stage-days" style="color: var(--danger);">+12</div>
+                    <div class="stage-target">Target: +4 days</div>
+                </div>
+                <div class="pipeline-stage">
+                    <div class="stage-icon">💼</div>
+                    <div class="stage-name">SOLD</div>
+                    <div class="stage-days">36</div>
+                    <div class="stage-target">Booked GP Recorded</div>
+                </div>
+                <div class="pipeline-stage">
+                    <div class="stage-icon">💰</div>
+                    <div class="stage-name">PAID</div>
+                    <div class="stage-days" style="color: var(--danger);">+16</div>
+                    <div class="stage-target">Target: +10 days</div>
+                </div>
+                <div class="pipeline-stage" style="background: var(--success); color: white;">
+                    <div class="stage-icon">✅</div>
+                    <div class="stage-name">TOTAL</div>
+                    <div class="stage-days">52 days</div>
+                    <div class="stage-target">Target: 35</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- GP Guardian Section -->
+        <div class="gp-guardian">
+            <div class="gp-waterfall">
+                <div class="lifecycle-title">🛡️ GP Guardian - Margin Waterfall (Sample Order)</div>
+                <div class="waterfall-bars">
+                    <div class="waterfall-bar">
+                        <div class="bar booked" style="height: 200px;">
+                            <div class="bar-value">£2,500</div>
+                        </div>
+                        <div class="bar-label">Booked GP<br>(at order)</div>
+                    </div>
+                    <div class="waterfall-bar">
+                        <div class="bar storage" style="height: 50px;">
+                            <div class="bar-value">-£200</div>
+                        </div>
+                        <div class="bar-label">Storage Cost<br>(+8 days)</div>
+                    </div>
+                    <div class="waterfall-bar">
+                        <div class="bar finance" style="height: 30px;">
+                            <div class="bar-value">-£150</div>
+                        </div>
+                        <div class="bar-label">Finance Cost<br>(16 day delay)</div>
+                    </div>
+                    <div class="waterfall-bar">
+                        <div class="bar realized" style="height: 170px;">
+                            <div class="bar-value">£2,150</div>
+                        </div>
+                        <div class="bar-label">Realized GP<br>(at payment)</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <span class="badge badge-danger">GP Erosion: £350 (14%)</span>
+                </div>
+            </div>
+            
+            <div class="gp-alerts">
+                <div class="lifecycle-title">⚠️ Active Alerts</div>
+                <div class="alert-item alert-high pulse">
+                    <span class="alert-icon">🔴</span>
+                    <div class="alert-text">
+                        <div class="alert-title">High Storage Alert</div>
+                        <div class="alert-desc">Container NZ-4521: 14 days in storage. Target customers: Metro Hotels, Premier Foods</div>
+                    </div>
+                </div>
+                <div class="alert-item alert-high">
+                    <span class="alert-icon">🔴</span>
+                    <div class="alert-text">
+                        <div class="alert-title">Payment Overdue</div>
+                        <div class="alert-desc">ABC Restaurant: £45,000 - 22 days overdue. Finance cost: £197</div>
+                    </div>
+                </div>
+                <div class="alert-item alert-medium">
+                    <span class="alert-icon">🟡</span>
+                    <div class="alert-text">
+                        <div class="alert-title">Margin Erosion</div>
+                        <div class="alert-desc">Order ORD-2847: Current GP 18% below booked GP</div>
+                    </div>
+                </div>
+                <div class="alert-item alert-info">
+                    <span class="alert-icon">🔵</span>
+                    <div class="alert-text">
+                        <div class="alert-title">Expansion Opportunity</div>
+                        <div class="alert-desc">Golden Palace Hotels: High expansion potential (score: 82)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Intelligence -->
+        <div class="customer-section">
+            <div class="customer-tier-card tier-platinum">
+                <div class="tier-header">
+                    <div class="tier-name">💎 Platinum Customers</div>
+                    <div class="tier-count">24</div>
+                </div>
+                <p style="font-size: 0.85em; color: #666;">Score 85+ | Best pricing | Priority service</p>
+                <div class="tier-metrics">
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">23%</div>
+                        <div class="tier-metric-label">Avg Margin</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">18</div>
+                        <div class="tier-metric-label">Avg DSO</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">96%</div>
+                        <div class="tier-metric-label">Price Accept</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">£1.8M</div>
+                        <div class="tier-metric-label">Annual Rev</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="customer-tier-card tier-gold">
+                <div class="tier-header">
+                    <div class="tier-name">🥇 Gold Customers</div>
+                    <div class="tier-count">58</div>
+                </div>
+                <p style="font-size: 0.85em; color: #666;">Score 70-84 | Standard discount | Regular contact</p>
+                <div class="tier-metrics">
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">19%</div>
+                        <div class="tier-metric-label">Avg Margin</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">32</div>
+                        <div class="tier-metric-label">Avg DSO</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">91%</div>
+                        <div class="tier-metric-label">Price Accept</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">£2.4M</div>
+                        <div class="tier-metric-label">Annual Rev</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="customer-tier-card tier-silver">
+                <div class="tier-header">
+                    <div class="tier-name">🥈 Silver & Bronze</div>
+                    <div class="tier-count">165</div>
+                </div>
+                <p style="font-size: 0.85em; color: #666;">Score <70 | List price | Review for improvement</p>
+                <div class="tier-metrics">
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">12%</div>
+                        <div class="tier-metric-label">Avg Margin</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">48</div>
+                        <div class="tier-metric-label">Avg DSO</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">82%</div>
+                        <div class="tier-metric-label">Price Accept</div>
+                    </div>
+                    <div class="tier-metric">
+                        <div class="tier-metric-value">£1.1M</div>
+                        <div class="tier-metric-label">Annual Rev</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Action Recommendations -->
+        <div class="actions-section">
+            <div class="lifecycle-title">🎯 AI-Generated Action Recommendations</div>
+            <div class="action-list">
+                <div class="action-card">
+                    <span class="action-priority priority-urgent">URGENT</span>
+                    <div class="action-title">Sell Striploin Container AU-2847</div>
+                    <div class="action-desc">2,400kg at day 14. Target: Premier Restaurants (DSO: 18, Price: 94%)</div>
+                    <div class="action-impact">Potential GP save: £480</div>
+                </div>
+                <div class="action-card">
+                    <span class="action-priority priority-urgent">URGENT</span>
+                    <div class="action-title">Collect Payment - ABC Restaurant</div>
+                    <div class="action-desc">£45,000 overdue 22 days. Finance cost accumulating £9/day</div>
+                    <div class="action-impact">Stop erosion: £197 so far</div>
+                </div>
+                <div class="action-card">
+                    <span class="action-priority priority-high">HIGH</span>
+                    <div class="action-title">Upsell Golden Palace Hotels</div>
+                    <div class="action-desc">Expansion score 82. Purchase pattern shows capacity for +40% volume</div>
+                    <div class="action-impact">Potential: £180K annual</div>
+                </div>
+                <div class="action-card">
+                    <span class="action-priority priority-high">HIGH</span>
+                    <div class="action-title">Reprice Ribeye Inventory</div>
+                    <div class="action-desc">Container NZ-3892 at day 11. Recommend 5% discount for quick sale</div>
+                    <div class="action-impact">Better than 3 more days storage</div>
+                </div>
+                <div class="action-card">
+                    <span class="action-priority priority-medium">MEDIUM</span>
+                    <div class="action-title">Retention Call - Metro Foods</div>
+                    <div class="action-desc">Churn risk score: 68. Order frequency down 25% vs prior quarter</div>
+                    <div class="action-impact">Protect: £420K annual rev</div>
+                </div>
+                <div class="action-card">
+                    <span class="action-priority priority-medium">MEDIUM</span>
+                    <div class="action-title">Review Bronze Customer XYZ Catering</div>
+                    <div class="action-desc">Profitability score: 32. DSO: 62 days. Margin: 8%</div>
+                    <div class="action-impact">Consider pricing increase or exit</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Inventory-Customer Matching -->
+        <div class="matching-section">
+            <div class="lifecycle-title">🔄 AI Inventory-Customer Matching Engine</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Container</th>
+                        <th>Qty (kg)</th>
+                        <th>Age</th>
+                        <th>Urgency</th>
+                        <th>Recommended Customer</th>
+                        <th>Match Score</th>
+                        <th>Suggested Price</th>
+                        <th>Predicted DSO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Striploin Premium</strong></td>
+                        <td>AU-2847</td>
+                        <td>2,400</td>
+                        <td>14 days</td>
+                        <td class="urgency-high">🔴 URGENT</td>
+                        <td>Premier Restaurants</td>
+                        <td><span class="match-score match-excellent">94</span></td>
+                        <td>List -8%</td>
+                        <td>18 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ribeye MS4+</strong></td>
+                        <td>NZ-3892</td>
+                        <td>1,800</td>
+                        <td>11 days</td>
+                        <td class="urgency-high">🔴 URGENT</td>
+                        <td>Metro Hotels Group</td>
+                        <td><span class="match-score match-excellent">91</span></td>
+                        <td>List -5%</td>
+                        <td>22 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tenderloin</strong></td>
+                        <td>AU-2921</td>
+                        <td>960</td>
+                        <td>8 days</td>
+                        <td class="urgency-medium">🟡 MODERATE</td>
+                        <td>Platinum Dining Co</td>
+                        <td><span class="match-score match-good">87</span></td>
+                        <td>List -2%</td>
+                        <td>15 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chuck Roll</strong></td>
+                        <td>NZ-4521</td>
+                        <td>3,200</td>
+                        <td>14 days</td>
+                        <td class="urgency-high">🔴 URGENT</td>
+                        <td>City Catering Services</td>
+                        <td><span class="match-score match-good">82</span></td>
+                        <td>List -10%</td>
+                        <td>28 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lamb Rack</strong></td>
+                        <td>NZ-4498</td>
+                        <td>1,400</td>
+                        <td>5 days</td>
+                        <td class="urgency-low">🟢 LOW</td>
+                        <td>Golden Palace Hotels</td>
+                        <td><span class="match-score match-excellent">96</span></td>
+                        <td>List price</td>
+                        <td>20 days</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ROI Summary -->
+        <div class="roi-section">
+            <div class="lifecycle-title" style="color: white;">💰 Projected Annual ROI</div>
+            <div class="roi-grid">
+                <div class="roi-item">
+                    <div class="roi-value">£92K</div>
+                    <div class="roi-label">Investment</div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-value">£705K</div>
+                    <div class="roi-label">Annual Benefit</div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-value">8 wks</div>
+                    <div class="roi-label">Payback Period</div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-value">666%</div>
+                    <div class="roi-label">Year 1 ROI</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>WWGiles AI-Powered Sales & GP Guardian Integration | Powered by W4M BAIV Architecture</p>
+            <p>Document Version 1.0 | December 2025</p>
+        </div>
+    </div>
+    
+    <script>
+        // Simulate real-time updates
+        function updateKPIs() {
+            // Random small fluctuations to simulate live data
+            const gpElement = document.getElementById('realizedGP');
+            const currentGP = 10.5 + (Math.random() * 0.3 - 0.15);
+            gpElement.textContent = currentGP.toFixed(1) + '%';
+            
+            const adoptionElement = document.getElementById('aiAdoption');
+            const currentAdoption = 35 + Math.floor(Math.random() * 3);
+            adoptionElement.textContent = currentAdoption + '%';
+        }
+        
+        // Update every 10 seconds
+        setInterval(updateKPIs, 10000);
+        
+        // Add click handlers to action cards
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function() {
+                alert('Opening action details...\n\nIn production, this would open the full action workflow in the CRM.');
+            });
+        });
+        
+        // Add click handler to matching table rows
+        document.querySelectorAll('.matching-section tbody tr').forEach(row => {
+            row.style.cursor = 'pointer';
+            row.addEventListener('click', function() {
+                const product = this.cells[0].textContent;
+                const customer = this.cells[5].textContent;
+                alert(`Creating sales opportunity:\n\nProduct: ${product}\nTarget: ${customer}\n\nIn production, this would open a new opportunity record in CRM.`);
+            });
+        });
+    </script>
+</body>
+</html>

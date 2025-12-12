@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWGiles Strategic Transformation | Executive Communication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wwg-primary: #94134d;
+            --wwg-secondary: #0797d5;
+            --wwg-accent: #009b90;
+            --wwg-dark: #1a1a2e;
+            --wwg-light: #f8f9fa;
+            --financial-green: #2e7d32;
+            --customer-blue: #1565c0;
+            --process-orange: #ef6c00;
+            --learning-purple: #7b1fa2;
+            --crisis-red: #c62828;
+            --success-green: #43a047;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: linear-gradient(135deg, var(--wwg-dark) 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .executive-header {
+            background: linear-gradient(135deg, var(--wwg-primary) 0%, #7b0f41 100%);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .executive-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .company-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Crisis Banner */
+        .crisis-banner {
+            background: linear-gradient(90deg, var(--crisis-red), #b71c1c);
+            padding: 25px 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 40px rgba(198, 40, 40, 0.4);
+            animation: pulse-subtle 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+        }
+        
+        .crisis-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+        
+        .crisis-content p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .crisis-metric {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            min-width: 150px;
+        }
+        
+        .crisis-metric .number {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .crisis-metric .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        /* Opportunity Banner */
+        .opportunity-banner {
+            background: linear-gradient(90deg, var(--success-green), #2e7d32);
+            padding: 25px 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 40px rgba(46, 125, 50, 0.4);
+        }
+        
+        /* BSC Strategy Map */
+        .strategy-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--wwg-accent);
+            margin: 15px auto 0;
+        }
+        
+        .bsc-map {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .bsc-perspective {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            border-left: 5px solid;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .bsc-perspective:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .bsc-perspective.financial { border-left-color: var(--financial-green); }
+        .bsc-perspective.customer { border-left-color: var(--customer-blue); }
+        .bsc-perspective.process { border-left-color: var(--process-orange); }
+        .bsc-perspective.learning { border-left-color: var(--learning-purple); }
+        
+        .perspective-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .perspective-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+        }
+        
+        .perspective-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .financial .perspective-badge { background: var(--financial-green); }
+        .customer .perspective-badge { background: var(--customer-blue); }
+        .process .perspective-badge { background: var(--process-orange); }
+        .learning .perspective-badge { background: var(--learning-purple); }
+        
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .objective-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .objective-card:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-3px);
+        }
+        
+        .objective-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .objective-id {
+            background: rgba(255,255,255,0.1);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .objective-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .objective-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+        }
+        
+        .metric-progress {
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .metric-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+        
+        /* Cause-Effect Chains */
+        .causal-chains {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .chain-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .chain-card:hover {
+            border-color: var(--wwg-accent);
+            box-shadow: 0 10px 30px rgba(0, 155, 144, 0.2);
+        }
+        
+        .chain-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: var(--wwg-accent);
+        }
+        
+        .chain-flow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .chain-node {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .chain-arrow {
+            color: var(--wwg-accent);
+            font-size: 1.2em;
+        }
+        
+        .chain-outcome {
+            background: linear-gradient(135deg, var(--financial-green), #1b5e20);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* Executive Narratives */
+        .narratives-section {
+            margin-top: 50px;
+        }
+        
+        .narrative-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .narrative-tab {
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .narrative-tab:hover, .narrative-tab.active {
+            background: var(--wwg-primary);
+            border-color: var(--wwg-primary);
+        }
+        
+        .narrative-content {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 35px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .narrative-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .narrative-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: var(--wwg-accent);
+        }
+        
+        .narrative-section {
+            margin-bottom: 25px;
+        }
+        
+        .narrative-section h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: var(--wwg-secondary);
+        }
+        
+        .narrative-section p, .narrative-section ul {
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+        
+        .narrative-section ul {
+            padding-left: 25px;
+        }
+        
+        .narrative-section li {
+            margin-bottom: 8px;
+        }
+        
+        .impact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .impact-card {
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .impact-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--success-green);
+        }
+        
+        .impact-label {
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* Investment Summary */
+        .investment-section {
+            margin-top: 50px;
+        }
+        
+        .investment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .phase-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .phase-card:hover {
+            border-color: var(--wwg-accent);
+            transform: translateY(-5px);
+        }
+        
+        .phase-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--wwg-primary), #7b0f41);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 0 auto 15px;
+        }
+        
+        .phase-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        
+        .phase-duration {
+            color: var(--wwg-secondary);
+            margin-bottom: 15px;
+        }
+        
+        .phase-investment {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--wwg-accent);
+            margin-bottom: 20px;
+        }
+        
+        .phase-deliverables {
+            text-align: left;
+            padding: 0 10px;
+        }
+        
+        .phase-deliverables li {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        /* ROI Summary */
+        .roi-summary {
+            background: linear-gradient(135deg, var(--wwg-dark), #16213e);
+            border: 2px solid var(--wwg-accent);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .roi-item {
+            padding: 20px;
+        }
+        
+        .roi-value {
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--success-green);
+            text-shadow: 0 0 20px rgba(67, 160, 71, 0.3);
+        }
+        
+        .roi-label {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        /* Footer */
+        .executive-footer {
+            background: var(--wwg-primary);
+            padding: 30px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-cta {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .footer-action {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #fff;
+            color: var(--wwg-primary);
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-action:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        @media (max-width: 992px) {
+            .causal-chains, .investment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .roi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .crisis-banner, .opportunity-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .roi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="executive-header">
+        <div class="header-content">
+            <div class="company-badge">WWGiles Strategic Transformation</div>
+            <h1>From Crisis to Market Leadership</h1>
+            <p class="subtitle">BSC Cause-Effect Strategy for Owner-Managers & CEO</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Crisis Reality -->
+        <div class="crisis-banner">
+            <div class="crisis-content">
+                <h2>⚠️ The Burning Platform</h2>
+                <p>At 10.5% margin vs 15-20% industry average, WWGiles is in the <strong>bottom quartile</strong> — acquisition target territory. Invisible margin leakage costs £450,000 annually.</p>
+            </div>
+            <div class="crisis-metric">
+                <div class="number">10.5%</div>
+                <div class="label">Current Margin</div>
+            </div>
+            <div class="crisis-metric">
+                <div class="number">£450K</div>
+                <div class="label">Annual Leak</div>
+            </div>
+            <div class="crisis-metric">
+                <div class="number">89 days</div>
+                <div class="label">Cash Cycle</div>
+            </div>
+        </div>
+        
+        <!-- Opportunity -->
+        <div class="opportunity-banner">
+            <div class="crisis-content">
+                <h2>🎯 The Opportunity</h2>
+                <p>AI-powered operational excellence can achieve <strong>22% margin</strong> — top quartile — creating £6.1M additional GP and strategic optionality.</p>
+            </div>
+            <div class="crisis-metric">
+                <div class="number">22%</div>
+                <div class="label">Target Margin</div>
+            </div>
+            <div class="crisis-metric">
+                <div class="number">£6.1M</div>
+                <div class="label">Additional GP</div>
+            </div>
+            <div class="crisis-metric">
+                <div class="number">2,900%</div>
+                <div class="label">3-Year ROI</div>
+            </div>
+        </div>
+        
+        <!-- BSC Strategy Map -->
+        <section class="strategy-section">
+            <h2 class="section-title">BSC Cause-Effect Strategy Map</h2>
+            <p style="text-align: center; margin-bottom: 30px; opacity: 0.9;">Bottom-up causality: Investments in Learning & Growth enable Process Excellence, which drives Customer Value, delivering Financial Outcomes</p>
+            
+            <div class="bsc-map">
+                <!-- Financial Perspective -->
+                <div class="bsc-perspective financial">
+                    <div class="perspective-header">
+                        <h3 class="perspective-title">💰 Financial Outcomes</h3>
+                        <span class="perspective-badge">What owners see</span>
+                    </div>
+                    <div class="objectives-grid">
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">F1</span>
+                            </div>
+                            <div class="objective-name">Increase Realized GP</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Current → Target</span>
+                                    <span>10.5% → 22%</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 48%; background: var(--financial-green);"></div>
+                                </div>
+                                <div class="metric-row" style="margin-top: 10px;">
+                                    <span style="color: var(--success-green);">+ £6.1M by Year 3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">F2</span>
+                            </div>
+                            <div class="objective-name">Reduce Financing Cost</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Current → Target</span>
+                                    <span>£800K → £560K</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 70%; background: var(--financial-green);"></div>
+                                </div>
+                                <div class="metric-row" style="margin-top: 10px;">
+                                    <span style="color: var(--success-green);">- £240K annually</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">F3</span>
+                            </div>
+                            <div class="objective-name">Accelerate Cash Conversion</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Current → Target</span>
+                                    <span>89 → 45 days</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 51%; background: var(--financial-green);"></div>
+                                </div>
+                                <div class="metric-row" style="margin-top: 10px;">
+                                    <span style="color: var(--success-green);">£8M cash freed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Customer Perspective -->
+                <div class="bsc-perspective customer">
+                    <div class="perspective-header">
+                        <h3 class="perspective-title">👥 Customer Value</h3>
+                        <span class="perspective-badge">How we serve customers</span>
+                    </div>
+                    <div class="objectives-grid">
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">C1</span>
+                            </div>
+                            <div class="objective-name">Target Premium Buyers</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Who pay best price on time</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span>Premium Share</span>
+                                    <span>35% → 60%</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 58%; background: var(--customer-blue);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">C2</span>
+                            </div>
+                            <div class="objective-name">Reduce Days Sales Outstanding</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Faster payment collection</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span>DSO</span>
+                                    <span>47 → 25 days</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 53%; background: var(--customer-blue);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">C3</span>
+                            </div>
+                            <div class="objective-name">Improve Price Realization</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Achieve quoted prices</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span>Realization</span>
+                                    <span>88% → 95%</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 93%; background: var(--customer-blue);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Internal Process Perspective -->
+                <div class="bsc-perspective process">
+                    <div class="perspective-header">
+                        <h3 class="perspective-title">⚙️ Internal Process Excellence</h3>
+                        <span class="perspective-badge">How we operate</span>
+                    </div>
+                    <div class="objectives-grid">
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">P1</span>
+                            </div>
+                            <div class="objective-name">GP Guardian</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Booked → Current → Realized GP</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span>Prediction Accuracy</span>
+                                    <span>0% → 85%</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 0%; background: var(--process-orange);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">P2</span>
+                            </div>
+                            <div class="objective-name">AI Smart CRM</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Match inventory to best buyers</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span>Status</span>
+                                    <span>Manual → AI-optimized</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 20%; background: var(--process-orange);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">P3</span>
+                            </div>
+                            <div class="objective-name">Dynamic Pricing</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Risk-adjusted quotations</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span>Quote Time</span>
+                                    <span>4 hrs → 15 mins</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 6%; background: var(--process-orange);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">P4</span>
+                            </div>
+                            <div class="objective-name">Source→Sold→Paid Pipeline</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>End-to-end visibility</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span>Status</span>
+                                    <span>Siloed → Unified</span>
+                                </div>
+                                <div class="metric-progress">
+                                    <div class="metric-fill" style="width: 15%; background: var(--process-orange);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Learning & Growth Perspective -->
+                <div class="bsc-perspective learning">
+                    <div class="perspective-header">
+                        <h3 class="perspective-title">📚 Learning & Growth Foundation</h3>
+                        <span class="perspective-badge">Where we invest</span>
+                    </div>
+                    <div class="objectives-grid">
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">L1</span>
+                            </div>
+                            <div class="objective-name">AI Model Training</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Model Accuracy</span>
+                                    <span>0% → 85%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">L2</span>
+                            </div>
+                            <div class="objective-name">Data Quality</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>CRM Completeness</span>
+                                    <span>60% → 95%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">L3</span>
+                            </div>
+                            <div class="objective-name">Sales AI Enablement</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Tool Usage</span>
+                                    <span>20% → 80%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="objective-card">
+                            <div class="objective-header">
+                                <span class="objective-id">L4</span>
+                            </div>
+                            <div class="objective-name">Process Automation</div>
+                            <div class="objective-metrics">
+                                <div class="metric-row">
+                                    <span>Automation Level</span>
+                                    <span>15% → 70%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cause-Effect Chains -->
+            <h3 class="section-title" style="margin-top: 50px; font-size: 1.5em;">Cause-Effect Chains</h3>
+            <div class="causal-chains">
+                <div class="chain-card">
+                    <h4 class="chain-title">🛡️ Margin Recovery Chain</h4>
+                    <p>AI model training enables GP Guardian which enables price realization visibility which increases realized GP</p>
+                    <div class="chain-flow">
+                        <span class="chain-node" style="background: var(--learning-purple);">L1</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--process-orange);">P1</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--customer-blue);">C3</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--financial-green);">F1</span>
+                    </div>
+                    <div class="chain-outcome">💰 £6.1M additional GP by Year 3</div>
+                </div>
+                
+                <div class="chain-card">
+                    <h4 class="chain-title">💸 Cash Acceleration Chain</h4>
+                    <p>Process automation enables pipeline visibility which enables DSO reduction which accelerates cash and reduces financing cost</p>
+                    <div class="chain-flow">
+                        <span class="chain-node" style="background: var(--learning-purple);">L4</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--process-orange);">P4</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--customer-blue);">C2</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--financial-green);">F3</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--financial-green);">F2</span>
+                    </div>
+                    <div class="chain-outcome">💸 £8M cash freed, £520K annual savings</div>
+                </div>
+                
+                <div class="chain-card">
+                    <h4 class="chain-title">👥 Customer Optimization Chain</h4>
+                    <p>Data quality enables AI CRM which enables premium buyer targeting which increases realized GP</p>
+                    <div class="chain-flow">
+                        <span class="chain-node" style="background: var(--learning-purple);">L2</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--process-orange);">P2</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--customer-blue);">C1</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--financial-green);">F1</span>
+                    </div>
+                    <div class="chain-outcome">🎯 Focus resources on profitable customers</div>
+                </div>
+                
+                <div class="chain-card">
+                    <h4 class="chain-title">💲 Pricing Discipline Chain</h4>
+                    <p>Sales AI enablement enables dynamic pricing which improves price realization which increases realized GP</p>
+                    <div class="chain-flow">
+                        <span class="chain-node" style="background: var(--learning-purple);">L3</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--process-orange);">P3</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--customer-blue);">C3</span>
+                        <span class="chain-arrow">→</span>
+                        <span class="chain-node" style="background: var(--financial-green);">F1</span>
+                    </div>
+                    <div class="chain-outcome">📈 7% price realization improvement</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Executive Narratives -->
+        <section class="narratives-section">
+            <h2 class="section-title">Executive Communication Guide</h2>
+            <p style="text-align: center; margin-bottom: 30px; opacity: 0.9;">Tailored messaging for each stakeholder role</p>
+            
+            <div class="narrative-tabs">
+                <div class="narrative-tab active" onclick="showNarrative('ceo')">👔 CEO</div>
+                <div class="narrative-tab" onclick="showNarrative('cfo')">💰 CFO</div>
+                <div class="narrative-tab" onclick="showNarrative('coo')">⚙️ COO</div>
+                <div class="narrative-tab" onclick="showNarrative('sales')">📈 Sales Director</div>
+            </div>
+            
+            <div class="narrative-content active" id="ceo-narrative">
+                <h3 class="narrative-headline">From Survival to Market Leadership in 36 Months</h3>
+                
+                <div class="narrative-section">
+                    <h4>The Crisis</h4>
+                    <p>At 10.5% margin versus the 15-20% industry average, WWGiles sits in the bottom quartile. This isn't a performance gap—it's acquisition target territory. Every month without action erodes strategic optionality.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>The Opportunity</h4>
+                    <p>AI-powered operational excellence can move WWGiles from bottom quartile to top quartile (22% margin) within 36 months. This creates £6.1M additional annual GP and transforms the business from vulnerable to strategically valuable.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>The Ask</h4>
+                    <p>£400K total investment over 3 years. Start with £15K proof-of-concept in 30 days. Kill option if it doesn't work. But if it does—£12M+ return (2,900% ROI).</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>The Differentiator</h4>
+                    <p><strong>This isn't about technology. It's about making invisible profit leaks visible and fixable.</strong> Sales compensates on "booked GP" while £450K leaks through storage cost overruns that nobody tracks back to the orders that caused them.</p>
+                </div>
+                
+                <div class="impact-cards">
+                    <div class="impact-card">
+                        <div class="impact-value">£6.1M</div>
+                        <div class="impact-label">Additional GP Year 3</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">22%</div>
+                        <div class="impact-label">Target Margin</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">36 mo</div>
+                        <div class="impact-label">Transformation</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">2,900%</div>
+                        <div class="impact-label">3-Year ROI</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="narrative-content" id="cfo-narrative">
+                <h3 class="narrative-headline">Stop the £450K Annual Leak, Free £8M Working Capital</h3>
+                
+                <div class="narrative-section">
+                    <h4>The Problem</h4>
+                    <p>Sales is compensated on "booked GP" (margin calculated assuming 4-day storage). Reality? Average 12-day storage means £450,000 leaks annually through cost overruns that never get allocated back to originating orders.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>The Solution</h4>
+                    <p>GP Guardian tracks Booked → Current → Realized GP, allocating true storage costs to each order. This makes invisible margin erosion visible while there's still time to intervene.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>Financial Impact</h4>
+                    <ul>
+                        <li><strong>Margin Recovery:</strong> 4-5 percentage points through visibility and intervention</li>
+                        <li><strong>Working Capital Freed:</strong> £8M through DSO reduction from 47 to 25 days</li>
+                        <li><strong>Financing Cost Savings:</strong> £520K annually (interest + shorter cycle)</li>
+                    </ul>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>Payback</h4>
+                    <p>4 months on initial £100K investment. Full platform delivers 489% Year 1 ROI.</p>
+                </div>
+                
+                <div class="impact-cards">
+                    <div class="impact-card">
+                        <div class="impact-value">£450K</div>
+                        <div class="impact-label">Leak Stopped</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">£8M</div>
+                        <div class="impact-label">Cash Freed</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">£520K</div>
+                        <div class="impact-label">Annual Savings</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">4 mo</div>
+                        <div class="impact-label">Payback Period</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="narrative-content" id="coo-narrative">
+                <h3 class="narrative-headline">Visibility Creates Control, Control Creates Margin</h3>
+                
+                <div class="narrative-section">
+                    <h4>The Challenge</h4>
+                    <p>89-day cash conversion cycle with £24M tied up in working capital. Vessel delays (only 62% on-time from NZ) cascade through operations with no visibility until it's too late.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>The Approach</h4>
+                    <p>End-to-end pipeline visibility from Source → Sold → Paid. AI-powered prediction of margin erosion before it happens, not after P&L reconciliation.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>Quick Wins</h4>
+                    <ul>
+                        <li>Predict margin erosion 5-7 days before it happens</li>
+                        <li>Alert on delayed pickups before storage costs compound</li>
+                        <li>Match inbound inventory to ready buyers automatically</li>
+                        <li>Optimize container mix based on demand forecast</li>
+                    </ul>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>Operational Metrics</h4>
+                </div>
+                
+                <div class="impact-cards">
+                    <div class="impact-card">
+                        <div class="impact-value">12→6</div>
+                        <div class="impact-label">Storage Days</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">47→25</div>
+                        <div class="impact-label">DSO Days</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">18x→24x</div>
+                        <div class="impact-label">Inventory Turns</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">89→45</div>
+                        <div class="impact-label">Cash Cycle Days</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="narrative-content" id="sales-narrative">
+                <h3 class="narrative-headline">AI That Helps You Win, Not Police You</h3>
+                
+                <div class="narrative-section">
+                    <h4>The Frustration</h4>
+                    <p>You're compensated on margins that don't materialize—through no fault of your own. Vessel delays, customer pickup timing, and storage cost overruns erode the profit you booked.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>The Promise</h4>
+                    <p>GP Guardian makes you a margin hero, not a villain. Know the true story before it becomes a problem, and have tools to protect your deals.</p>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>What You Get</h4>
+                    <ul>
+                        <li><strong>True customer profitability</strong> before quoting—no more surprises</li>
+                        <li><strong>Risk-adjusted pricing</strong> that protects your commission</li>
+                        <li><strong>Early warning</strong> on deals going sideways—time to intervene</li>
+                        <li><strong>Priority targeting</strong> of customers who pay well and on time</li>
+                    </ul>
+                </div>
+                
+                <div class="narrative-section">
+                    <h4>AI CRM Benefits</h4>
+                    <p>Surfaces which customers to prioritize for maximum realized GP. Matches inbound inventory to your ready buyers. Predicts churn before it happens.</p>
+                </div>
+                
+                <div class="impact-cards">
+                    <div class="impact-card">
+                        <div class="impact-value">88%→95%</div>
+                        <div class="impact-label">Price Realization</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">35%→60%</div>
+                        <div class="impact-label">Premium Customers</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">4 hrs→15 min</div>
+                        <div class="impact-label">Quote Time</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">25%→40%</div>
+                        <div class="impact-label">Win Rate</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Investment Roadmap -->
+        <section class="investment-section">
+            <h2 class="section-title">Investment & Implementation Roadmap</h2>
+            
+            <div class="investment-grid">
+                <div class="phase-card">
+                    <div class="phase-number">1</div>
+                    <h3 class="phase-name">Prove the Model</h3>
+                    <div class="phase-duration">30 days</div>
+                    <div class="phase-investment">£15,000</div>
+                    <ul class="phase-deliverables">
+                        <li>✓ Historical data analysis (12 months)</li>
+                        <li>✓ Validate £450K storage leak</li>
+                        <li>✓ Build GP prediction model</li>
+                        <li>✓ Business case report</li>
+                        <li>✓ Go/No-Go decision point</li>
+                    </ul>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-number">2</div>
+                    <h3 class="phase-name">Deploy GP Guardian</h3>
+                    <div class="phase-duration">60 days</div>
+                    <div class="phase-investment">£85,000</div>
+                    <ul class="phase-deliverables">
+                        <li>✓ GP Guardian 2.2 live</li>
+                        <li>✓ Real-time dashboard</li>
+                        <li>✓ Agent ecosystem active</li>
+                        <li>✓ 20 pilot orders tracked</li>
+                        <li>✓ Early intervention proving value</li>
+                    </ul>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-number">3</div>
+                    <h3 class="phase-name">Integrated Platform</h3>
+                    <div class="phase-duration">90 days</div>
+                    <div class="phase-investment">£150,000</div>
+                    <ul class="phase-deliverables">
+                        <li>✓ AI Smart CRM integration</li>
+                        <li>✓ Dynamic Pricing Engine</li>
+                        <li>✓ Sales SOP automation</li>
+                        <li>✓ BSC dashboard live</li>
+                        <li>✓ Full margin visibility</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ROI Summary -->
+            <div class="roi-summary">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8em;">3-Year ROI Summary</h3>
+                <p style="opacity: 0.9; margin-top: 10px;">Every £1 invested returns £29 over 3 years</p>
+                
+                <div class="roi-grid">
+                    <div class="roi-item">
+                        <div class="roi-value">£400K</div>
+                        <div class="roi-label">Total Investment</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-value">£12M+</div>
+                        <div class="roi-label">Total Return</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-value">2,900%</div>
+                        <div class="roi-label">3-Year ROI</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-value">4 mo</div>
+                        <div class="roi-label">Initial Payback</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer class="executive-footer">
+        <div class="footer-cta">Ready to Transform WWGiles?</div>
+        <p style="margin-bottom: 20px; opacity: 0.9;">Start with £15K proof-of-concept. Prove the model in 30 days. Kill option if it doesn't work.</p>
+        <a href="#" class="footer-action">Schedule Steering Committee Review</a>
+    </footer>
+    
+    <script>
+        function showNarrative(role) {
+            // Update tabs
+            document.querySelectorAll('.narrative-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.narrative-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(role + '-narrative').classList.add('active');
+        }
+        
+        // Animate progress bars on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.metric-fill');
+                    fills.forEach(fill => {
+                        fill.style.width = fill.style.width;
+                    });
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.bsc-perspective').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

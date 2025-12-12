@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/gp-guardian-opportunity/v1.0",
+  "title": "WWG GP Guardian - Opportunity Framework",
+  "description": "Reframed executive positioning: Building on success, not crisis response",
+  "version": "1.0.0",
+  "lastModified": "2025-12-12",
+  
+  "executivePositioning": {
+    "@context": "https://schema.org",
+    "@type": "BusinessPlan",
+    "name": "GP Guardian - Margin Improvement Opportunity",
+    
+    "keyMessage": "Building on last year's success by making invisible margin visible",
+    
+    "framingPrinciples": {
+      "avoid": [
+        "Crisis language",
+        "Survival rhetoric",
+        "Bottom quartile emphasis",
+        "Distressed sale scenarios",
+        "Panic-inducing comparisons"
+      ],
+      "emphasize": [
+        "Building on strong performance",
+        "Capturing untapped opportunity",
+        "Visibility enabling improvement",
+        "Evidence-based decision making",
+        "Phased low-risk approach"
+      ]
+    },
+    
+    "coreOpportunity": {
+      "description": "WWGiles has an untapped opportunity to capture £450K+ in annual margin that currently disappears between order booking and payment collection",
+      "rootCause": "Gap between booked GP (4-day storage assumption) and realized GP (12-day average)",
+      "notAbout": "Fixing something broken",
+      "about": "Making invisible value visible"
+    }
+  },
+  
+  "businessCase": {
+    "@type": "FinancialProduct",
+    
+    "currentState": {
+      "annualRevenue": {"@type": "MonetaryAmount", "value": 53000000, "currency": "GBP"},
+      "grossMarginCurrent": "10.5%",
+      "industryAverage": "15-20%",
+      "storageAssumption": "4 days",
+      "storageActual": "12 days",
+      "annualStorageLeak": {"@type": "MonetaryAmount", "value": 450000, "currency": "GBP"}
+    },
+    
+    "opportunityState": {
+      "targetMargin": "22%",
+      "targetStorageDays": 6,
+      "potentialSavings": {"@type": "MonetaryAmount", "value": 225000, "currency": "GBP"},
+      "additionalGPYear1": {"@type": "MonetaryAmount", "value": 300000, "currency": "GBP"}
+    },
+    
+    "keyInsight": "The gap isn't about performance—it's about visibility. Top-quartile operators have this visibility."
+  },
+  
+  "solution": {
+    "@type": "Product",
+    "name": "GP Guardian",
+    
+    "threeCapabilities": [
+      {
+        "name": "Track",
+        "description": "Follow GP through Booked → Current → Realized stages in real-time"
+      },
+      {
+        "name": "Alert",
+        "description": "Flag margin erosion before it becomes a P&L surprise"
+      },
+      {
+        "name": "Act",
+        "description": "Enable operational intervention while there's still time to protect margin"
+      }
+    ],
+    
+    "outcome": "Operations discovers problems in time to act. Sales sees true customer profitability. Finance reconciles without surprises."
+  },
+  
+  "investmentPlan": {
+    "@type": "InvestmentOrDeposit",
+    
+    "phases": [
+      {
+        "phase": 1,
+        "name": "Validate",
+        "duration": "4 weeks",
+        "investment": {"@type": "MonetaryAmount", "value": 15000, "currency": "GBP"},
+        "outcome": "Prove the £450K gap with WWG data",
+        "decisionGate": "Review results, decide on Phase 2"
+      },
+      {
+        "phase": 2,
+        "name": "Pilot",
+        "duration": "8 weeks",
+        "investment": {"@type": "MonetaryAmount", "value": 45000, "currency": "GBP"},
+        "outcome": "Live tracking, demonstrate savings"
+      },
+      {
+        "phase": 3,
+        "name": "Scale",
+        "duration": "6 weeks",
+        "investment": {"@type": "MonetaryAmount", "value": 32000, "currency": "GBP"},
+        "outcome": "Full deployment, ongoing value"
+      }
+    ],
+    
+    "totalInvestment": {"@type": "MonetaryAmount", "value": 92000, "currency": "GBP"},
+    "year1Benefit": {"@type": "MonetaryAmount", "value": 300000, "currency": "GBP"},
+    "paybackPeriod": "4 months"
+  },
+  
+  "theAsk": {
+    "@type": "Action",
+    
+    "immediateAsk": {
+      "description": "Approve £15K for 30-day validation",
+      "investment": {"@type": "MonetaryAmount", "value": 15000, "currency": "GBP"},
+      "duration": "4 weeks"
+    },
+    
+    "riskMitigation": "If validation shows the gap is smaller than expected, we stop. If it confirms the opportunity, we proceed with confidence.",
+    
+    "decisionFramework": {
+      "question": "Do we believe margin visibility enables margin improvement?",
+      "ifYes": "Invest £15K in 30-day MVP",
+      "afterMVP": "Data-driven decision on Phase 2"
+    }
+  },
+  
+  "executiveMessages": {
+    "ceo": {
+      "headline": "From Good to Great",
+      "message": "WWG performed well last year. GP Guardian captures the next level—not by working harder, but by seeing clearly. Every importer faces the booked-vs-realized gap. The ones who close it set the pace.",
+      "ask": "£15K validation investment, 4-week decision gate"
+    },
+    
+    "cfo": {
+      "headline": "Capture the Invisible £450K",
+      "message": "GP Guardian tracks Booked→Current→Realized GP, making invisible margin erosion visible. 4-month payback on initial investment.",
+      "focus": "Working capital efficiency, cash cycle reduction"
+    },
+    
+    "coo": {
+      "headline": "Visibility Creates Control",
+      "message": "End-to-end pipeline visibility from Source→Sold→Paid. Predict margin erosion before it happens. Intervene while there's still time.",
+      "focus": "Operational efficiency, storage optimization"
+    },
+    
+    "salesDirector": {
+      "headline": "Know True Profitability Before You Quote",
+      "message": "See real customer profitability, not just booked margin. Focus on customers who pay well and on time. AI that helps you win, not police you.",
+      "focus": "Customer segmentation, pricing guidance"
+    }
+  },
+  
+  "closingStatement": {
+    "tagline": "Visibility creates control. Control creates margin.",
+    "summary": "WWGiles performed well last year. GP Guardian is about capturing the next level of performance—not by working harder, but by seeing clearly."
+  }
+}

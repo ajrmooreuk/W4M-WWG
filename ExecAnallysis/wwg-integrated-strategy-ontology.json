@@ -1,0 +1,505 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/integrated-strategy/v3.0",
+  "title": "WWGiles Integrated AI Strategy - BSC Cause-Effect Framework",
+  "description": "Strategic ontology connecting GP Guardian, AI Smart CRM, and operational excellence through BSC cause-effect relationships",
+  "version": "3.0.0",
+  "lastModified": "2025-12-12",
+  "@context": "https://schema.org",
+  "@type": "BusinessStrategy",
+  
+  "strategicContext": {
+    "businessIdentity": {
+      "@type": "Organization",
+      "name": "WWGiles",
+      "industry": "Meat Wholesale Import",
+      "annualRevenue": "£53,000,000",
+      "containersPerYear": 350,
+      "primaryMarkets": ["Australia", "New Zealand", "Iceland"]
+    },
+    "currentState": {
+      "grossMargin": {
+        "current": "10.5%",
+        "industryAverage": "15-20%",
+        "quartilePosition": "Bottom 25%",
+        "status": "CRITICAL"
+      },
+      "hiddenCostLeak": {
+        "annualStorageLeak": "£450,000",
+        "rootCause": "Booked GP assumes 4-day storage, reality is 12-day average",
+        "visibility": "Invisible until P&L reconciliation"
+      },
+      "cashConversionCycle": {
+        "currentDays": 89,
+        "components": {
+          "daysInventoryOutstanding": 42,
+          "daysSalesOutstanding": 47,
+          "daysPayablesOutstanding": 0
+        },
+        "workingCapitalTied": "£24,000,000",
+        "financingCost": "£800,000 annually at 3.5%"
+      }
+    },
+    "targetState": {
+      "grossMargin": "22%",
+      "cashConversionCycle": 45,
+      "timeline": "36 months",
+      "additionalGP": "£6,095,000 annually by Year 3"
+    }
+  },
+
+  "bscStrategyMap": {
+    "@type": "StrategyFramework",
+    "name": "Balanced Scorecard Cause-Effect Model",
+    "description": "Bottom-up causality from Learning & Growth through to Financial outcomes",
+    
+    "perspectives": {
+      "learningAndGrowth": {
+        "position": 1,
+        "theme": "Build AI Capability Foundation",
+        "objectives": [
+          {
+            "objectiveId": "L1",
+            "name": "AI Model Training & Adoption",
+            "description": "Train and deploy AI models for margin prediction and customer scoring",
+            "measures": {
+              "modelAccuracy": { "current": "0%", "target": "85%", "unit": "percentage" },
+              "adoptionRate": { "current": "0%", "target": "80%", "unit": "percentage" }
+            },
+            "enablesProcess": ["P1"],
+            "initiative": "GP Guardian MVP Development"
+          },
+          {
+            "objectiveId": "L2",
+            "name": "Data Quality Excellence",
+            "description": "Establish single source of truth with validated CRM data",
+            "measures": {
+              "dataCompleteness": { "current": "60%", "target": "95%", "unit": "percentage" },
+              "crmAdoption": { "current": "70%", "target": "100%", "unit": "percentage" }
+            },
+            "enablesProcess": ["P2"],
+            "initiative": "CRM Data Discipline Program"
+          },
+          {
+            "objectiveId": "L3",
+            "name": "Sales Team AI Enablement",
+            "description": "Equip sales team with AI tools for intelligent customer targeting",
+            "measures": {
+              "trainingCompletion": { "current": "0%", "target": "100%", "unit": "percentage" },
+              "toolUtilization": { "current": "20%", "target": "80%", "unit": "percentage" }
+            },
+            "enablesProcess": ["P3"],
+            "initiative": "AI-Powered Sales Enablement"
+          },
+          {
+            "objectiveId": "L4",
+            "name": "Process Automation",
+            "description": "Automate manual processes from order to cash collection",
+            "measures": {
+              "automationLevel": { "current": "15%", "target": "70%", "unit": "percentage" },
+              "manualTouchpoints": { "current": 28, "target": 8, "unit": "count" }
+            },
+            "enablesProcess": ["P4"],
+            "initiative": "Source-to-Paid Automation"
+          }
+        ]
+      },
+      
+      "internalProcess": {
+        "position": 2,
+        "theme": "Operational Excellence Through AI",
+        "objectives": [
+          {
+            "objectiveId": "P1",
+            "name": "GP Guardian - Real-time Margin Tracking",
+            "description": "Track Booked → Current → Realized GP with cost allocation",
+            "measures": {
+              "marginVisibility": { "current": "Booked only", "target": "Full lifecycle", "unit": "state" },
+              "storageAllocation": { "current": "None", "target": "Order-level", "unit": "granularity" },
+              "predictionAccuracy": { "current": "0%", "target": "85%", "unit": "percentage" }
+            },
+            "enabledBy": ["L1"],
+            "enablesCustomer": ["C3"],
+            "initiative": "GP Guardian 2.2 Deployment"
+          },
+          {
+            "objectiveId": "P2",
+            "name": "AI Smart CRM - Inventory-Buyer Matching",
+            "description": "Match inbound inventory to optimal buyers based on profitability and payment behavior",
+            "measures": {
+              "matchAccuracy": { "current": "Manual", "target": "AI-optimized", "unit": "state" },
+              "customerProfitabilityScore": { "current": "Unknown", "target": "Real-time", "unit": "visibility" }
+            },
+            "enabledBy": ["L2"],
+            "enablesCustomer": ["C1"],
+            "initiative": "AI CRM Customer Intelligence"
+          },
+          {
+            "objectiveId": "P3",
+            "name": "Dynamic Pricing Engine",
+            "description": "Risk-adjusted quotations based on customer behavior, inventory age, and margin floors",
+            "measures": {
+              "priceRealization": { "current": "88%", "target": "95%", "unit": "percentage" },
+              "quotationTime": { "current": "4 hours", "target": "15 minutes", "unit": "time" }
+            },
+            "enabledBy": ["L3"],
+            "enablesCustomer": ["C3"],
+            "initiative": "Dynamic Pricing Deployment"
+          },
+          {
+            "objectiveId": "P4",
+            "name": "Source→Sold→Paid Pipeline Visibility",
+            "description": "End-to-end visibility from procurement to cash collection",
+            "measures": {
+              "pipelineVisibility": { "current": "Siloed", "target": "Unified", "unit": "state" },
+              "bottleneckIdentification": { "current": "Reactive", "target": "Predictive", "unit": "mode" }
+            },
+            "enabledBy": ["L4"],
+            "enablesCustomer": ["C2"],
+            "initiative": "Container-to-Cash Platform"
+          }
+        ]
+      },
+      
+      "customer": {
+        "position": 3,
+        "theme": "Optimize Customer Value & Payment Velocity",
+        "objectives": [
+          {
+            "objectiveId": "C1",
+            "name": "Target Premium Buyers",
+            "description": "Prioritize customers who pay best price on time",
+            "measures": {
+              "premiumCustomerShare": { "current": "35%", "target": "60%", "unit": "percentage" },
+              "customerProfitability": { "current": "Unknown", "target": "Ranked", "unit": "visibility" }
+            },
+            "enabledBy": ["P2"],
+            "enablesFinancial": ["F1"],
+            "initiative": "Customer Tiering & Prioritization"
+          },
+          {
+            "objectiveId": "C2",
+            "name": "Reduce Days Sales Outstanding",
+            "description": "Accelerate payment collection from 47 to 25 days",
+            "measures": {
+              "dso": { "current": 47, "target": 25, "unit": "days" },
+              "onTimePayment": { "current": "72%", "target": "92%", "unit": "percentage" }
+            },
+            "enabledBy": ["P4"],
+            "enablesFinancial": ["F3"],
+            "initiative": "Payment Acceleration Program"
+          },
+          {
+            "objectiveId": "C3",
+            "name": "Improve Price Realization",
+            "description": "Achieve quoted prices through discipline and transparency",
+            "measures": {
+              "priceRealization": { "current": "88%", "target": "95%", "unit": "percentage" },
+              "discountLeakage": { "current": "12%", "target": "5%", "unit": "percentage" }
+            },
+            "enabledBy": ["P1", "P3"],
+            "enablesFinancial": ["F1"],
+            "initiative": "Pricing Discipline & Transparency"
+          }
+        ]
+      },
+      
+      "financial": {
+        "position": 4,
+        "theme": "Sustainable Profitability & Cash Generation",
+        "objectives": [
+          {
+            "objectiveId": "F1",
+            "name": "Increase Realized Gross Profit",
+            "description": "Grow from 10.5% to 22% realized margin over 36 months",
+            "measures": {
+              "realizedMargin": { "current": "10.5%", "target": "22%", "unit": "percentage" },
+              "additionalGP": { "current": "£0", "target": "£6,095,000", "unit": "currency" }
+            },
+            "enabledBy": ["C1", "C3"],
+            "financialImpact": {
+              "year1": "£2,385,000",
+              "year2": "£3,710,000",
+              "year3": "£6,095,000"
+            },
+            "initiative": "Margin Recovery Program"
+          },
+          {
+            "objectiveId": "F2",
+            "name": "Reduce Cost of Financing Stock",
+            "description": "Lower working capital financing costs by 30%",
+            "measures": {
+              "financingCost": { "current": "£800,000", "target": "£560,000", "unit": "currency" },
+              "workingCapitalTied": { "current": "£24,000,000", "target": "£16,000,000", "unit": "currency" }
+            },
+            "enabledBy": ["F1", "F3"],
+            "financialImpact": {
+              "annualSavings": "£240,000"
+            },
+            "initiative": "Working Capital Optimization"
+          },
+          {
+            "objectiveId": "F3",
+            "name": "Accelerate Cash Conversion",
+            "description": "Reduce cash conversion cycle from 89 to 45 days",
+            "measures": {
+              "cashConversionCycle": { "current": 89, "target": 45, "unit": "days" },
+              "cashFreed": { "current": "£0", "target": "£8,000,000", "unit": "currency" }
+            },
+            "enabledBy": ["C2"],
+            "financialImpact": {
+              "oneTimeRelease": "£8,000,000",
+              "annualInterestSavings": "£280,000"
+            },
+            "initiative": "Cash Acceleration Program"
+          }
+        ]
+      }
+    },
+    
+    "causalChains": [
+      {
+        "chainId": "MARGIN-RECOVERY",
+        "name": "Margin Recovery Chain",
+        "narrative": "AI model training enables GP Guardian → enables price realization visibility → enables premium buyer targeting → increases realized GP",
+        "links": ["L1 → P1 → C3 → F1"],
+        "primaryOutcome": "£6.1M additional GP by Year 3",
+        "ownerRole": "CFO/COO"
+      },
+      {
+        "chainId": "CASH-ACCELERATION",
+        "name": "Cash Acceleration Chain",
+        "narrative": "Process automation enables pipeline visibility → enables DSO reduction → accelerates cash conversion → reduces financing cost",
+        "links": ["L4 → P4 → C2 → F3 → F2"],
+        "primaryOutcome": "£8M cash freed, £280K annual savings",
+        "ownerRole": "CFO"
+      },
+      {
+        "chainId": "CUSTOMER-OPTIMIZATION",
+        "name": "Customer Optimization Chain",
+        "narrative": "Data quality excellence enables AI CRM → enables premium buyer targeting → increases realized GP",
+        "links": ["L2 → P2 → C1 → F1"],
+        "primaryOutcome": "Focus on profitable customers",
+        "ownerRole": "Sales Director"
+      },
+      {
+        "chainId": "PRICING-DISCIPLINE",
+        "name": "Pricing Discipline Chain",
+        "narrative": "Sales AI enablement enables dynamic pricing → improves price realization → increases realized GP",
+        "links": ["L3 → P3 → C3 → F1"],
+        "primaryOutcome": "7% price realization improvement",
+        "ownerRole": "Sales Director"
+      }
+    ]
+  },
+
+  "integratedSolution": {
+    "@type": "SoftwarePlatform",
+    "name": "WWGiles AI Operations Suite",
+    "components": [
+      {
+        "componentId": "GP-GUARDIAN",
+        "name": "GP Guardian 2.2",
+        "role": "Margin Protection Engine",
+        "capabilities": [
+          "Booked → Current → Realized GP tracking",
+          "Storage cost allocation to order level",
+          "Margin erosion prediction",
+          "Intervention alerting",
+          "Quotation risk adjustment"
+        ],
+        "integration": {
+          "inputs": ["ERP orders", "Storage data", "Vessel schedules"],
+          "outputs": ["GP dashboard", "Alerts", "Risk scores"],
+          "synergies": ["AI Smart CRM", "Dynamic Pricing"]
+        }
+      },
+      {
+        "componentId": "AI-SMART-CRM",
+        "name": "AI Smart CRM",
+        "role": "Customer Intelligence Engine",
+        "capabilities": [
+          "Customer profitability scoring",
+          "Payment behavior prediction",
+          "Inventory-buyer matching",
+          "Churn risk detection",
+          "Upsell opportunity identification"
+        ],
+        "integration": {
+          "inputs": ["Customer history", "GP Guardian data", "Inventory levels"],
+          "outputs": ["Customer scores", "Targeting recommendations", "Pipeline view"],
+          "synergies": ["GP Guardian", "Sales SOPs"]
+        }
+      },
+      {
+        "componentId": "DYNAMIC-PRICING",
+        "name": "Dynamic Pricing Engine",
+        "role": "Price Optimization Engine",
+        "capabilities": [
+          "Risk-adjusted quotations",
+          "Inventory age pricing",
+          "Customer tier pricing",
+          "Margin floor enforcement",
+          "Competitive positioning"
+        ],
+        "integration": {
+          "inputs": ["GP Guardian risk", "CRM scores", "Inventory age"],
+          "outputs": ["Optimized quotes", "Approval workflows"],
+          "synergies": ["GP Guardian", "AI Smart CRM"]
+        }
+      }
+    ],
+    "synergiesMatrix": {
+      "gpGuardian_to_crm": "Realized GP informs true customer profitability scores",
+      "crm_to_pricing": "Customer scores drive risk-adjusted quotations",
+      "pricing_to_gpGuardian": "Quote acceptance feeds back to GP prediction models",
+      "integrated_value": "30% greater impact than individual components"
+    }
+  },
+
+  "executiveCommunication": {
+    "ceoNarrative": {
+      "headline": "From Survival to Market Leadership in 36 Months",
+      "crisis": "At 10.5% margin vs 15-20% industry average, WWGiles is in bottom quartile - acquisition target territory",
+      "opportunity": "AI-powered operational excellence can achieve 22% margin - top quartile - creating £6.1M additional GP and strategic optionality",
+      "ask": "£400K total investment over 3 years for £12M+ return (2,900% ROI)",
+      "differentiator": "This isn't about technology - it's about making invisible profit leaks visible and fixable"
+    },
+    "cfoNarrative": {
+      "headline": "Stop the £450K Annual Leak, Free £8M Working Capital",
+      "problem": "Sales compensated on 'booked GP' while £450K leaks through storage cost overruns",
+      "solution": "GP Guardian tracks Booked → Current → Realized GP, allocating true costs to orders",
+      "impact": {
+        "marginRecovery": "4-5 percentage points",
+        "workingCapitalFreed": "£8M through DSO reduction",
+        "financingSaved": "£520K annually"
+      },
+      "payback": "4 months on initial £100K investment"
+    },
+    "cooNarrative": {
+      "headline": "Visibility Creates Control, Control Creates Margin",
+      "challenge": "89-day cash conversion cycle with £24M tied up in working capital",
+      "approach": "End-to-end pipeline visibility from source → sold → paid",
+      "quickWins": [
+        "Predict margin erosion before it happens",
+        "Alert on delayed pickups before storage costs compound",
+        "Match inbound inventory to ready buyers"
+      ],
+      "operationalMetrics": {
+        "storageReduction": "12 days → 6 days average",
+        "dsoReduction": "47 days → 25 days",
+        "inventoryTurns": "18x → 24x"
+      }
+    },
+    "salesDirectorNarrative": {
+      "headline": "AI That Helps You Win, Not Police You",
+      "frustration": "Compensated on margins that don't materialize due to factors outside your control",
+      "promise": "GP Guardian makes you a margin hero, not a villain",
+      "benefits": [
+        "Know true customer profitability before quoting",
+        "Risk-adjusted pricing protects your commission",
+        "Early warning on deals going sideways",
+        "Focus on customers who pay well and on time"
+      ],
+      "salesEnablement": "AI CRM surfaces which customers to prioritize for maximum realized GP"
+    }
+  },
+
+  "implementationPhasing": {
+    "phase1_foundation": {
+      "name": "Prove the Model",
+      "duration": "30 days",
+      "investment": "£15,000",
+      "deliverables": [
+        "Historical data analysis (12 months)",
+        "Validate £450K storage leak",
+        "Build GP prediction model",
+        "Business case report"
+      ],
+      "successCriteria": {
+        "modelAccuracy": "≥85%",
+        "savingsIdentified": "≥£200K",
+        "stakeholderApproval": "Go/No-Go decision"
+      }
+    },
+    "phase2_pilot": {
+      "name": "Deploy GP Guardian",
+      "duration": "60 days",
+      "investment": "£85,000",
+      "deliverables": [
+        "GP Guardian 2.2 live",
+        "Dashboard deployment",
+        "Agent ecosystem active",
+        "20 pilot orders tracked"
+      ],
+      "successCriteria": {
+        "liveTracking": "All new orders",
+        "alertAccuracy": "≥90%",
+        "userAdoption": "≥80%"
+      }
+    },
+    "phase3_scale": {
+      "name": "Integrated Platform",
+      "duration": "90 days",
+      "investment": "£150,000",
+      "deliverables": [
+        "AI Smart CRM integration",
+        "Dynamic Pricing Engine",
+        "Sales SOP automation",
+        "BSC dashboard live"
+      ],
+      "successCriteria": {
+        "marginImprovement": "≥2 percentage points",
+        "dsoReduction": "≥10 days",
+        "roiRealized": "≥200%"
+      }
+    }
+  },
+
+  "riskMitigation": {
+    "technicalRisks": [
+      {
+        "risk": "Data quality insufficient for AI models",
+        "mitigation": "Phase 1 validates data quality; CRM discipline program runs parallel",
+        "contingency": "Extend Phase 1 for data cleansing if needed"
+      },
+      {
+        "risk": "Integration complexity with legacy ERP",
+        "mitigation": "MVP uses batch data sync; real-time integration in Phase 3",
+        "contingency": "Continue batch mode if integration delays"
+      }
+    ],
+    "adoptionRisks": [
+      {
+        "risk": "Sales team resistance to margin visibility",
+        "mitigation": "Frame as enablement not policing; show commission protection benefits",
+        "contingency": "Pilot with willing champions first"
+      },
+      {
+        "risk": "Executive attention wanes",
+        "mitigation": "Weekly steering committee; visible quick wins; CEO champion",
+        "contingency": "Escalate to board if needed"
+      }
+    ],
+    "financialRisks": [
+      {
+        "risk": "ROI takes longer than projected",
+        "mitigation": "Phased investment with kill options; quick wins in 30 days",
+        "contingency": "Scale down to GP Guardian only if needed"
+      }
+    ]
+  },
+
+  "versionHistory": [
+    {
+      "version": "3.0.0",
+      "date": "2025-12-12",
+      "changes": [
+        "Integrated BSC cause-effect framework",
+        "Added executive communication narratives",
+        "Connected GP Guardian with AI Smart CRM and Dynamic Pricing",
+        "Added financing cost reduction dimension"
+      ]
+    }
+  ]
+}

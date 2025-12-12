@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWGiles Business Excellence Scorecard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* WWG Brand Colors */
+            --wwg-primary: #94134d;
+            --wwg-secondary: #0797d5;
+            --wwg-accent: #009b90;
+            /* Neutral palette */
+            --paper: #faf9f7;
+            --ink: #1a1a1a;
+            --ink-light: #4a4a4a;
+            --ink-muted: #7a7a7a;
+            --border: #e0ddd8;
+            --border-light: #f0ede8;
+            /* Status colors - professional, not alarming */
+            --opportunity: #0797d5;
+            --growth: #009b90;
+            --progress: #94134d;
+            --foundation: #6b5b4f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Header - Confident, not crisis */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 2px solid var(--wwg-primary);
+        }
+
+        .header h1 {
+            font-family: Georgia, serif;
+            font-size: 2.4em;
+            color: var(--wwg-primary);
+            font-weight: normal;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            color: var(--ink-light);
+            font-weight: 400;
+        }
+
+        .header .tagline {
+            margin-top: 16px;
+            font-size: 1.2em;
+            color: var(--wwg-secondary);
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        /* Executive Summary - Opportunity framing */
+        .exec-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            border-color: var(--wwg-primary);
+            box-shadow: 0 4px 20px rgba(148, 19, 77, 0.1);
+        }
+
+        .summary-label {
+            font-size: 0.85em;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            font-family: Georgia, serif;
+            font-size: 2em;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .summary-value.bracketed {
+            color: var(--wwg-secondary);
+        }
+
+        .summary-context {
+            font-size: 0.9em;
+            color: var(--ink-light);
+        }
+
+        .trend-up { color: var(--growth); }
+        .trend-stable { color: var(--ink-muted); }
+
+        /* Opportunity Banner - Not Crisis */
+        .opportunity-banner {
+            background: linear-gradient(135deg, var(--wwg-secondary) 0%, var(--wwg-accent) 100%);
+            color: white;
+            padding: 24px 32px;
+            border-radius: 8px;
+            margin-bottom: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .opportunity-content h3 {
+            font-family: Georgia, serif;
+            font-size: 1.3em;
+            font-weight: normal;
+            margin-bottom: 4px;
+        }
+
+        .opportunity-content p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .opportunity-action {
+            background: white;
+            color: var(--wwg-secondary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .opportunity-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* BSC Grid */
+        .bsc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .perspective-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .perspective-card:hover {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .perspective-header {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .perspective-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .perspective-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .perspective-icon.financial { background: rgba(148, 19, 77, 0.1); }
+        .perspective-icon.customer { background: rgba(7, 151, 213, 0.1); }
+        .perspective-icon.process { background: rgba(0, 155, 144, 0.1); }
+        .perspective-icon.learning { background: rgba(107, 91, 79, 0.1); }
+
+        .perspective-name {
+            font-family: Georgia, serif;
+            font-size: 1.2em;
+            color: var(--ink);
+        }
+
+        .perspective-score {
+            font-size: 1.4em;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: var(--border-light);
+            color: var(--ink-light);
+        }
+
+        .perspective-score.strong { background: rgba(0, 155, 144, 0.15); color: var(--growth); }
+        .perspective-score.building { background: rgba(7, 151, 213, 0.15); color: var(--wwg-secondary); }
+        .perspective-score.developing { background: rgba(148, 19, 77, 0.15); color: var(--wwg-primary); }
+
+        .perspective-body {
+            padding: 24px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-name {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .metric-values {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .metric-current {
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .metric-target {
+            font-size: 0.9em;
+            color: var(--ink-muted);
+        }
+
+        .metric-target::before {
+            content: '→ ';
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border-light);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .progress-fill.financial { background: var(--wwg-primary); }
+        .progress-fill.customer { background: var(--wwg-secondary); }
+        .progress-fill.process { background: var(--wwg-accent); }
+        .progress-fill.learning { background: var(--foundation); }
+
+        /* Initiative Priorities */
+        .initiatives-section {
+            margin-bottom: 48px;
+        }
+
+        .section-header {
+            font-family: Georgia, serif;
+            font-size: 1.5em;
+            color: var(--wwg-primary);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .initiatives-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .initiative-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .initiative-card:hover {
+            border-color: var(--wwg-secondary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .initiative-phase {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 0.75em;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .phase-1 { background: rgba(148, 19, 77, 0.1); color: var(--wwg-primary); }
+        .phase-2 { background: rgba(7, 151, 213, 0.1); color: var(--wwg-secondary); }
+        .phase-3 { background: rgba(0, 155, 144, 0.1); color: var(--wwg-accent); }
+
+        .initiative-title {
+            font-family: Georgia, serif;
+            font-size: 1.1em;
+            color: var(--ink);
+            margin-bottom: 8px;
+            padding-right: 60px;
+        }
+
+        .initiative-desc {
+            font-size: 0.9em;
+            color: var(--ink-light);
+            margin-bottom: 16px;
+        }
+
+        .initiative-impact {
+            background: var(--border-light);
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: auto;
+        }
+
+        .impact-label {
+            font-size: 0.75em;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .impact-value {
+            font-weight: 700;
+            color: var(--wwg-secondary);
+        }
+
+        /* Investment Note */
+        .investment-note {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px 32px;
+            margin-bottom: 48px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .investment-icon {
+            font-size: 2em;
+        }
+
+        .investment-content h4 {
+            font-family: Georgia, serif;
+            font-size: 1.1em;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .investment-content p {
+            color: var(--ink-light);
+            font-size: 0.95em;
+        }
+
+        /* Implementation Timeline */
+        .timeline-section {
+            margin-bottom: 48px;
+        }
+
+        .timeline {
+            display: flex;
+            gap: 24px;
+        }
+
+        .timeline-phase {
+            flex: 1;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .timeline-phase::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -14px;
+            width: 28px;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .timeline-phase:last-child::before {
+            display: none;
+        }
+
+        .phase-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .phase-number.p1 { background: var(--wwg-primary); color: white; }
+        .phase-number.p2 { background: var(--wwg-secondary); color: white; }
+        .phase-number.p3 { background: var(--wwg-accent); color: white; }
+
+        .phase-title {
+            font-family: Georgia, serif;
+            font-size: 1.1em;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .phase-duration {
+            font-size: 0.85em;
+            color: var(--ink-muted);
+            margin-bottom: 12px;
+        }
+
+        .phase-focus {
+            font-size: 0.9em;
+            color: var(--ink-light);
+        }
+
+        /* ROI Summary - Impact Focus */
+        .roi-summary {
+            background: linear-gradient(135deg, var(--wwg-primary) 0%, #7a1040 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+
+        .roi-item h4 {
+            font-size: 0.85em;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .roi-value {
+            font-family: Georgia, serif;
+            font-size: 2em;
+            font-weight: normal;
+        }
+
+        .roi-note {
+            font-size: 0.85em;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            color: var(--ink-muted);
+            font-size: 0.9em;
+        }
+
+        .footer .brand {
+            color: var(--wwg-primary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>WWGiles Business Excellence</h1>
+            <p class="subtitle">Balanced Scorecard · AI-Enabled Transformation</p>
+            <p class="tagline">"Visibility creates control. Control creates margin."</p>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="exec-summary">
+            <div class="summary-card">
+                <div class="summary-label">Current Position</div>
+                <div class="summary-value">10.5%</div>
+                <div class="summary-context">Gross Margin</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Industry Benchmark</div>
+                <div class="summary-value">15-20%</div>
+                <div class="summary-context">Top Quartile Range</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Target Position</div>
+                <div class="summary-value bracketed">[22%]</div>
+                <div class="summary-context">36-Month Goal</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Opportunity Value</div>
+                <div class="summary-value bracketed">[£6.1M]</div>
+                <div class="summary-context">Additional GP Year 3</div>
+            </div>
+        </div>
+
+        <!-- Opportunity Banner -->
+        <div class="opportunity-banner">
+            <div class="opportunity-content">
+                <h3>Building on Strong Foundations</h3>
+                <p>WWGiles performed well last year. This initiative unlocks the next level—better visibility, smarter decisions, stronger margins.</p>
+            </div>
+            <button class="opportunity-action" onclick="scrollToInitiatives()">View Priorities →</button>
+        </div>
+
+        <!-- BSC Perspectives -->
+        <div class="bsc-grid">
+            <!-- Financial -->
+            <div class="perspective-card">
+                <div class="perspective-header">
+                    <div class="perspective-title">
+                        <div class="perspective-icon financial">💰</div>
+                        <span class="perspective-name">Financial</span>
+                    </div>
+                    <span class="perspective-score building">Building</span>
+                </div>
+                <div class="perspective-body">
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Realized Gross Margin</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">10.5%</span>
+                            <span class="metric-target">[22%]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill financial" style="width: 48%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Margin Visibility Gap</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">[£450K]</span>
+                            <span class="metric-target">[£0]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill financial" style="width: 0%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Cash Cycle Days</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">89</span>
+                            <span class="metric-target">[45]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill financial" style="width: 51%"></div></div>
+                </div>
+            </div>
+
+            <!-- Customer -->
+            <div class="perspective-card">
+                <div class="perspective-header">
+                    <div class="perspective-title">
+                        <div class="perspective-icon customer">👥</div>
+                        <span class="perspective-name">Customer</span>
+                    </div>
+                    <span class="perspective-score strong">Strong</span>
+                </div>
+                <div class="perspective-body">
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Customer Retention</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">85%</span>
+                            <span class="metric-target">[95%]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill customer" style="width: 89%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Profitability Visibility</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">Limited</span>
+                            <span class="metric-target">[Full]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill customer" style="width: 25%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Response Time</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">4 hrs</span>
+                            <span class="metric-target">[30 min]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill customer" style="width: 12%"></div></div>
+                </div>
+            </div>
+
+            <!-- Internal Process -->
+            <div class="perspective-card">
+                <div class="perspective-header">
+                    <div class="perspective-title">
+                        <div class="perspective-icon process">⚙️</div>
+                        <span class="perspective-name">Internal Process</span>
+                    </div>
+                    <span class="perspective-score developing">Developing</span>
+                </div>
+                <div class="perspective-body">
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Storage Days (Avg)</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">12</span>
+                            <span class="metric-target">[6]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill process" style="width: 50%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Cost Allocation</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">Batch</span>
+                            <span class="metric-target">[Order-level]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill process" style="width: 20%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Inventory Turns</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">18x</span>
+                            <span class="metric-target">[24x]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill process" style="width: 75%"></div></div>
+                </div>
+            </div>
+
+            <!-- Learning & Growth -->
+            <div class="perspective-card">
+                <div class="perspective-header">
+                    <div class="perspective-title">
+                        <div class="perspective-icon learning">📚</div>
+                        <span class="perspective-name">Learning & Growth</span>
+                    </div>
+                    <span class="perspective-score developing">Developing</span>
+                </div>
+                <div class="perspective-body">
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">AI Tool Adoption</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">20%</span>
+                            <span class="metric-target">[80%]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill learning" style="width: 25%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Data Quality</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">60%</span>
+                            <span class="metric-target">[95%]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill learning" style="width: 63%"></div></div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-info">
+                            <div class="metric-name">Process Documentation</div>
+                        </div>
+                        <div class="metric-values">
+                            <span class="metric-current">Partial</span>
+                            <span class="metric-target">[Complete]</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill learning" style="width: 40%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Note -->
+        <div class="investment-note">
+            <div class="investment-icon">💡</div>
+            <div class="investment-content">
+                <h4>Internal Capability Build</h4>
+                <p>Implementation leverages existing team capacity and infrastructure. Investment is predominantly time and focus—nominal external costs. Value validated through phased delivery with clear decision gates.</p>
+            </div>
+        </div>
+
+        <!-- Initiative Priorities -->
+        <section class="initiatives-section" id="initiatives">
+            <h2 class="section-header">Strategic Initiative Priorities</h2>
+            <div class="initiatives-grid">
+                <div class="initiative-card">
+                    <span class="initiative-phase phase-1">Phase 1</span>
+                    <h3 class="initiative-title">GP Guardian</h3>
+                    <p class="initiative-desc">Real-time margin tracking: Booked → Current → Realized. Make invisible cost erosion visible.</p>
+                    <div class="initiative-impact">
+                        <div class="impact-label">Impact Focus</div>
+                        <div class="impact-value">Margin Visibility & Protection</div>
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <span class="initiative-phase phase-1">Phase 1</span>
+                    <h3 class="initiative-title">Customer Profitability</h3>
+                    <p class="initiative-desc">True profitability scoring including payment behavior, margin contribution, service cost.</p>
+                    <div class="initiative-impact">
+                        <div class="impact-label">Impact Focus</div>
+                        <div class="impact-value">Focus on Best Customers</div>
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <span class="initiative-phase phase-1">Phase 1</span>
+                    <h3 class="initiative-title">Pricing Guidance</h3>
+                    <p class="initiative-desc">AI-assisted pricing that accounts for inventory age, customer tier, and margin floors.</p>
+                    <div class="initiative-impact">
+                        <div class="impact-label">Impact Focus</div>
+                        <div class="impact-value">Smarter Pricing Decisions</div>
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <span class="initiative-phase phase-2">Phase 2</span>
+                    <h3 class="initiative-title">Sales Velocity Engine</h3>
+                    <p class="initiative-desc">Match aging inventory to optimal customers. Reduce storage days through intelligent demand matching.</p>
+                    <div class="initiative-impact">
+                        <div class="impact-label">Impact Focus</div>
+                        <div class="impact-value">Faster Inventory Turns</div>
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <span class="initiative-phase phase-2">Phase 2</span>
+                    <h3 class="initiative-title">Cash Cycle Optimization</h3>
+                    <p class="initiative-desc">Reduce 89-day cash cycle through proactive collections and payment behavior analysis.</p>
+                    <div class="initiative-impact">
+                        <div class="impact-label">Impact Focus</div>
+                        <div class="impact-value">Working Capital Release</div>
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <span class="initiative-phase phase-3">Phase 3</span>
+                    <h3 class="initiative-title">Predictive Operations</h3>
+                    <p class="initiative-desc">AI-powered forecasting for demand, vessel timing, and margin risk prediction.</p>
+                    <div class="initiative-impact">
+                        <div class="impact-label">Impact Focus</div>
+                        <div class="impact-value">Proactive Decision Making</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="timeline-section">
+            <h2 class="section-header">Implementation Phases</h2>
+            <div class="timeline">
+                <div class="timeline-phase">
+                    <div class="phase-number p1">1</div>
+                    <h4 class="phase-title">Foundation & Validation</h4>
+                    <div class="phase-duration">Weeks 1-4</div>
+                    <p class="phase-focus">GP Guardian MVP, historical data validation, baseline metrics established.</p>
+                </div>
+                <div class="timeline-phase">
+                    <div class="phase-number p2">2</div>
+                    <h4 class="phase-title">Pilot & Refinement</h4>
+                    <div class="phase-duration">Weeks 5-12</div>
+                    <p class="phase-focus">Live pilot, user adoption, sales velocity integration, customer profitability views.</p>
+                </div>
+                <div class="timeline-phase">
+                    <div class="phase-number p3">3</div>
+                    <h4 class="phase-title">Scale & Optimize</h4>
+                    <div class="phase-duration">Weeks 13-26</div>
+                    <p class="phase-focus">Full deployment, predictive capabilities, continuous improvement cycle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI Summary -->
+        <div class="roi-summary">
+            <div class="roi-item">
+                <h4>Year 1 Impact</h4>
+                <div class="roi-value">[£705K]</div>
+                <div class="roi-note">Combined benefits</div>
+            </div>
+            <div class="roi-item">
+                <h4>Year 3 Impact</h4>
+                <div class="roi-value">[£6.1M]</div>
+                <div class="roi-note">Full transformation</div>
+            </div>
+            <div class="roi-item">
+                <h4>Cash Released</h4>
+                <div class="roi-value">[£8M]</div>
+                <div class="roi-note">Working capital</div>
+            </div>
+            <div class="roi-item">
+                <h4>Initial Investment</h4>
+                <div class="roi-value">Nominal</div>
+                <div class="roi-note">Internal team capacity</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p><span class="brand">WWGiles</span> Business Excellence Program · Balanced Scorecard Framework</p>
+            <p style="margin-top: 8px;">Building on success. Creating visibility. Unlocking value.</p>
+        </footer>
+    </div>
+
+    <script>
+        function scrollToInitiatives() {
+            document.getElementById('initiatives').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

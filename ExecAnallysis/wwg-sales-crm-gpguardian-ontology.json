@@ -1,0 +1,707 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/sales-crm-gpguardian/v1.0",
+  "@context": "https://schema.org",
+  "title": "WWG AI-Powered Sales CRM & GP Guardian Integration Ontology",
+  "description": "Comprehensive ontology for optimizing meat wholesale profitability through AI-powered CRM integration with GP Guardian - tracking Source to Sold to Paid lifecycle",
+  "version": "1.0.0",
+  "lastModified": "2025-12-12",
+  "industry": "meat_wholesale_import",
+  "framework_alignment": ["W4M_BAIV", "BSC", "VSOM", "OKR"],
+
+  "vision": {
+    "statement": "Transform WWGiles into the UK's most profitable meat wholesaler through AI-powered optimization of the complete Source-to-Paid cycle",
+    "target_margin": "22%",
+    "current_margin": "10.5%",
+    "transformation_period": "36_months"
+  },
+
+  "strategic_objectives": {
+    "financial": {
+      "F1": {
+        "objective": "Increase Realized GP to 22%",
+        "current": "10.5%",
+        "target": "22%",
+        "key_results": [
+          "Reduce storage cost leak from £450K to £150K annually",
+          "Improve price realization by 8%",
+          "Optimize customer mix for margin"
+        ]
+      },
+      "F2": {
+        "objective": "Reduce Finance Costs by 30%",
+        "mechanism": "Accelerate Source-to-Paid cycle",
+        "key_results": [
+          "Reduce average days from source to payment from 52 to 35",
+          "Cut interest expense by £125K annually"
+        ]
+      },
+      "F3": {
+        "objective": "Improve Working Capital Efficiency",
+        "key_results": [
+          "Reduce DSO from 40 to 25 days",
+          "Optimize inventory turn to 24x annually"
+        ]
+      }
+    },
+    "customer": {
+      "C1": {
+        "objective": "Target High-Value Customers Systematically",
+        "mechanism": "AI-powered customer profitability scoring",
+        "key_results": [
+          "Identify and prioritize top 20% customers generating 80% margin",
+          "Match aging inventory to appropriate customer segments"
+        ]
+      },
+      "C2": {
+        "objective": "Reduce Days Sales Outstanding",
+        "current": "40_days",
+        "target": "25_days",
+        "mechanism": "Payment behavior AI and customer selection"
+      },
+      "C3": {
+        "objective": "Improve Price Realization",
+        "current": "88%",
+        "target": "95%",
+        "mechanism": "Dynamic pricing and customer-inventory matching"
+      }
+    },
+    "process": {
+      "P1": {
+        "objective": "AI-Powered Inventory-Customer Matching",
+        "description": "Match aging inventory to customers most likely to buy quickly at acceptable margins"
+      },
+      "P2": {
+        "objective": "Real-time GP Tracking",
+        "description": "Track GP through Booked → Current → Realized stages with cost allocation"
+      },
+      "P3": {
+        "objective": "Dynamic Pricing Engine",
+        "description": "Optimize pricing based on inventory age, customer value, and market conditions"
+      },
+      "P4": {
+        "objective": "Source-Sold-Paid Pipeline Management",
+        "description": "Visibility and optimization across entire cash conversion cycle"
+      }
+    },
+    "learning_growth": {
+      "L1": {
+        "objective": "AI Model Training and Deployment",
+        "models": ["customer_profitability", "payment_prediction", "demand_forecasting", "price_optimization"]
+      },
+      "L2": {
+        "objective": "CRM Data Quality",
+        "current": "60%",
+        "target": "95%"
+      },
+      "L3": {
+        "objective": "Sales Team AI Adoption",
+        "current": "20%",
+        "target": "80%"
+      }
+    }
+  },
+
+  "core_entities": {
+    "Container": {
+      "@type": "https://schema.org/Product",
+      "description": "Shipping container of meat products from supplier",
+      "properties": {
+        "containerId": {
+          "type": "string",
+          "description": "Unique container identifier"
+        },
+        "supplierId": {
+          "@type": "https://schema.org/Organization",
+          "description": "Reference to supplier"
+        },
+        "origin": {
+          "@type": "https://schema.org/Place",
+          "enum": ["Australia", "New_Zealand", "Iceland", "Other"]
+        },
+        "vesselId": {
+          "type": "string",
+          "description": "Vessel carrying container"
+        },
+        "departureDate": {
+          "@type": "https://schema.org/Date"
+        },
+        "estimatedArrival": {
+          "@type": "https://schema.org/Date"
+        },
+        "actualArrival": {
+          "@type": "https://schema.org/Date"
+        },
+        "delayDays": {
+          "type": "integer",
+          "calculated": "actualArrival - estimatedArrival"
+        },
+        "landedCost": {
+          "@type": "https://schema.org/MonetaryAmount"
+        },
+        "storageStartDate": {
+          "@type": "https://schema.org/Date"
+        },
+        "storageEndDate": {
+          "@type": "https://schema.org/Date"
+        },
+        "storageDays": {
+          "type": "integer"
+        },
+        "storageCostAccumulated": {
+          "@type": "https://schema.org/MonetaryAmount"
+        },
+        "products": {
+          "type": "array",
+          "items": {"$ref": "#/core_entities/ProductLine"}
+        },
+        "lifecycleStage": {
+          "enum": ["sourced", "in_transit", "arrived", "in_storage", "partially_sold", "fully_sold", "fully_paid"]
+        }
+      }
+    },
+
+    "ProductLine": {
+      "@type": "https://schema.org/Product",
+      "description": "Individual product SKU within a container",
+      "properties": {
+        "productId": {"type": "string"},
+        "productName": {"type": "string"},
+        "category": {
+          "enum": ["premium_cuts", "standard_cuts", "value_cuts", "offal", "specialty"]
+        },
+        "quantity": {
+          "@type": "https://schema.org/QuantitativeValue",
+          "unitText": "kg"
+        },
+        "unitCost": {
+          "@type": "https://schema.org/MonetaryAmount"
+        },
+        "targetMargin": {
+          "type": "number",
+          "format": "percentage"
+        },
+        "marginFloor": {
+          "type": "number",
+          "format": "percentage"
+        },
+        "currentAge": {
+          "type": "integer",
+          "unit": "days"
+        },
+        "urgencyScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "AI-calculated urgency to sell based on age, margin erosion"
+        },
+        "recommendedPrice": {
+          "@type": "https://schema.org/MonetaryAmount"
+        },
+        "recommendedCustomers": {
+          "type": "array",
+          "items": {"$ref": "#/core_entities/Customer"}
+        }
+      }
+    },
+
+    "Customer": {
+      "@type": "https://schema.org/Organization",
+      "description": "WWG customer with profitability metrics",
+      "properties": {
+        "customerId": {"type": "string"},
+        "customerName": {"type": "string"},
+        "customerType": {
+          "enum": ["restaurant_group", "hotel_chain", "retailer", "foodservice_distributor", "butcher", "other"]
+        },
+        "tier": {
+          "enum": ["platinum", "gold", "silver", "bronze"],
+          "description": "Customer tier based on profitability score"
+        },
+        "profitabilityScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "components": {
+            "volume_contribution": "weight_0.20",
+            "margin_contribution": "weight_0.30",
+            "payment_speed": "weight_0.25",
+            "price_acceptance": "weight_0.15",
+            "growth_potential": "weight_0.10"
+          }
+        },
+        "averageDSO": {
+          "type": "number",
+          "unit": "days",
+          "description": "Average days to payment"
+        },
+        "priceRealization": {
+          "type": "number",
+          "format": "percentage",
+          "description": "Percentage of list price typically achieved"
+        },
+        "preferredProducts": {
+          "type": "array",
+          "description": "Products customer frequently purchases"
+        },
+        "purchaseFrequency": {
+          "type": "string",
+          "enum": ["daily", "twice_weekly", "weekly", "fortnightly", "monthly", "irregular"]
+        },
+        "averageOrderValue": {
+          "@type": "https://schema.org/MonetaryAmount"
+        },
+        "lifetimeValue": {
+          "@type": "https://schema.org/MonetaryAmount"
+        },
+        "churnRisk": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "expansionPotential": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "paymentBehavior": {
+          "type": "object",
+          "properties": {
+            "paymentTerms": {"type": "string"},
+            "averagePaymentDelay": {"type": "number"},
+            "paymentConsistency": {"type": "number"},
+            "lastPaymentDate": {"@type": "https://schema.org/Date"}
+          }
+        }
+      }
+    },
+
+    "Order": {
+      "@type": "https://schema.org/Order",
+      "description": "Customer order with GP tracking through lifecycle",
+      "properties": {
+        "orderId": {"type": "string"},
+        "orderNumber": {"type": "string"},
+        "customerId": {"$ref": "#/core_entities/Customer"},
+        "orderDate": {"@type": "https://schema.org/Date"},
+        "requestedDeliveryDate": {"@type": "https://schema.org/Date"},
+        "actualDeliveryDate": {"@type": "https://schema.org/Date"},
+        "invoiceDate": {"@type": "https://schema.org/Date"},
+        "paymentDueDate": {"@type": "https://schema.org/Date"},
+        "actualPaymentDate": {"@type": "https://schema.org/Date"},
+        "orderStatus": {
+          "enum": ["quoted", "confirmed", "allocated", "picked", "shipped", "delivered", "invoiced", "partial_paid", "fully_paid", "overdue"]
+        },
+        "orderLines": {
+          "type": "array",
+          "items": {"$ref": "#/core_entities/OrderLine"}
+        },
+        "gpTracking": {
+          "type": "object",
+          "properties": {
+            "bookedGP": {
+              "@type": "https://schema.org/MonetaryAmount",
+              "description": "GP at order confirmation assuming 4-day storage"
+            },
+            "currentGP": {
+              "@type": "https://schema.org/MonetaryAmount",
+              "description": "GP accounting for actual storage to date"
+            },
+            "realizedGP": {
+              "@type": "https://schema.org/MonetaryAmount",
+              "description": "Final GP after payment received"
+            },
+            "gpErosion": {
+              "@type": "https://schema.org/MonetaryAmount",
+              "description": "Difference between booked and realized GP"
+            },
+            "storageCostAllocated": {
+              "@type": "https://schema.org/MonetaryAmount"
+            },
+            "financeCostAllocated": {
+              "@type": "https://schema.org/MonetaryAmount"
+            }
+          }
+        },
+        "daysSourceToSold": {"type": "integer"},
+        "daysSoldToDelivered": {"type": "integer"},
+        "daysDeliveredToPaid": {"type": "integer"},
+        "totalDaysSourceToPaid": {"type": "integer"}
+      }
+    },
+
+    "OrderLine": {
+      "@type": "https://schema.org/OrderItem",
+      "properties": {
+        "lineId": {"type": "string"},
+        "productId": {"$ref": "#/core_entities/ProductLine"},
+        "containerId": {"$ref": "#/core_entities/Container"},
+        "quantity": {"@type": "https://schema.org/QuantitativeValue"},
+        "listPrice": {"@type": "https://schema.org/MonetaryAmount"},
+        "discountApplied": {"type": "number", "format": "percentage"},
+        "netPrice": {"@type": "https://schema.org/MonetaryAmount"},
+        "lineGP": {"@type": "https://schema.org/MonetaryAmount"},
+        "lineMargin": {"type": "number", "format": "percentage"},
+        "inventoryAgeAtSale": {"type": "integer", "unit": "days"}
+      }
+    }
+  },
+
+  "ai_models": {
+    "customer_profitability_scorer": {
+      "model_type": "gradient_boosting",
+      "purpose": "Calculate customer profitability score for prioritization",
+      "features": [
+        "historical_revenue",
+        "historical_margin_contribution",
+        "average_dso",
+        "price_realization_rate",
+        "order_frequency",
+        "payment_consistency",
+        "growth_trajectory"
+      ],
+      "output": "profitability_score_0_100",
+      "update_frequency": "daily"
+    },
+
+    "inventory_customer_matcher": {
+      "model_type": "recommendation_engine",
+      "purpose": "Match aging inventory to optimal customers",
+      "inputs": [
+        "inventory_age",
+        "inventory_category",
+        "margin_erosion_rate",
+        "customer_preferences",
+        "customer_payment_speed",
+        "customer_price_acceptance"
+      ],
+      "output": "ranked_customer_list_per_product",
+      "optimization_target": "maximize_realized_gp"
+    },
+
+    "dynamic_pricing_engine": {
+      "model_type": "reinforcement_learning",
+      "purpose": "Optimize pricing based on multiple factors",
+      "factors": {
+        "inventory_age": {
+          "0-4_days": "list_price",
+          "5-8_days": "list_minus_2%",
+          "9-12_days": "list_minus_5%",
+          "13-15_days": "list_minus_8%",
+          "over_15_days": "list_minus_12%"
+        },
+        "customer_tier": {
+          "platinum": "best_available",
+          "gold": "standard_discount",
+          "silver": "list_price",
+          "bronze": "premium_pricing"
+        },
+        "demand_forecast": {
+          "high": "maintain_premium",
+          "normal": "standard_pricing",
+          "low": "aggressive_discount"
+        },
+        "competitor_pricing": "market_adjusted"
+      },
+      "constraints": {
+        "margin_floor_premium": "22%",
+        "margin_floor_standard": "18%",
+        "margin_floor_value": "15%"
+      }
+    },
+
+    "payment_predictor": {
+      "model_type": "time_series_ml",
+      "purpose": "Predict when customer will actually pay",
+      "features": [
+        "customer_payment_history",
+        "invoice_amount",
+        "order_composition",
+        "seasonality",
+        "customer_cash_flow_indicators"
+      ],
+      "output": "predicted_payment_date_with_confidence"
+    },
+
+    "churn_predictor": {
+      "model_type": "classification",
+      "purpose": "Identify customers at risk of churning",
+      "triggers": [
+        "order_frequency_decline_20%",
+        "average_order_value_drop_15%",
+        "service_complaints_2_plus",
+        "payment_delays_30_days",
+        "competitor_engagement_detected"
+      ],
+      "output": "churn_risk_score_0_100"
+    },
+
+    "demand_forecaster": {
+      "model_type": "ensemble_time_series",
+      "purpose": "Forecast demand by product category and customer segment",
+      "features": [
+        "historical_sales",
+        "seasonality",
+        "economic_indicators",
+        "competitor_activity",
+        "customer_pipeline"
+      ],
+      "output": "weekly_demand_forecast_by_sku"
+    }
+  },
+
+  "crm_integration": {
+    "lead_scoring_weights": {
+      "company_size": 0.15,
+      "industry_fit": 0.20,
+      "engagement_level": 0.15,
+      "budget_indication": 0.10,
+      "payment_potential": 0.25,
+      "margin_potential": 0.15
+    },
+
+    "customer_segmentation": {
+      "platinum": {
+        "criteria": "profitability_score >= 85",
+        "treatment": "dedicated_account_manager",
+        "pricing": "best_available",
+        "service_level": "priority"
+      },
+      "gold": {
+        "criteria": "profitability_score 70-84",
+        "treatment": "regular_contact",
+        "pricing": "standard_discount",
+        "service_level": "standard"
+      },
+      "silver": {
+        "criteria": "profitability_score 50-69",
+        "treatment": "automated_nurture",
+        "pricing": "list_price",
+        "service_level": "standard"
+      },
+      "bronze": {
+        "criteria": "profitability_score < 50",
+        "treatment": "review_for_improvement_or_exit",
+        "pricing": "premium_or_exit",
+        "service_level": "basic"
+      }
+    },
+
+    "action_recommendations": {
+      "aging_inventory_alert": {
+        "trigger": "product_age > 10_days AND inventory_level > threshold",
+        "action": "Target high-velocity customers for this SKU",
+        "priority": "high"
+      },
+      "payment_overdue_alert": {
+        "trigger": "days_past_due > 15",
+        "action": "Escalate collection, pause new orders",
+        "priority": "high"
+      },
+      "margin_erosion_alert": {
+        "trigger": "current_gp < booked_gp * 0.85",
+        "action": "Review pricing and inventory allocation",
+        "priority": "high"
+      },
+      "expansion_opportunity": {
+        "trigger": "expansion_potential > 70 AND recent_engagement_high",
+        "action": "Schedule upsell conversation",
+        "priority": "medium"
+      },
+      "churn_risk_intervention": {
+        "trigger": "churn_risk > 60",
+        "action": "Executive outreach, retention offer",
+        "priority": "high"
+      }
+    }
+  },
+
+  "gp_guardian_integration": {
+    "cost_allocation_rules": {
+      "storage_cost": {
+        "daily_rate_per_container": 150,
+        "allocation_method": "pro_rata_by_value",
+        "threshold_alert_days": 10
+      },
+      "finance_cost": {
+        "interest_rate_annual": 0.08,
+        "calculation": "landed_cost * days_outstanding / 365 * rate",
+        "allocation_method": "by_order_value"
+      },
+      "handling_cost": {
+        "per_movement": 25,
+        "allocation": "per_order_line"
+      }
+    },
+
+    "gp_stages": {
+      "booked_gp": {
+        "calculation": "sale_price - landed_cost - (4_days * storage_rate)",
+        "when": "order_confirmed"
+      },
+      "current_gp": {
+        "calculation": "sale_price - landed_cost - actual_storage_to_date - finance_cost_to_date",
+        "when": "real_time_during_lifecycle"
+      },
+      "realized_gp": {
+        "calculation": "payment_received - total_allocated_costs",
+        "when": "payment_received"
+      }
+    },
+
+    "alerts": {
+      "margin_threshold_breach": {
+        "trigger": "current_margin < margin_floor",
+        "action": "flag_for_review",
+        "escalation": "sales_manager"
+      },
+      "storage_cost_warning": {
+        "trigger": "storage_days > 10",
+        "action": "prioritize_sale",
+        "notification": "sales_team"
+      },
+      "payment_delay_impact": {
+        "trigger": "days_past_due > 30",
+        "action": "calculate_finance_cost_impact",
+        "notification": "finance_and_sales"
+      }
+    }
+  },
+
+  "kpis_and_metrics": {
+    "financial": {
+      "realized_gp_percentage": {
+        "current": "10.5%",
+        "target": "22%",
+        "measurement": "monthly"
+      },
+      "gp_leakage_annual": {
+        "current": "450000",
+        "target": "150000",
+        "measurement": "monthly"
+      },
+      "finance_cost_reduction": {
+        "target": "30%",
+        "measurement": "quarterly"
+      },
+      "working_capital_days": {
+        "current": "52",
+        "target": "35",
+        "measurement": "monthly"
+      }
+    },
+    "customer": {
+      "average_dso": {
+        "current": "40",
+        "target": "25",
+        "measurement": "weekly"
+      },
+      "price_realization": {
+        "current": "88%",
+        "target": "95%",
+        "measurement": "weekly"
+      },
+      "customer_profitability_distribution": {
+        "target": "80% revenue from profitable customers",
+        "measurement": "monthly"
+      }
+    },
+    "operational": {
+      "average_storage_days": {
+        "current": "12",
+        "target": "6",
+        "measurement": "weekly"
+      },
+      "inventory_turnover": {
+        "current": "18x",
+        "target": "24x",
+        "measurement": "monthly"
+      },
+      "days_source_to_sold": {
+        "target": "reduce_30%",
+        "measurement": "weekly"
+      },
+      "days_sold_to_paid": {
+        "target": "25",
+        "measurement": "weekly"
+      }
+    },
+    "ai_adoption": {
+      "crm_data_quality": {
+        "current": "60%",
+        "target": "95%",
+        "measurement": "weekly"
+      },
+      "ai_recommendation_adoption": {
+        "current": "20%",
+        "target": "80%",
+        "measurement": "weekly"
+      },
+      "forecast_accuracy": {
+        "current": "75%",
+        "target": "95%",
+        "measurement": "weekly"
+      }
+    }
+  },
+
+  "implementation_phases": {
+    "phase_1_foundation": {
+      "duration": "4_weeks",
+      "investment": "£15,000",
+      "deliverables": [
+        "CRM data cleanup and validation",
+        "Customer profitability baseline calculation",
+        "Inventory tracking integration",
+        "Basic GP tracking implementation"
+      ],
+      "success_criteria": [
+        "CRM data quality > 80%",
+        "All active customers scored",
+        "Real-time inventory visibility"
+      ]
+    },
+    "phase_2_intelligence": {
+      "duration": "6_weeks",
+      "investment": "£35,000",
+      "deliverables": [
+        "AI customer profitability model deployed",
+        "Payment predictor model deployed",
+        "Dynamic pricing rules engine",
+        "GP Guardian full integration"
+      ],
+      "success_criteria": [
+        "Profitability model accuracy > 85%",
+        "Payment prediction accuracy > 80%",
+        "Real-time GP tracking operational"
+      ]
+    },
+    "phase_3_optimization": {
+      "duration": "8_weeks",
+      "investment": "£42,000",
+      "deliverables": [
+        "Inventory-customer matching engine",
+        "Automated action recommendations",
+        "Sales team AI adoption training",
+        "Performance dashboards"
+      ],
+      "success_criteria": [
+        "AI recommendation adoption > 60%",
+        "Measurable GP improvement > 2%",
+        "DSO reduction > 5 days"
+      ]
+    }
+  },
+
+  "expected_roi": {
+    "annual_benefits": {
+      "storage_cost_reduction": "£300,000",
+      "finance_cost_reduction": "£125,000",
+      "margin_improvement": "£280,000",
+      "total_annual_benefit": "£705,000"
+    },
+    "total_investment": "£92,000",
+    "payback_period": "8_weeks",
+    "year_1_roi": "666%"
+  }
+}

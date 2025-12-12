@@ -1,0 +1,789 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/gp-guardian/pbs/v1.0",
+  "title": "WWG GP Guardian 2.2 - Product Breakdown Structure Ontology",
+  "description": "Schema.org grounded ontology for GP Guardian PBS",
+  "version": "1.0.0",
+  "lastModified": "2025-12-04",
+  
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "wwg": "https://wwg.ai/ontology/",
+    "pbs": "https://wwg.ai/ontology/pbs/",
+    "pm": "https://pmi.org/ontology/"
+  },
+  
+  "productBreakdownStructure": {
+    "@type": "pbs:PBS",
+    "identifier": "WWG-GP-G-2.2-PBS",
+    "name": "GP Guardian 2.2",
+    "description": "Margin Protection System Product Breakdown Structure",
+    "totalInvestment": {
+      "@type": "MonetaryAmount",
+      "value": 92000,
+      "currency": "GBP"
+    },
+    "timeline": {
+      "duration": "P18W",
+      "phases": 3
+    },
+    "metrics": {
+      "totalWorkPackages": 89,
+      "totalComponents": 42,
+      "totalDeliverables": 156
+    }
+  },
+  
+  "level1Components": [
+    {
+      "@type": "pbs:Component",
+      "identifier": "1.0",
+      "name": "Platform Infrastructure",
+      "investment": 8000,
+      "componentCount": 4,
+      "children": [
+        {
+          "identifier": "1.1",
+          "name": "Cloud Environment",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "1.1.1", "name": "Supabase Project Setup"},
+            {"id": "1.1.2", "name": "Environment Configuration"},
+            {"id": "1.1.3", "name": "Secret Management"}
+          ]
+        },
+        {
+          "identifier": "1.2",
+          "name": "Hosting Platform",
+          "effort": 6,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "1.2.1", "name": "Vercel Project Setup"},
+            {"id": "1.2.2", "name": "Domain Configuration"},
+            {"id": "1.2.3", "name": "SSL Certificates"}
+          ]
+        },
+        {
+          "identifier": "1.3",
+          "name": "Development Environment",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "1.3.1", "name": "Git Repository"},
+            {"id": "1.3.2", "name": "CI/CD Pipeline"},
+            {"id": "1.3.3", "name": "Branch Strategy"}
+          ]
+        },
+        {
+          "identifier": "1.4",
+          "name": "Monitoring Stack",
+          "effort": 10,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "1.4.1", "name": "Error Tracking - Sentry"},
+            {"id": "1.4.2", "name": "Performance Monitoring"},
+            {"id": "1.4.3", "name": "Log Aggregation"}
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "pbs:Component",
+      "identifier": "2.0",
+      "name": "Data Layer",
+      "investment": 12000,
+      "componentCount": 6,
+      "children": [
+        {
+          "identifier": "2.1",
+          "name": "Database Schema",
+          "effort": 16,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "2.1.1", "name": "Containers Table"},
+            {"id": "2.1.2", "name": "Orders Table"},
+            {"id": "2.1.3", "name": "GP Tracking Table"},
+            {"id": "2.1.4", "name": "Alerts Table"},
+            {"id": "2.1.5", "name": "Customers Table"},
+            {"id": "2.1.6", "name": "Users Table"}
+          ]
+        },
+        {
+          "identifier": "2.2",
+          "name": "Database Functions",
+          "effort": 12,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "2.2.1", "name": "GP Calculation Functions"},
+            {"id": "2.2.2", "name": "Alert Trigger Functions"},
+            {"id": "2.2.3", "name": "Audit Log Functions"}
+          ]
+        },
+        {
+          "identifier": "2.3",
+          "name": "Real-time Subscriptions",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "2.3.1", "name": "GP Tracking Changes"},
+            {"id": "2.3.2", "name": "Alert Notifications"},
+            {"id": "2.3.3", "name": "Order Status Updates"}
+          ]
+        },
+        {
+          "identifier": "2.4",
+          "name": "ETL Pipeline",
+          "effort": 24,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "2.4.1", "name": "ERP Data Extractor"},
+            {"id": "2.4.2", "name": "Data Transformer"},
+            {"id": "2.4.3", "name": "Data Loader"},
+            {"id": "2.4.4", "name": "Validation Rules"}
+          ]
+        },
+        {
+          "identifier": "2.5",
+          "name": "Historical Data",
+          "effort": 16,
+          "unit": "hours",
+          "phase": "Phase 0",
+          "deliverables": [
+            {"id": "2.5.1", "name": "Data Migration Scripts"},
+            {"id": "2.5.2", "name": "12-Month Import"},
+            {"id": "2.5.3", "name": "Data Cleansing"}
+          ]
+        },
+        {
+          "identifier": "2.6",
+          "name": "Data Quality",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "2.6.1", "name": "Validation Constraints"},
+            {"id": "2.6.2", "name": "Referential Integrity"},
+            {"id": "2.6.3", "name": "Quality Dashboards"}
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "pbs:Component",
+      "identifier": "3.0",
+      "name": "AI Agent Layer",
+      "investment": 18000,
+      "componentCount": 5,
+      "children": [
+        {
+          "identifier": "3.1",
+          "name": "Agent Framework",
+          "effort": 16,
+          "unit": "hours",
+          "phase": "MVP",
+          "deliverables": [
+            {"id": "3.1.1", "name": "Claude Agent SDK Setup"},
+            {"id": "3.1.2", "name": "Agent Orchestrator"},
+            {"id": "3.1.3", "name": "Event Bus"},
+            {"id": "3.1.4", "name": "Agent Logging"}
+          ]
+        },
+        {
+          "identifier": "3.2",
+          "name": "Ingestion Agent",
+          "effort": 24,
+          "unit": "hours",
+          "phase": "MVP",
+          "deliverables": [
+            {"id": "3.2.1", "name": "ERP Data Connector"},
+            {"id": "3.2.2", "name": "WMS Data Connector"},
+            {"id": "3.2.3", "name": "Vessel Data Connector"},
+            {"id": "3.2.4", "name": "Data Normalizer"},
+            {"id": "3.2.5", "name": "Validation Engine"}
+          ]
+        },
+        {
+          "identifier": "3.3",
+          "name": "Calculation Agent",
+          "effort": 20,
+          "unit": "hours",
+          "phase": "MVP",
+          "deliverables": [
+            {"id": "3.3.1", "name": "Booked GP Calculator"},
+            {"id": "3.3.2", "name": "Current GP Calculator"},
+            {"id": "3.3.3", "name": "Realized GP Calculator"},
+            {"id": "3.3.4", "name": "Variance Calculator"},
+            {"id": "3.3.5", "name": "Cost Allocator"}
+          ]
+        },
+        {
+          "identifier": "3.4",
+          "name": "Alert Agent",
+          "effort": 16,
+          "unit": "hours",
+          "phase": "MVP",
+          "deliverables": [
+            {"id": "3.4.1", "name": "Threshold Monitor"},
+            {"id": "3.4.2", "name": "Alert Generator"},
+            {"id": "3.4.3", "name": "Email Notifier"},
+            {"id": "3.4.4", "name": "Escalation Engine"}
+          ]
+        },
+        {
+          "identifier": "3.5",
+          "name": "Prediction Agent",
+          "effort": 32,
+          "unit": "hours",
+          "phase": "Phase 2",
+          "deliverables": [
+            {"id": "3.5.1", "name": "Feature Engineering"},
+            {"id": "3.5.2", "name": "ML Model Training"},
+            {"id": "3.5.3", "name": "Prediction Service"},
+            {"id": "3.5.4", "name": "Model Monitoring"}
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "pbs:Component",
+      "identifier": "4.0",
+      "name": "Application Layer",
+      "investment": 24000,
+      "componentCount": 8,
+      "children": [
+        {
+          "identifier": "4.1",
+          "name": "Core Framework",
+          "effort": 8,
+          "unit": "hours",
+          "priority": "Must",
+          "deliverables": [
+            {"id": "4.1.1", "name": "Next.js 14 Setup"},
+            {"id": "4.1.2", "name": "App Router Config"},
+            {"id": "4.1.3", "name": "TypeScript Config"},
+            {"id": "4.1.4", "name": "Tailwind Setup"}
+          ]
+        },
+        {
+          "identifier": "4.2",
+          "name": "UI Component Library",
+          "effort": 16,
+          "unit": "hours",
+          "priority": "Must",
+          "deliverables": [
+            {"id": "4.2.1", "name": "Shadcn/ui Integration"},
+            {"id": "4.2.2", "name": "WWG Design Tokens"},
+            {"id": "4.2.3", "name": "Common Components"},
+            {"id": "4.2.4", "name": "Chart Components"}
+          ]
+        },
+        {
+          "identifier": "4.3",
+          "name": "Dashboard Module",
+          "effort": 24,
+          "unit": "hours",
+          "priority": "Must",
+          "deliverables": [
+            {"id": "4.3.1", "name": "KPI Cards"},
+            {"id": "4.3.2", "name": "GP Trend Chart"},
+            {"id": "4.3.3", "name": "Top Variance Table"},
+            {"id": "4.3.4", "name": "Segment Breakdown"},
+            {"id": "4.3.5", "name": "Date Range Filter"}
+          ]
+        },
+        {
+          "identifier": "4.4",
+          "name": "Order Management Module",
+          "effort": 32,
+          "unit": "hours",
+          "priority": "Must",
+          "deliverables": [
+            {"id": "4.4.1", "name": "Order List View"},
+            {"id": "4.4.2", "name": "Order Detail View"},
+            {"id": "4.4.3", "name": "Order Filters"},
+            {"id": "4.4.4", "name": "Order Search"},
+            {"id": "4.4.5", "name": "GP Breakdown Panel"}
+          ]
+        },
+        {
+          "identifier": "4.5",
+          "name": "Container Module",
+          "effort": 16,
+          "unit": "hours",
+          "priority": "Should",
+          "deliverables": [
+            {"id": "4.5.1", "name": "Container List View"},
+            {"id": "4.5.2", "name": "Container Detail View"},
+            {"id": "4.5.3", "name": "Storage Timeline"},
+            {"id": "4.5.4", "name": "Order Allocation View"}
+          ]
+        },
+        {
+          "identifier": "4.6",
+          "name": "Alert Module",
+          "effort": 20,
+          "unit": "hours",
+          "priority": "Must",
+          "deliverables": [
+            {"id": "4.6.1", "name": "Alert Center"},
+            {"id": "4.6.2", "name": "Alert Cards"},
+            {"id": "4.6.3", "name": "Acknowledgment Flow"},
+            {"id": "4.6.4", "name": "Alert History"}
+          ]
+        },
+        {
+          "identifier": "4.7",
+          "name": "Reports Module",
+          "effort": 12,
+          "unit": "hours",
+          "priority": "Should",
+          "phase": "Phase 2",
+          "deliverables": [
+            {"id": "4.7.1", "name": "Export Configuration"},
+            {"id": "4.7.2", "name": "CSV Generator"},
+            {"id": "4.7.3", "name": "Report Templates"},
+            {"id": "4.7.4", "name": "Scheduled Reports"}
+          ]
+        },
+        {
+          "identifier": "4.8",
+          "name": "Settings Module",
+          "effort": 8,
+          "unit": "hours",
+          "priority": "Should",
+          "phase": "Phase 2",
+          "deliverables": [
+            {"id": "4.8.1", "name": "User Profile"},
+            {"id": "4.8.2", "name": "Alert Thresholds"},
+            {"id": "4.8.3", "name": "Notification Preferences"},
+            {"id": "4.8.4", "name": "System Configuration"}
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "pbs:Component",
+      "identifier": "5.0",
+      "name": "Integration Layer",
+      "investment": 12000,
+      "componentCount": 5,
+      "children": [
+        {
+          "identifier": "5.1",
+          "name": "ERP Integration",
+          "effort": 24,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "5.1.1", "name": "CSV Import Parser"},
+            {"id": "5.1.2", "name": "API Connector (Optional)"},
+            {"id": "5.1.3", "name": "Data Mapping Config"},
+            {"id": "5.1.4", "name": "Error Handling"},
+            {"id": "5.1.5", "name": "Manual Upload UI"}
+          ]
+        },
+        {
+          "identifier": "5.2",
+          "name": "WMS Integration",
+          "effort": 16,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "5.2.1", "name": "REST API Client"},
+            {"id": "5.2.2", "name": "Authentication Handler"},
+            {"id": "5.2.3", "name": "Polling Scheduler"},
+            {"id": "5.2.4", "name": "Response Parser"}
+          ]
+        },
+        {
+          "identifier": "5.3",
+          "name": "Vessel Tracking Integration",
+          "effort": 12,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "5.3.1", "name": "Webhook Endpoint"},
+            {"id": "5.3.2", "name": "Signature Verification"},
+            {"id": "5.3.3", "name": "Event Processor"},
+            {"id": "5.3.4", "name": "Retry Handler"}
+          ]
+        },
+        {
+          "identifier": "5.4",
+          "name": "Email Integration",
+          "effort": 12,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "5.4.1", "name": "SendGrid/SMTP Setup"},
+            {"id": "5.4.2", "name": "Email Templates"},
+            {"id": "5.4.3", "name": "Template Engine"},
+            {"id": "5.4.4", "name": "Delivery Tracking"}
+          ]
+        },
+        {
+          "identifier": "5.5",
+          "name": "API Gateway",
+          "effort": 16,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "5.5.1", "name": "REST API Endpoints"},
+            {"id": "5.5.2", "name": "Rate Limiting"},
+            {"id": "5.5.3", "name": "API Documentation"},
+            {"id": "5.5.4", "name": "Versioning"}
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "pbs:Component",
+      "identifier": "6.0",
+      "name": "Security & Compliance",
+      "investment": 6000,
+      "componentCount": 4,
+      "children": [
+        {
+          "identifier": "6.1",
+          "name": "Authentication",
+          "effort": 12,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "6.1.1", "name": "Supabase Auth Setup"},
+            {"id": "6.1.2", "name": "Login/Logout Flow"},
+            {"id": "6.1.3", "name": "Password Reset"},
+            {"id": "6.1.4", "name": "Session Management"}
+          ]
+        },
+        {
+          "identifier": "6.2",
+          "name": "Authorization",
+          "effort": 16,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "6.2.1", "name": "Role Definitions"},
+            {"id": "6.2.2", "name": "Permission Matrix"},
+            {"id": "6.2.3", "name": "RLS Policies"},
+            {"id": "6.2.4", "name": "UI Access Control"}
+          ]
+        },
+        {
+          "identifier": "6.3",
+          "name": "Data Protection",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "6.3.1", "name": "Encryption Config"},
+            {"id": "6.3.2", "name": "Data Masking"},
+            {"id": "6.3.3", "name": "Backup Procedures"},
+            {"id": "6.3.4", "name": "Retention Policies"}
+          ]
+        },
+        {
+          "identifier": "6.4",
+          "name": "Audit & Compliance",
+          "effort": 12,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "6.4.1", "name": "Audit Log Schema"},
+            {"id": "6.4.2", "name": "Activity Tracking"},
+            {"id": "6.4.3", "name": "Compliance Reports"},
+            {"id": "6.4.4", "name": "GDPR Features"}
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "pbs:Component",
+      "identifier": "7.0",
+      "name": "Documentation & Training",
+      "investment": 6000,
+      "componentCount": 5,
+      "phase": "Phase 2",
+      "children": [
+        {
+          "identifier": "7.1",
+          "name": "User Documentation",
+          "effort": 16,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "7.1.1", "name": "User Guide"},
+            {"id": "7.1.2", "name": "Quick Start Guide"},
+            {"id": "7.1.3", "name": "FAQ Document"},
+            {"id": "7.1.4", "name": "Video Tutorials"}
+          ]
+        },
+        {
+          "identifier": "7.2",
+          "name": "Technical Documentation",
+          "effort": 12,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "7.2.1", "name": "Architecture Guide"},
+            {"id": "7.2.2", "name": "API Reference"},
+            {"id": "7.2.3", "name": "Database Documentation"},
+            {"id": "7.2.4", "name": "Deployment Guide"}
+          ]
+        },
+        {
+          "identifier": "7.3",
+          "name": "Training Materials",
+          "effort": 16,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "7.3.1", "name": "Training Deck"},
+            {"id": "7.3.2", "name": "Hands-on Exercises"},
+            {"id": "7.3.3", "name": "Role-based Guides"},
+            {"id": "7.3.4", "name": "Assessment Quiz"}
+          ]
+        },
+        {
+          "identifier": "7.4",
+          "name": "Process Documentation",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "7.4.1", "name": "SOPs"},
+            {"id": "7.4.2", "name": "Runbooks"},
+            {"id": "7.4.3", "name": "Escalation Procedures"}
+          ]
+        },
+        {
+          "identifier": "7.5",
+          "name": "Change Documentation",
+          "effort": 4,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "7.5.1", "name": "Release Notes"},
+            {"id": "7.5.2", "name": "Change Log"},
+            {"id": "7.5.3", "name": "Known Issues"}
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "pbs:Component",
+      "identifier": "8.0",
+      "name": "Operations & Support",
+      "investment": 6000,
+      "componentCount": 5,
+      "phase": "Phase 2",
+      "children": [
+        {
+          "identifier": "8.1",
+          "name": "Monitoring",
+          "effort": 12,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "8.1.1", "name": "Health Dashboards"},
+            {"id": "8.1.2", "name": "Alert Rules"},
+            {"id": "8.1.3", "name": "SLA Tracking"},
+            {"id": "8.1.4", "name": "Performance Metrics"}
+          ]
+        },
+        {
+          "identifier": "8.2",
+          "name": "Incident Management",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "8.2.1", "name": "Incident Process"},
+            {"id": "8.2.2", "name": "Severity Definitions"},
+            {"id": "8.2.3", "name": "Communication Templates"},
+            {"id": "8.2.4", "name": "Post-mortem Templates"}
+          ]
+        },
+        {
+          "identifier": "8.3",
+          "name": "Backup & Recovery",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "8.3.1", "name": "Backup Schedule"},
+            {"id": "8.3.2", "name": "Recovery Procedures"},
+            {"id": "8.3.3", "name": "DR Testing Plan"}
+          ]
+        },
+        {
+          "identifier": "8.4",
+          "name": "Support Model",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "8.4.1", "name": "Support Tiers"},
+            {"id": "8.4.2", "name": "Ticket System"},
+            {"id": "8.4.3", "name": "Knowledge Base"}
+          ]
+        },
+        {
+          "identifier": "8.5",
+          "name": "Maintenance",
+          "effort": 8,
+          "unit": "hours",
+          "deliverables": [
+            {"id": "8.5.1", "name": "Update Schedule"},
+            {"id": "8.5.2", "name": "Patch Management"},
+            {"id": "8.5.3", "name": "Dependency Updates"}
+          ]
+        }
+      ]
+    }
+  ],
+  
+  "phaseAllocation": {
+    "phase0": {
+      "name": "Validation",
+      "duration": "P4W",
+      "investment": 15000,
+      "components": ["1.1.1", "2.5", "2.6", "3.3 (prototype)"],
+      "gateDeliverables": [
+        "Data quality report (>80%)",
+        "£450K leak validation",
+        "Simulation model",
+        "Go/No-Go recommendation"
+      ]
+    },
+    "phase1": {
+      "name": "MVP",
+      "duration": "P8W",
+      "investment": 45000,
+      "components": ["1.0", "2.1-2.4", "3.1-3.4", "4.1-4.6", "5.1-5.4", "6.0"],
+      "sprints": [
+        {"sprint": 1, "focus": "Foundation", "components": ["1.0", "2.1-2.4"]},
+        {"sprint": 2, "focus": "AI Agents", "components": ["3.1-3.4", "4.1-4.2"]},
+        {"sprint": 3, "focus": "UI Development", "components": ["4.3-4.6"]},
+        {"sprint": 4, "focus": "Integration", "components": ["5.1-5.4", "6.0"]}
+      ],
+      "gateDeliverables": [
+        "Three-stage GP tracking operational",
+        "Dashboard with real-time data",
+        "Alert system functional",
+        "20-order pilot complete",
+        "NPS >50"
+      ]
+    },
+    "phase2": {
+      "name": "Intelligence",
+      "duration": "P6W",
+      "investment": 32000,
+      "components": ["3.5", "4.7-4.8", "7.0", "8.0"],
+      "gateDeliverables": [
+        "Prediction model MAPE <15%",
+        "Documentation complete",
+        "Training delivered",
+        "Operations handover"
+      ]
+    }
+  },
+  
+  "criticalPath": [
+    {"sequence": 1, "id": "2.5", "name": "Historical Data Import"},
+    {"sequence": 2, "id": "2.1", "name": "Database Schema"},
+    {"sequence": 3, "id": "3.2", "name": "Ingestion Agent"},
+    {"sequence": 4, "id": "3.3", "name": "Calculation Agent"},
+    {"sequence": 5, "id": "4.3", "name": "Dashboard Module"},
+    {"sequence": 6, "id": "5.1", "name": "ERP Integration"},
+    {"sequence": 7, "id": "PILOT", "name": "Pilot Launch"}
+  ],
+  
+  "qualityGates": [
+    {
+      "gate": "Infrastructure Review",
+      "component": "1.0",
+      "criteria": ["All environments accessible", "CI/CD working"]
+    },
+    {
+      "gate": "Data Quality Review",
+      "component": "2.0",
+      "criteria": [">80% data quality", "Schema validated"]
+    },
+    {
+      "gate": "Agent Testing",
+      "component": "3.0",
+      "criteria": ["Unit tests pass", "Accuracy metrics met"]
+    },
+    {
+      "gate": "UI/UX Review",
+      "component": "4.0",
+      "criteria": ["Design compliance", "Accessibility"]
+    },
+    {
+      "gate": "Integration Testing",
+      "component": "5.0",
+      "criteria": ["All connections verified"]
+    },
+    {
+      "gate": "Security Review",
+      "component": "6.0",
+      "criteria": ["Pen test passed", "RLS verified"]
+    },
+    {
+      "gate": "Doc Review",
+      "component": "7.0",
+      "criteria": ["Complete", "Accurate", "Approved"]
+    },
+    {
+      "gate": "Ops Readiness",
+      "component": "8.0",
+      "criteria": ["Runbooks tested", "Team trained"]
+    }
+  ],
+  
+  "resourceAllocation": {
+    "byComponent": [
+      {"component": "4.0 Application Layer", "percentage": 26},
+      {"component": "3.0 AI Agent Layer", "percentage": 20},
+      {"component": "2.0 Data Layer", "percentage": 13},
+      {"component": "5.0 Integration Layer", "percentage": 13},
+      {"component": "1.0 Platform Infrastructure", "percentage": 9},
+      {"component": "6.0 Security", "percentage": 6.5},
+      {"component": "7.0 Documentation", "percentage": 6.5},
+      {"component": "8.0 Operations", "percentage": 6.5}
+    ],
+    "byRole": [
+      {"role": "Technical Lead", "components": ["3.0", "4.0", "Architecture"], "allocation": 1.0},
+      {"role": "Full-stack Developer", "components": ["2.0", "4.0", "5.0"], "allocation": 1.0},
+      {"role": "Project Manager", "components": ["All"], "allocation": 0.5},
+      {"role": "Business Analyst", "components": ["7.0", "UAT"], "allocation": 0.25},
+      {"role": "Operations SME", "components": ["2.5", "5.1", "8.0"], "allocation": 0.25},
+      {"role": "IT Support", "components": ["1.0", "5.1", "6.0"], "allocation": 0.25}
+    ]
+  },
+  
+  "deliverablesChecklist": {
+    "phase0": [
+      {"id": 1, "deliverable": "Supabase dev environment", "type": "Infrastructure"},
+      {"id": 2, "deliverable": "Data extraction scripts", "type": "Code"},
+      {"id": 3, "deliverable": "Historical dataset (12 months)", "type": "Data"},
+      {"id": 4, "deliverable": "Data quality report", "type": "Document"},
+      {"id": 5, "deliverable": "Simulation model", "type": "Code"},
+      {"id": 6, "deliverable": "Validation report", "type": "Document"}
+    ],
+    "phase1": [
+      {"id": 7, "deliverable": "Production Supabase project", "type": "Infrastructure"},
+      {"id": 8, "deliverable": "Database schema", "type": "Database"},
+      {"id": 9, "deliverable": "ETL pipeline", "type": "Code"},
+      {"id": 10, "deliverable": "Ingestion Agent", "type": "AI Agent"},
+      {"id": 11, "deliverable": "Calculation Agent", "type": "AI Agent"},
+      {"id": 12, "deliverable": "Alert Agent", "type": "AI Agent"},
+      {"id": 13, "deliverable": "Next.js application", "type": "Code"},
+      {"id": 14, "deliverable": "Dashboard UI", "type": "UI"},
+      {"id": 15, "deliverable": "Order List View", "type": "UI"},
+      {"id": 16, "deliverable": "Order Detail View", "type": "UI"},
+      {"id": 17, "deliverable": "Alert Center", "type": "UI"},
+      {"id": 18, "deliverable": "ERP integration", "type": "Integration"},
+      {"id": 19, "deliverable": "WMS integration", "type": "Integration"},
+      {"id": 20, "deliverable": "Email notifications", "type": "Integration"},
+      {"id": 21, "deliverable": "Authentication system", "type": "Security"},
+      {"id": 22, "deliverable": "RBAC implementation", "type": "Security"},
+      {"id": 23, "deliverable": "Pilot completion report", "type": "Document"}
+    ],
+    "phase2": [
+      {"id": 24, "deliverable": "Prediction Agent", "type": "AI Agent"},
+      {"id": 25, "deliverable": "Container Module", "type": "UI"},
+      {"id": 26, "deliverable": "Reports Module", "type": "UI"},
+      {"id": 27, "deliverable": "Settings Module", "type": "UI"},
+      {"id": 28, "deliverable": "User Guide", "type": "Document"},
+      {"id": 29, "deliverable": "Technical Documentation", "type": "Document"},
+      {"id": 30, "deliverable": "Training Materials", "type": "Document"},
+      {"id": 31, "deliverable": "Training Delivery", "type": "Training"},
+      {"id": 32, "deliverable": "Operations Runbook", "type": "Document"},
+      {"id": 33, "deliverable": "Support Handover", "type": "Handover"}
+    ]
+  }
+}

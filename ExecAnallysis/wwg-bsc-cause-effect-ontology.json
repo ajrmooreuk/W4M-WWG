@@ -1,0 +1,749 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwgiles.com/schemas/bsc-cause-effect/v2.0",
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "bsc": "https://wwgiles.com/schemas/bsc/",
+    "wwg": "https://wwgiles.com/ontology/"
+  },
+  "title": "WWGiles BSC Cause-Effect Strategy Ontology",
+  "description": "Comprehensive cause-effect relationships connecting AI-augmented initiatives across BSC perspectives for margin recovery, cash acceleration, and profit optimization",
+  "version": "2.0.0",
+  "lastModified": "2025-12-12",
+  
+  "strategicContext": {
+    "@type": "BusinessStrategy",
+    "businessName": "WWGiles Ltd",
+    "industry": "Meat Wholesale Import",
+    "annualRevenue": {
+      "@type": "MonetaryAmount",
+      "value": 53000000,
+      "currency": "GBP"
+    },
+    "currentState": {
+      "grossMargin": {
+        "current": 0.105,
+        "industryAverage": 0.175,
+        "industryTop": 0.22,
+        "percentileRank": "bottom_quartile"
+      },
+      "coreProblems": [
+        {
+          "problemId": "GP_EROSION",
+          "description": "Booked GP vs Realized GP divergence due to storage cost leak",
+          "annualImpact": {
+            "@type": "MonetaryAmount",
+            "value": 450000,
+            "currency": "GBP"
+          },
+          "rootCause": "Sales books orders assuming 4-day storage, actual averages 12 days"
+        },
+        {
+          "problemId": "WORKING_CAPITAL_DRAG",
+          "description": "89-day cash conversion cycle consuming capital",
+          "annualImpact": {
+            "@type": "MonetaryAmount",
+            "value": 520000,
+            "currency": "GBP"
+          },
+          "rootCause": "Long source-to-paid pipeline with no velocity optimization"
+        },
+        {
+          "problemId": "FINANCE_COST_BURDEN",
+          "description": "Stock financing costs eroding margin",
+          "annualImpact": {
+            "@type": "MonetaryAmount",
+            "value": 380000,
+            "currency": "GBP"
+          },
+          "rootCause": "Inventory age and extended DSO increasing financing burden"
+        }
+      ]
+    },
+    "targetState": {
+      "grossMargin": {
+        "year1Target": 0.15,
+        "year3Target": 0.22
+      },
+      "cashConversionCycle": {
+        "current": 89,
+        "target": 45,
+        "unit": "days"
+      }
+    }
+  },
+
+  "bscCauseEffectChains": {
+    "@type": "StrategyMap",
+    "description": "Four interconnected causal chains driving financial outcomes from Learning & Growth foundation",
+    
+    "chains": [
+      {
+        "chainId": "CHAIN_1_MARGIN_RECOVERY",
+        "chainName": "Margin Recovery Chain",
+        "primaryOutcome": "Recover £6.1M Additional GP by Year 3",
+        "owner": "CFO/COO",
+        "flow": [
+          {
+            "perspective": "LEARNING_GROWTH",
+            "initiative": "GP_GUARDIAN_AI_DEPLOYMENT",
+            "action": "Deploy GP Guardian with Booked→Current→Realized tracking",
+            "enabler": true
+          },
+          {
+            "perspective": "INTERNAL_PROCESS",
+            "initiative": "REAL_TIME_COST_ALLOCATION",
+            "action": "Allocate storage, logistics, substitution costs to order level within 24hrs",
+            "enabledBy": "GP_GUARDIAN_AI_DEPLOYMENT"
+          },
+          {
+            "perspective": "CUSTOMER",
+            "initiative": "PRICE_REALIZATION_DISCIPLINE",
+            "action": "Improve price realization from 88% to 95% through visibility",
+            "enabledBy": "REAL_TIME_COST_ALLOCATION"
+          },
+          {
+            "perspective": "FINANCIAL",
+            "outcome": "INCREASE_REALIZED_GP",
+            "impact": {
+              "year1": {"@type": "MonetaryAmount", "value": 850000, "currency": "GBP"},
+              "year2": {"@type": "MonetaryAmount", "value": 2800000, "currency": "GBP"},
+              "year3": {"@type": "MonetaryAmount", "value": 6100000, "currency": "GBP"}
+            },
+            "enabledBy": "PRICE_REALIZATION_DISCIPLINE"
+          }
+        ]
+      },
+      {
+        "chainId": "CHAIN_2_CASH_ACCELERATION",
+        "chainName": "Cash Acceleration Chain",
+        "primaryOutcome": "Free £8M Working Capital, Save £520K Finance Costs",
+        "owner": "CFO",
+        "flow": [
+          {
+            "perspective": "LEARNING_GROWTH",
+            "initiative": "SOURCE_TO_PAID_PIPELINE_VISIBILITY",
+            "action": "Build end-to-end visibility from container landing to cash collection",
+            "enabler": true
+          },
+          {
+            "perspective": "INTERNAL_PROCESS",
+            "initiative": "VELOCITY_OPTIMIZATION",
+            "action": "Accelerate each stage: procurement→storage→sale→invoice→collection",
+            "enabledBy": "SOURCE_TO_PAID_PIPELINE_VISIBILITY"
+          },
+          {
+            "perspective": "CUSTOMER",
+            "initiative": "DSO_REDUCTION",
+            "action": "Reduce DSO from 47 to 25 days through customer selection and terms",
+            "enabledBy": "VELOCITY_OPTIMIZATION"
+          },
+          {
+            "perspective": "FINANCIAL",
+            "outcome": "FREE_WORKING_CAPITAL",
+            "impact": {
+              "workingCapitalFreed": {"@type": "MonetaryAmount", "value": 8000000, "currency": "GBP"},
+              "financeCostSavings": {"@type": "MonetaryAmount", "value": 520000, "currency": "GBP"}
+            },
+            "enabledBy": "DSO_REDUCTION"
+          }
+        ]
+      },
+      {
+        "chainId": "CHAIN_3_CUSTOMER_OPTIMIZATION",
+        "chainName": "Customer Optimization Chain",
+        "primaryOutcome": "Focus Resources on Profitable Customers",
+        "owner": "Sales Director",
+        "flow": [
+          {
+            "perspective": "LEARNING_GROWTH",
+            "initiative": "CRM_DATA_QUALITY_IMPROVEMENT",
+            "action": "Improve CRM data quality from 60% to 95% completeness",
+            "enabler": true
+          },
+          {
+            "perspective": "INTERNAL_PROCESS",
+            "initiative": "AI_SMART_CRM_DEPLOYMENT",
+            "action": "Deploy AI Smart CRM with customer profitability scoring",
+            "enabledBy": "CRM_DATA_QUALITY_IMPROVEMENT"
+          },
+          {
+            "perspective": "CUSTOMER",
+            "initiative": "TARGET_PREMIUM_BUYERS",
+            "action": "Identify and prioritize customers who pay best price, on time",
+            "enabledBy": "AI_SMART_CRM_DEPLOYMENT"
+          },
+          {
+            "perspective": "FINANCIAL",
+            "outcome": "OPTIMIZE_CUSTOMER_MIX",
+            "impact": {
+              "revenuePerCustomer": "+35%",
+              "marginPerOrder": "+4.5%",
+              "paymentCycle": "-15 days"
+            },
+            "enabledBy": "TARGET_PREMIUM_BUYERS"
+          }
+        ]
+      },
+      {
+        "chainId": "CHAIN_4_INVENTORY_OPTIMIZATION",
+        "chainName": "Inventory-to-Cash Chain",
+        "primaryOutcome": "Reduce Inventory Holding Costs by 40%",
+        "owner": "COO",
+        "flow": [
+          {
+            "perspective": "LEARNING_GROWTH",
+            "initiative": "PREDICTIVE_DEMAND_MODELING",
+            "action": "Deploy ML models for demand forecasting and inventory planning",
+            "enabler": true
+          },
+          {
+            "perspective": "INTERNAL_PROCESS",
+            "initiative": "DYNAMIC_INVENTORY_MATCHING",
+            "action": "Match aging inventory to optimal buyers automatically",
+            "enabledBy": "PREDICTIVE_DEMAND_MODELING"
+          },
+          {
+            "perspective": "CUSTOMER",
+            "initiative": "RISK_ADJUSTED_PRICING",
+            "action": "Dynamic pricing based on inventory age and customer profile",
+            "enabledBy": "DYNAMIC_INVENTORY_MATCHING"
+          },
+          {
+            "perspective": "FINANCIAL",
+            "outcome": "REDUCE_STORAGE_FINANCE_COSTS",
+            "impact": {
+              "storageReduction": {"@type": "MonetaryAmount", "value": 300000, "currency": "GBP"},
+              "financeReduction": {"@type": "MonetaryAmount", "value": 125000, "currency": "GBP"}
+            },
+            "enabledBy": "RISK_ADJUSTED_PRICING"
+          }
+        ]
+      }
+    ]
+  },
+
+  "integratedInitiatives": {
+    "@type": "StrategicInitiativePortfolio",
+    "totalInvestment": {
+      "@type": "MonetaryAmount",
+      "value": 400000,
+      "currency": "GBP",
+      "period": "36_months"
+    },
+    "totalBenefitYear3": {
+      "@type": "MonetaryAmount",
+      "value": 12500000,
+      "currency": "GBP"
+    },
+    "portfolioROI": "31:1",
+    
+    "initiatives": [
+      {
+        "initiativeId": "INIT_001",
+        "name": "GP Guardian 2.2",
+        "category": "OPERATIONS_AI",
+        "description": "Real-time margin protection system tracking Booked→Current→Realized GP",
+        "bscPerspective": ["INTERNAL_PROCESS", "FINANCIAL"],
+        "chainContribution": ["CHAIN_1_MARGIN_RECOVERY", "CHAIN_4_INVENTORY_OPTIMIZATION"],
+        "investment": {
+          "@type": "MonetaryAmount",
+          "value": 92000,
+          "currency": "GBP"
+        },
+        "benefits": {
+          "year1": {"@type": "MonetaryAmount", "value": 450000, "currency": "GBP"},
+          "year3": {"@type": "MonetaryAmount", "value": 1500000, "currency": "GBP"}
+        },
+        "keyCapabilities": [
+          "Order-level cost allocation within 24 hours",
+          "Booked→Current→Realized GP tracking",
+          "Storage cost attribution per order",
+          "Vessel delay impact quantification",
+          "Customer pickup timing analysis"
+        ],
+        "causeEffectLinks": {
+          "enables": ["REAL_TIME_COST_ALLOCATION", "PRICE_REALIZATION_DISCIPLINE"],
+          "enabledBy": ["CRM_DATA_QUALITY_IMPROVEMENT", "SOURCE_TO_PAID_PIPELINE_VISIBILITY"]
+        },
+        "implementation": {
+          "phase1": {"weeks": 4, "cost": 15000, "milestone": "Validation with historical data"},
+          "phase2": {"weeks": 8, "cost": 45000, "milestone": "Pilot with 50 orders"},
+          "phase3": {"weeks": 6, "cost": 32000, "milestone": "Full deployment"}
+        }
+      },
+      {
+        "initiativeId": "INIT_002",
+        "name": "AI Smart CRM",
+        "category": "SALES_MARKETING_AI",
+        "description": "AI-augmented CRM with customer profitability scoring and inventory matching",
+        "bscPerspective": ["CUSTOMER", "INTERNAL_PROCESS"],
+        "chainContribution": ["CHAIN_3_CUSTOMER_OPTIMIZATION", "CHAIN_4_INVENTORY_OPTIMIZATION"],
+        "investment": {
+          "@type": "MonetaryAmount",
+          "value": 85000,
+          "currency": "GBP"
+        },
+        "benefits": {
+          "year1": {"@type": "MonetaryAmount", "value": 280000, "currency": "GBP"},
+          "year3": {"@type": "MonetaryAmount", "value": 920000, "currency": "GBP"}
+        },
+        "keyCapabilities": [
+          "Customer profitability scoring (not just revenue)",
+          "Lead scoring based on realized margin potential",
+          "Inventory-to-customer matching",
+          "Payment behavior prediction",
+          "Next best action recommendations"
+        ],
+        "causeEffectLinks": {
+          "enables": ["TARGET_PREMIUM_BUYERS", "RISK_ADJUSTED_PRICING"],
+          "enabledBy": ["CRM_DATA_QUALITY_IMPROVEMENT", "GP_GUARDIAN_AI_DEPLOYMENT"]
+        },
+        "aiModels": [
+          {
+            "modelName": "Customer Profitability Predictor",
+            "inputFeatures": ["order_history", "payment_timing", "margin_realization", "pickup_delays"],
+            "output": "Expected realized GP per order"
+          },
+          {
+            "modelName": "Inventory-Customer Matcher",
+            "inputFeatures": ["inventory_age", "customer_segment", "payment_profile", "order_timing"],
+            "output": "Optimal customer for aging inventory"
+          }
+        ]
+      },
+      {
+        "initiativeId": "INIT_003",
+        "name": "Dynamic Pricing Engine",
+        "category": "OPERATIONS_AI",
+        "description": "Real-time pricing optimization based on inventory age, demand, and customer profile",
+        "bscPerspective": ["INTERNAL_PROCESS", "FINANCIAL"],
+        "chainContribution": ["CHAIN_1_MARGIN_RECOVERY", "CHAIN_4_INVENTORY_OPTIMIZATION"],
+        "investment": {
+          "@type": "MonetaryAmount",
+          "value": 65000,
+          "currency": "GBP"
+        },
+        "benefits": {
+          "year1": {"@type": "MonetaryAmount", "value": 220000, "currency": "GBP"},
+          "year3": {"@type": "MonetaryAmount", "value": 750000, "currency": "GBP"}
+        },
+        "keyCapabilities": [
+          "Inventory age-based price adjustment",
+          "Customer segment pricing tiers",
+          "Demand-responsive pricing",
+          "Margin floor protection",
+          "Competitive price monitoring"
+        ],
+        "pricingRules": {
+          "inventoryAgeAdjustment": [
+            {"daysRange": "0-5", "adjustment": "list_price"},
+            {"daysRange": "6-10", "adjustment": "-5%"},
+            {"daysRange": "11-15", "adjustment": "-10%"},
+            {"daysRange": "15+", "adjustment": "-15%", "alert": "URGENT_SELL"}
+          ],
+          "customerTierMultiplier": [
+            {"tier": "PLATINUM", "multiplier": 0.95, "terms": "NET_7"},
+            {"tier": "GOLD", "multiplier": 0.98, "terms": "NET_14"},
+            {"tier": "STANDARD", "multiplier": 1.0, "terms": "NET_30"}
+          ]
+        }
+      },
+      {
+        "initiativeId": "INIT_004",
+        "name": "Cash Flow Accelerator",
+        "category": "FINANCE_AI",
+        "description": "End-to-end cash conversion cycle optimization from source to paid",
+        "bscPerspective": ["FINANCIAL", "INTERNAL_PROCESS"],
+        "chainContribution": ["CHAIN_2_CASH_ACCELERATION"],
+        "investment": {
+          "@type": "MonetaryAmount",
+          "value": 78000,
+          "currency": "GBP"
+        },
+        "benefits": {
+          "year1": {"@type": "MonetaryAmount", "value": 520000, "currency": "GBP"},
+          "year3": {"@type": "MonetaryAmount", "value": 1600000, "currency": "GBP"}
+        },
+        "keyCapabilities": [
+          "Payment prediction per customer",
+          "Early payment incentive optimization",
+          "Invoice timing optimization",
+          "DSO reduction tracking",
+          "Working capital dashboard"
+        ],
+        "cashCycleOptimization": {
+          "stageTargets": [
+            {"stage": "Procurement to Landing", "current": 21, "target": 18, "unit": "days"},
+            {"stage": "Landing to Sale", "current": 12, "target": 6, "unit": "days"},
+            {"stage": "Sale to Invoice", "current": 3, "target": 0, "unit": "days"},
+            {"stage": "Invoice to Payment", "current": 47, "target": 25, "unit": "days"}
+          ],
+          "totalReduction": {"from": 89, "to": 45, "unit": "days"}
+        }
+      },
+      {
+        "initiativeId": "INIT_005",
+        "name": "Sales Intelligence Platform",
+        "category": "SALES_MARKETING_AI",
+        "description": "AI-powered sales process optimization and forecasting",
+        "bscPerspective": ["CUSTOMER", "LEARNING_GROWTH"],
+        "chainContribution": ["CHAIN_3_CUSTOMER_OPTIMIZATION"],
+        "investment": {
+          "@type": "MonetaryAmount",
+          "value": 80000,
+          "currency": "GBP"
+        },
+        "benefits": {
+          "year1": {"@type": "MonetaryAmount", "value": 350000, "currency": "GBP"},
+          "year3": {"@type": "MonetaryAmount", "value": 1200000, "currency": "GBP"}
+        },
+        "keyCapabilities": [
+          "Win probability prediction",
+          "Deal coaching recommendations",
+          "Pipeline health scoring",
+          "Forecast accuracy improvement",
+          "Competitive intelligence"
+        ],
+        "salesMetricsImpact": {
+          "winRate": {"from": "25%", "to": "40%"},
+          "forecastAccuracy": {"from": "75%", "to": "95%"},
+          "averageDealSize": {"from": "£15K", "to": "£20K"},
+          "salesCycle": {"from": "28 days", "to": "20 days"}
+        }
+      }
+    ]
+  },
+
+  "bscPerspectiveMetrics": {
+    "financial": {
+      "@type": "FinancialMetrics",
+      "objectives": [
+        {
+          "objectiveId": "F1",
+          "name": "Maximize Realized GP",
+          "measure": "Gross margin percentage (realized, not booked)",
+          "current": 0.105,
+          "target": {"year1": 0.15, "year3": 0.22},
+          "drivingInitiatives": ["INIT_001", "INIT_003"],
+          "linkedChains": ["CHAIN_1_MARGIN_RECOVERY"]
+        },
+        {
+          "objectiveId": "F2",
+          "name": "Reduce Finance Costs",
+          "measure": "Annual financing cost for stock and receivables",
+          "current": {"@type": "MonetaryAmount", "value": 520000, "currency": "GBP"},
+          "target": {"@type": "MonetaryAmount", "value": 180000, "currency": "GBP"},
+          "drivingInitiatives": ["INIT_004"],
+          "linkedChains": ["CHAIN_2_CASH_ACCELERATION"]
+        },
+        {
+          "objectiveId": "F3",
+          "name": "Accelerate Cash Conversion",
+          "measure": "Cash conversion cycle in days",
+          "current": 89,
+          "target": {"year1": 65, "year3": 45},
+          "drivingInitiatives": ["INIT_004"],
+          "linkedChains": ["CHAIN_2_CASH_ACCELERATION"]
+        },
+        {
+          "objectiveId": "F4",
+          "name": "Increase Revenue",
+          "measure": "Annual revenue",
+          "current": {"@type": "MonetaryAmount", "value": 53000000, "currency": "GBP"},
+          "target": {"@type": "MonetaryAmount", "value": 65000000, "currency": "GBP"},
+          "drivingInitiatives": ["INIT_002", "INIT_005"],
+          "linkedChains": ["CHAIN_3_CUSTOMER_OPTIMIZATION"]
+        }
+      ]
+    },
+    "customer": {
+      "@type": "CustomerMetrics",
+      "objectives": [
+        {
+          "objectiveId": "C1",
+          "name": "Target Premium Buyers",
+          "measure": "% revenue from customers paying >95% list price within 14 days",
+          "current": 0.25,
+          "target": {"year1": 0.40, "year3": 0.55},
+          "drivingInitiatives": ["INIT_002"],
+          "linkedChains": ["CHAIN_3_CUSTOMER_OPTIMIZATION"]
+        },
+        {
+          "objectiveId": "C2",
+          "name": "Reduce DSO",
+          "measure": "Days Sales Outstanding",
+          "current": 47,
+          "target": {"year1": 35, "year3": 25},
+          "drivingInitiatives": ["INIT_004"],
+          "linkedChains": ["CHAIN_2_CASH_ACCELERATION"]
+        },
+        {
+          "objectiveId": "C3",
+          "name": "Improve Price Realization",
+          "measure": "Actual price / List price ratio",
+          "current": 0.88,
+          "target": {"year1": 0.92, "year3": 0.95},
+          "drivingInitiatives": ["INIT_001", "INIT_003"],
+          "linkedChains": ["CHAIN_1_MARGIN_RECOVERY"]
+        },
+        {
+          "objectiveId": "C4",
+          "name": "Increase Customer Retention",
+          "measure": "Customer retention rate",
+          "current": 0.85,
+          "target": {"year1": 0.90, "year3": 0.95},
+          "drivingInitiatives": ["INIT_002", "INIT_005"],
+          "linkedChains": ["CHAIN_3_CUSTOMER_OPTIMIZATION"]
+        }
+      ]
+    },
+    "internalProcess": {
+      "@type": "ProcessMetrics",
+      "objectives": [
+        {
+          "objectiveId": "P1",
+          "name": "Real-Time GP Tracking",
+          "measure": "Orders with real-time realized GP visibility",
+          "current": 0,
+          "target": {"year1": 0.80, "year3": 1.0},
+          "drivingInitiatives": ["INIT_001"],
+          "linkedChains": ["CHAIN_1_MARGIN_RECOVERY"]
+        },
+        {
+          "objectiveId": "P2",
+          "name": "Inventory-Customer Matching",
+          "measure": "AI recommendation adoption rate",
+          "current": 0,
+          "target": {"year1": 0.50, "year3": 0.80},
+          "drivingInitiatives": ["INIT_002", "INIT_003"],
+          "linkedChains": ["CHAIN_4_INVENTORY_OPTIMIZATION"]
+        },
+        {
+          "objectiveId": "P3",
+          "name": "Dynamic Pricing Coverage",
+          "measure": "% quotes using dynamic pricing engine",
+          "current": 0,
+          "target": {"year1": 0.60, "year3": 0.95},
+          "drivingInitiatives": ["INIT_003"],
+          "linkedChains": ["CHAIN_1_MARGIN_RECOVERY", "CHAIN_4_INVENTORY_OPTIMIZATION"]
+        },
+        {
+          "objectiveId": "P4",
+          "name": "Pipeline Velocity",
+          "measure": "Source-to-Paid cycle time",
+          "current": 89,
+          "target": {"year1": 65, "year3": 45},
+          "drivingInitiatives": ["INIT_004"],
+          "linkedChains": ["CHAIN_2_CASH_ACCELERATION"]
+        }
+      ]
+    },
+    "learningGrowth": {
+      "@type": "LearningMetrics",
+      "objectives": [
+        {
+          "objectiveId": "L1",
+          "name": "AI Adoption",
+          "measure": "% of sales team using AI tools daily",
+          "current": 0.20,
+          "target": {"year1": 0.60, "year3": 0.95},
+          "drivingInitiatives": ["INIT_001", "INIT_002", "INIT_003", "INIT_004", "INIT_005"],
+          "linkedChains": ["ALL"]
+        },
+        {
+          "objectiveId": "L2",
+          "name": "Data Quality",
+          "measure": "CRM data completeness score",
+          "current": 0.60,
+          "target": {"year1": 0.85, "year3": 0.95},
+          "drivingInitiatives": ["INIT_002"],
+          "linkedChains": ["CHAIN_3_CUSTOMER_OPTIMIZATION"]
+        },
+        {
+          "objectiveId": "L3",
+          "name": "Process Automation",
+          "measure": "% of repeatable tasks automated",
+          "current": 0.15,
+          "target": {"year1": 0.50, "year3": 0.80},
+          "drivingInitiatives": ["ALL"],
+          "linkedChains": ["ALL"]
+        },
+        {
+          "objectiveId": "L4",
+          "name": "Sales Productivity",
+          "measure": "Revenue per sales rep",
+          "current": {"@type": "MonetaryAmount", "value": 500000, "currency": "GBP"},
+          "target": {"@type": "MonetaryAmount", "value": 750000, "currency": "GBP"},
+          "drivingInitiatives": ["INIT_002", "INIT_005"],
+          "linkedChains": ["CHAIN_3_CUSTOMER_OPTIMIZATION"]
+        }
+      ]
+    }
+  },
+
+  "executiveSummary": {
+    "@type": "ExecutiveBriefing",
+    "strategicNarrative": "From Survival to Market Leadership in 36 Months",
+    "coreMessage": "At 10.5% margin vs 15-20% industry average, WWGiles operates in acquisition target territory. AI-powered operational excellence transforms the business from vulnerable to strategically valuable through four interconnected cause-effect chains.",
+    
+    "keyMetrics": {
+      "marginTransformation": {
+        "from": "10.5% (bottom quartile)",
+        "to": "22% (top quartile)",
+        "additionalGP": {"@type": "MonetaryAmount", "value": 6100000, "currency": "GBP"}
+      },
+      "cashAcceleration": {
+        "from": "89-day cycle",
+        "to": "45-day cycle",
+        "workingCapitalFreed": {"@type": "MonetaryAmount", "value": 8000000, "currency": "GBP"}
+      },
+      "financeCostReduction": {
+        "from": {"@type": "MonetaryAmount", "value": 520000, "currency": "GBP"},
+        "to": {"@type": "MonetaryAmount", "value": 180000, "currency": "GBP"},
+        "savings": {"@type": "MonetaryAmount", "value": 340000, "currency": "GBP"}
+      }
+    },
+    
+    "investmentSummary": {
+      "totalInvestment": {"@type": "MonetaryAmount", "value": 400000, "currency": "GBP"},
+      "paybackPeriod": "8 months",
+      "year1ROI": "489%",
+      "year3TotalReturn": {"@type": "MonetaryAmount", "value": 12500000, "currency": "GBP"}
+    },
+    
+    "roleBasedNarratives": {
+      "ceo": {
+        "headline": "Transform WWGiles from Acquisition Target to Market Leader",
+        "keyPoints": [
+          "10.5% margin makes us vulnerable; 22% margin makes us valuable",
+          "AI operational excellence creates sustainable competitive moat",
+          "£400K investment for £12M+ return over 36 months",
+          "Foundation for SaaS platform targeting £44M market"
+        ]
+      },
+      "cfo": {
+        "headline": "Stop the £450K Annual GP Leak, Free £8M Working Capital",
+        "keyPoints": [
+          "GP Guardian makes invisible margin erosion visible",
+          "Track Booked→Current→Realized GP at order level",
+          "Cash cycle reduction from 89 to 45 days frees £8M",
+          "Finance cost reduction of £340K annually",
+          "4-month payback on initial investment"
+        ]
+      },
+      "coo": {
+        "headline": "Visibility Creates Control, Control Creates Margin",
+        "keyPoints": [
+          "End-to-end pipeline visibility from Source→Sold→Paid",
+          "Predict margin erosion before it happens",
+          "Reduce 89-day cash cycle to 45 days",
+          "Storage optimization saves £300K annually",
+          "Vessel delay impact quantified and managed"
+        ]
+      },
+      "salesDirector": {
+        "headline": "AI That Helps You Win, Not Police You",
+        "keyPoints": [
+          "Know true customer profitability before quoting",
+          "AI matches aging inventory to optimal buyers",
+          "Risk-adjusted pricing protects margins automatically",
+          "Win rate improvement from 25% to 40%",
+          "Focus on customers who pay best price, on time"
+        ]
+      }
+    }
+  },
+
+  "implementationPhases": {
+    "phase1_foundation": {
+      "duration": "Months 1-4",
+      "investment": {"@type": "MonetaryAmount", "value": 107000, "currency": "GBP"},
+      "focus": "Data quality and GP Guardian validation",
+      "initiatives": ["CRM_DATA_QUALITY", "GP_GUARDIAN_VALIDATION"],
+      "successCriteria": [
+        "CRM data quality: 60% → 85%",
+        "GP Guardian validated against historical data",
+        "Pilot with 50 orders successful"
+      ],
+      "decisionGate": "GO_NO_GO_PHASE_2"
+    },
+    "phase2_intelligence": {
+      "duration": "Months 5-8",
+      "investment": {"@type": "MonetaryAmount", "value": 150000, "currency": "GBP"},
+      "focus": "AI deployment and pricing engine",
+      "initiatives": ["GP_GUARDIAN_FULL", "AI_SMART_CRM", "DYNAMIC_PRICING"],
+      "successCriteria": [
+        "GP Guardian: 100% order coverage",
+        "Customer profitability scoring live",
+        "Dynamic pricing: 60% quote coverage"
+      ],
+      "decisionGate": "ROI_VALIDATION"
+    },
+    "phase3_optimization": {
+      "duration": "Months 9-12",
+      "investment": {"@type": "MonetaryAmount", "value": 143000, "currency": "GBP"},
+      "focus": "Scale, refine, and measure",
+      "initiatives": ["SALES_INTELLIGENCE", "PREDICTIVE_ANALYTICS", "FULL_INTEGRATION"],
+      "successCriteria": [
+        "AI adoption: 80%+ daily usage",
+        "Model accuracy: 85%+",
+        "Year 1 benefit: £1.82M realized"
+      ],
+      "decisionGate": "YEAR_2_PLANNING"
+    }
+  },
+
+  "okrs": [
+    {
+      "objective": "Maximize Realized (Not Booked) GP",
+      "bscLink": ["F1", "C3", "P1"],
+      "keyResults": [
+        {"kr": "Increase realized GP from 10.5% to 15% by Q2, 22% by Y3", "metric": "gross_margin_percent"},
+        {"kr": "Reduce GP erosion (booked vs realized) from 25% to 10%", "metric": "gp_variance_percent"},
+        {"kr": "Cut average storage days from 12 to 6", "metric": "avg_storage_days"}
+      ]
+    },
+    {
+      "objective": "Accelerate Cash Conversion",
+      "bscLink": ["F2", "F3", "C2", "P4"],
+      "keyResults": [
+        {"kr": "Reduce source-to-paid cycle from 89 to 45 days", "metric": "cash_conversion_cycle"},
+        {"kr": "Cut DSO from 47 to 25 days", "metric": "days_sales_outstanding"},
+        {"kr": "Reduce finance costs from £520K to £180K", "metric": "annual_finance_cost"}
+      ]
+    },
+    {
+      "objective": "Build Profit-Focused Sales Culture",
+      "bscLink": ["L1", "L2", "L3", "P2", "C1"],
+      "keyResults": [
+        {"kr": "AI recommendation adoption from 0% to 80%", "metric": "ai_adoption_rate"},
+        {"kr": "CRM data quality from 60% to 95%", "metric": "crm_completeness"},
+        {"kr": "100% of sales prioritization based on profitability score", "metric": "profitability_based_sales"}
+      ]
+    }
+  ],
+
+  "versionControl": {
+    "version": "2.0.0",
+    "lastModified": "2025-12-12",
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "date": "2025-12-12",
+        "changes": [
+          "Added complete BSC cause-effect chains",
+          "Integrated initiative portfolio with dependencies",
+          "Added role-based executive narratives",
+          "Expanded financial projections with waterfall",
+          "Added implementation phases with decision gates"
+        ]
+      },
+      {
+        "version": "1.0.0",
+        "date": "2025-11-12",
+        "changes": ["Initial ontology creation"]
+      }
+    ]
+  }
+}

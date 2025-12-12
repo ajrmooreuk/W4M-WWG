@@ -1,0 +1,409 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wwg.ai/schemas/opportunity-scorecard/v2.0",
+  "@context": "https://schema.org",
+  "@type": "StrategicPlan",
+  
+  "metadata": {
+    "title": "WWGiles Business Excellence Scorecard",
+    "version": "2.0.0",
+    "lastUpdated": "2025-12-12",
+    "frameworkAlignment": ["BSC", "VSOM", "OKR", "W4M_BAIV"],
+    "framing": "opportunity_not_crisis",
+    "financialNotation": "bracketed_placeholders_for_validation"
+  },
+
+  "strategicPosition": {
+    "@type": "BusinessAnalysis",
+    "currentState": {
+      "annualRevenue": "£53M",
+      "grossMargin": {
+        "current": 0.105,
+        "industryBenchmark": { "low": 0.15, "high": 0.20 },
+        "note": "Solid foundation with improvement opportunity"
+      },
+      "containerVolume": 350,
+      "primaryMarkets": ["Australia", "New_Zealand", "Iceland"]
+    },
+    "framingStatement": "WWGiles performed well last year. This initiative is about capturing the next level of performance—not by working harder, but by seeing clearly.",
+    "tagline": "Visibility creates control. Control creates margin."
+  },
+
+  "balancedScorecard": {
+    "@type": "PerformanceMetric",
+    
+    "perspectives": [
+      {
+        "perspective": "financial",
+        "displayName": "Financial",
+        "icon": "💰",
+        "status": "building",
+        "objectives": [
+          {
+            "@type": "FinancialMetric",
+            "objective": "maximize_realized_gross_margin",
+            "description": "Close gap between booked GP and realized GP through cost visibility",
+            "metrics": [
+              {
+                "name": "realized_gross_margin",
+                "current": 0.105,
+                "target": "[0.22]",
+                "targetNote": "To be validated through pilot",
+                "measurement": "weekly"
+              },
+              {
+                "name": "margin_visibility_gap",
+                "current": "[£450K]",
+                "currentNote": "Annual storage cost leak - requires validation",
+                "target": "[£0]",
+                "measurement": "monthly"
+              },
+              {
+                "name": "cash_cycle_days",
+                "current": 89,
+                "target": "[45]",
+                "targetNote": "Aspirational - depends on customer mix",
+                "measurement": "monthly"
+              }
+            ],
+            "aiEnablers": ["gp_guardian", "cost_allocation_engine", "collections_intelligence"]
+          }
+        ],
+        "investmentModel": {
+          "approach": "internal_team_capacity",
+          "externalCost": "nominal",
+          "primaryInvestment": "focus_and_time"
+        }
+      },
+      
+      {
+        "perspective": "customer",
+        "displayName": "Customer",
+        "icon": "👥",
+        "status": "strong",
+        "objectives": [
+          {
+            "@type": "CustomerMetric",
+            "objective": "optimize_customer_profitability_mix",
+            "description": "Focus on customers who create value, not just volume",
+            "metrics": [
+              {
+                "name": "customer_retention",
+                "current": 0.85,
+                "target": "[0.95]",
+                "measurement": "monthly"
+              },
+              {
+                "name": "profitability_visibility",
+                "current": "limited",
+                "target": "full",
+                "description": "True customer P&L including payment behavior"
+              },
+              {
+                "name": "response_time_hours",
+                "current": 4,
+                "target": "[0.5]",
+                "measurement": "daily"
+              }
+            ],
+            "aiEnablers": ["customer_profitability_scoring", "segment_intelligence", "churn_prediction"]
+          }
+        ]
+      },
+      
+      {
+        "perspective": "internal_process",
+        "displayName": "Internal Process",
+        "icon": "⚙️",
+        "status": "developing",
+        "objectives": [
+          {
+            "@type": "ProcessMetric",
+            "objective": "accelerate_inventory_velocity",
+            "description": "Reduce time from container to cash through intelligent matching",
+            "metrics": [
+              {
+                "name": "average_storage_days",
+                "current": 12,
+                "target": "[6]",
+                "note": "Booked assumption is 4 days - realistic target TBD",
+                "measurement": "weekly"
+              },
+              {
+                "name": "cost_allocation_level",
+                "current": "batch",
+                "target": "order_level",
+                "description": "Granular cost visibility per order"
+              },
+              {
+                "name": "inventory_turns",
+                "current": 18,
+                "target": "[24]",
+                "measurement": "monthly"
+              }
+            ],
+            "aiEnablers": ["sales_velocity_engine", "inventory_aging_alerts", "demand_matching"]
+          }
+        ]
+      },
+      
+      {
+        "perspective": "learning_growth",
+        "displayName": "Learning & Growth",
+        "icon": "📚",
+        "status": "developing",
+        "objectives": [
+          {
+            "@type": "CapabilityMetric",
+            "objective": "build_ai_enabled_operations",
+            "description": "Develop organizational capability for data-driven decisions",
+            "metrics": [
+              {
+                "name": "ai_tool_adoption",
+                "current": 0.20,
+                "target": "[0.80]",
+                "measurement": "monthly"
+              },
+              {
+                "name": "data_quality_score",
+                "current": 0.60,
+                "target": "[0.95]",
+                "measurement": "weekly"
+              },
+              {
+                "name": "process_documentation",
+                "current": "partial",
+                "target": "complete"
+              }
+            ],
+            "aiEnablers": ["training_programs", "data_governance", "adoption_tracking"]
+          }
+        ]
+      }
+    ]
+  },
+
+  "strategicInitiatives": {
+    "@type": "ActionPlan",
+    "initiatives": [
+      {
+        "id": "SI-001",
+        "name": "GP Guardian",
+        "phase": 1,
+        "description": "Real-time margin tracking through Booked → Current → Realized stages",
+        "impactFocus": "Margin Visibility & Protection",
+        "bscAlignment": ["financial", "internal_process"],
+        "investment": {
+          "type": "internal_team",
+          "externalCost": "[nominal]"
+        },
+        "expectedImpact": {
+          "primary": "Make invisible margin erosion visible",
+          "quantified": "[£450K] annual cost visibility",
+          "note": "Requires validation through historical data analysis"
+        },
+        "deliverables": [
+          "Container-level cost tracking",
+          "Order-level margin calculation",
+          "Real-time GP erosion alerts"
+        ]
+      },
+      {
+        "id": "SI-002",
+        "name": "Customer Profitability Scoring",
+        "phase": 1,
+        "description": "True customer P&L including margin contribution, payment behavior, service cost",
+        "impactFocus": "Focus on Best Customers",
+        "bscAlignment": ["customer", "financial"],
+        "investment": {
+          "type": "internal_team",
+          "externalCost": "[nominal]"
+        },
+        "expectedImpact": {
+          "primary": "Identify truly profitable vs problematic customers",
+          "quantified": "[TBD through analysis]"
+        }
+      },
+      {
+        "id": "SI-003",
+        "name": "Pricing Guidance Engine",
+        "phase": 1,
+        "description": "AI-assisted pricing accounting for inventory age, customer tier, margin floors",
+        "impactFocus": "Smarter Pricing Decisions",
+        "bscAlignment": ["financial", "internal_process"],
+        "investment": {
+          "type": "internal_team",
+          "externalCost": "[nominal]"
+        },
+        "expectedImpact": {
+          "primary": "Improve price realization",
+          "quantified": "[7%] improvement target - to be validated"
+        }
+      },
+      {
+        "id": "SI-004",
+        "name": "Sales Velocity Engine",
+        "phase": 2,
+        "description": "Match aging inventory to optimal customers to reduce storage days",
+        "impactFocus": "Faster Inventory Turns",
+        "bscAlignment": ["internal_process", "financial"],
+        "expectedImpact": {
+          "primary": "Reduce average storage from 12 to [6] days"
+        }
+      },
+      {
+        "id": "SI-005",
+        "name": "Cash Cycle Optimization",
+        "phase": 2,
+        "description": "Proactive collections and payment behavior analysis",
+        "impactFocus": "Working Capital Release",
+        "bscAlignment": ["financial"],
+        "expectedImpact": {
+          "primary": "Reduce 89-day cycle to [45] days",
+          "secondary": "[£8M] working capital released - to be validated"
+        }
+      },
+      {
+        "id": "SI-006",
+        "name": "Predictive Operations",
+        "phase": 3,
+        "description": "AI forecasting for demand, vessel timing, margin risk prediction",
+        "impactFocus": "Proactive Decision Making",
+        "bscAlignment": ["internal_process", "learning_growth"]
+      }
+    ]
+  },
+
+  "implementationPhases": {
+    "@type": "ProjectPlan",
+    "phases": [
+      {
+        "phase": 1,
+        "name": "Foundation & Validation",
+        "duration": "Weeks 1-4",
+        "focus": "GP Guardian MVP, historical data validation, baseline metrics",
+        "decisionGate": {
+          "criteria": "Historical data confirms margin visibility gap",
+          "outcome": "Go/No-Go for Phase 2"
+        },
+        "investment": {
+          "type": "internal_team_time",
+          "external": "[nominal]"
+        }
+      },
+      {
+        "phase": 2,
+        "name": "Pilot & Refinement",
+        "duration": "Weeks 5-12",
+        "focus": "Live pilot, user adoption, customer profitability views",
+        "decisionGate": {
+          "criteria": "Pilot demonstrates measurable value",
+          "outcome": "Scale or adjust"
+        }
+      },
+      {
+        "phase": 3,
+        "name": "Scale & Optimize",
+        "duration": "Weeks 13-26",
+        "focus": "Full deployment, predictive capabilities, continuous improvement"
+      }
+    ]
+  },
+
+  "impactProjections": {
+    "@type": "FinancialForecast",
+    "notation": "All figures are targets requiring validation - bracketed to indicate uncertainty",
+    "year1": {
+      "combinedBenefit": "[£705K]",
+      "breakdown": {
+        "marginVisibility": "[£450K]",
+        "pricingImprovement": "[£155K]",
+        "velocityGains": "[£100K]"
+      },
+      "confidenceLevel": "To be validated through pilot"
+    },
+    "year3": {
+      "additionalGP": "[£6.1M]",
+      "basis": "Full transformation to 22% margin on £53M revenue",
+      "confidenceLevel": "Aspirational - depends on execution"
+    },
+    "workingCapital": {
+      "released": "[£8M]",
+      "basis": "Cash cycle reduction from 89 to 45 days",
+      "financingCostSavings": "[£520K]",
+      "confidenceLevel": "Requires validation"
+    },
+    "investment": {
+      "approach": "Internal team capacity",
+      "externalCosts": "Nominal - existing infrastructure and tools",
+      "primaryInvestment": "Focus, time, change management"
+    }
+  },
+
+  "stakeholderMessages": {
+    "@type": "CommunicationPlan",
+    "framing": "opportunity_not_crisis",
+    
+    "ceo": {
+      "headline": "From Good to Great in 36 Months",
+      "message": "WWGiles is performing well. This initiative captures the next level—better visibility creates smarter decisions creates stronger margins. No panic, no crisis—just smart investment in operational excellence.",
+      "ask": "Champion the visibility-first approach"
+    },
+    
+    "cfo": {
+      "headline": "See Where Margin Goes",
+      "message": "The [£450K] gap between booked and realized GP represents opportunity, not crisis. GP Guardian makes invisible costs visible. Once visible, they become manageable.",
+      "focus": "Validation through historical data before scaling"
+    },
+    
+    "coo": {
+      "headline": "Visibility Creates Control",
+      "message": "End-to-end pipeline visibility from Source→Sold→Paid. Predict margin erosion before it happens. Reduce storage days through intelligent demand matching.",
+      "focus": "Operational excellence through data"
+    },
+    
+    "salesDirector": {
+      "headline": "AI That Helps You Win",
+      "message": "Know true customer profitability before you quote. Focus on customers who pay well and pay on time. Better visibility means smarter targeting, not more policing.",
+      "focus": "Customer intelligence that improves outcomes"
+    }
+  },
+
+  "principlesApplied": {
+    "framingPrinciples": [
+      "Opportunity not crisis - WWG performed well, this captures upside",
+      "Bracketed financials - all targets require validation, not promises",
+      "Nominal investment - internal team, existing infrastructure",
+      "Impact focus - what changes, not what costs",
+      "Phased validation - prove value before scaling"
+    ],
+    "whatMattersMost": [
+      "Margin visibility - cannot improve what you cannot see",
+      "Customer profitability - focus on value, not volume",
+      "Cash cycle - faster turns, less financing cost",
+      "Capability building - sustainable competitive advantage"
+    ]
+  },
+
+  "versionControl": {
+    "currentVersion": "2.0.0",
+    "changeLog": [
+      {
+        "version": "2.0.0",
+        "date": "2025-12-12",
+        "changes": [
+          "Reframed from crisis to opportunity positioning",
+          "Bracketed all financial targets to indicate validation required",
+          "Changed investment model to nominal/internal team",
+          "Focus shifted to impact rather than investment figures",
+          "Aligned messaging with executive brief opportunity framing"
+        ]
+      },
+      {
+        "version": "1.0.0",
+        "date": "2025-11-27",
+        "changes": ["Initial scorecard creation"]
+      }
+    ]
+  }
+}

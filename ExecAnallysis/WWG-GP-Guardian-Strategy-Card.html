@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GP Guardian - Strategy at a Glance</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            padding: 30px;
+            color: #2c3e50;
+        }
+        .page {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #94134d 0%, #c91a6b 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .header h1 { font-family: Georgia, serif; font-size: 2.2em; margin-bottom: 8px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .content { padding: 30px 40px; }
+        
+        .opportunity-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 5px solid #009b90;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .opportunity-box h3 { color: #009b90; margin-bottom: 10px; font-size: 1.1em; }
+        .opportunity-box p { font-size: 1em; line-height: 1.6; }
+        
+        .flow-section { margin-bottom: 30px; }
+        .flow-section h2 { color: #94134d; font-size: 1.3em; margin-bottom: 15px; border-bottom: 2px solid #f0f0f0; padding-bottom: 8px; }
+        
+        .flow-visual {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .flow-step {
+            text-align: center;
+            flex: 1;
+        }
+        .flow-step .value { font-size: 2em; font-weight: bold; color: #94134d; }
+        .flow-step .label { font-size: 0.85em; color: #7f8c8d; margin-top: 5px; }
+        .flow-arrow {
+            font-size: 2em;
+            color: #0797d5;
+            padding: 0 10px;
+        }
+        .flow-gap {
+            background: #fff3e0;
+            border: 2px dashed #ff9800;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .flow-gap .amount { font-size: 1.8em; font-weight: bold; color: #e65100; }
+        .flow-gap .text { font-size: 0.9em; color: #bf360c; }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .benefit-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid #0797d5;
+        }
+        .benefit-card .icon { font-size: 2em; margin-bottom: 10px; }
+        .benefit-card h4 { color: #2c3e50; margin-bottom: 8px; font-size: 1em; }
+        .benefit-card p { font-size: 0.9em; color: #7f8c8d; }
+        
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .investment-table th {
+            background: #0797d5;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .investment-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .investment-table tr:hover { background: #f5f5f5; }
+        
+        .ask-box {
+            background: linear-gradient(135deg, #94134d 0%, #c91a6b 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .ask-box h3 { font-size: 1.3em; margin-bottom: 10px; }
+        .ask-box .amount { font-size: 2.5em; font-weight: bold; margin: 15px 0; }
+        .ask-box p { opacity: 0.9; }
+        
+        .roi-summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .roi-item { text-align: center; }
+        .roi-item .number { font-size: 1.8em; font-weight: bold; color: #009b90; }
+        .roi-item .label { font-size: 0.85em; color: #7f8c8d; }
+        
+        .tagline {
+            text-align: center;
+            font-style: italic;
+            color: #94134d;
+            font-size: 1.1em;
+            padding: 20px;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 20px;
+        }
+        
+        @media print {
+            body { padding: 0; background: white; }
+            .page { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <h1>GP Guardian</h1>
+            <p>Building on Success: The Margin Improvement Opportunity</p>
+        </div>
+        
+        <div class="content">
+            <div class="opportunity-box">
+                <h3>✓ The Opportunity</h3>
+                <p>WWGiles performed well last year. GP Guardian captures the next level of performance—not by working harder, but by making invisible margin erosion visible and actionable.</p>
+            </div>
+            
+            <div class="flow-section">
+                <h2>The GP Gap: What Currently Happens</h2>
+                <div class="flow-visual">
+                    <div class="flow-step">
+                        <div class="value">£53M</div>
+                        <div class="label">Annual Revenue</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="value">10.5%</div>
+                        <div class="label">Booked GP</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-gap">
+                        <div class="amount">-£450K</div>
+                        <div class="text">Storage & Delays<br>(12 days vs 4 days)</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="value">~9%</div>
+                        <div class="label">Realized GP</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-section">
+                <h2>What GP Guardian Delivers</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="icon">📊</div>
+                        <h4>Track</h4>
+                        <p>Real-time visibility: Booked → Current → Realized GP</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="icon">⚡</div>
+                        <h4>Alert</h4>
+                        <p>Flag margin erosion before it hits the P&L</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="icon">🎯</div>
+                        <h4>Act</h4>
+                        <p>Enable intervention while there's still time</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-section">
+                <h2>Investment & Return</h2>
+                <table class="investment-table">
+                    <tr>
+                        <th>Phase</th>
+                        <th>Duration</th>
+                        <th>Investment</th>
+                        <th>Outcome</th>
+                    </tr>
+                    <tr>
+                        <td><strong>1. Validate</strong></td>
+                        <td>4 weeks</td>
+                        <td>£15K</td>
+                        <td>Prove the opportunity with WWG data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Pilot</strong></td>
+                        <td>8 weeks</td>
+                        <td>£45K</td>
+                        <td>Live tracking, demonstrate real savings</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Scale</strong></td>
+                        <td>6 weeks</td>
+                        <td>£32K</td>
+                        <td>Full deployment, ongoing value capture</td>
+                    </tr>
+                </table>
+                
+                <div class="roi-summary">
+                    <div class="roi-item">
+                        <div class="number">£92K</div>
+                        <div class="label">Total Investment</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="number">£300K+</div>
+                        <div class="label">Year 1 Benefit</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="number">4 months</div>
+                        <div class="label">Payback Period</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="number">22%</div>
+                        <div class="label">Target GP (36 mo)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ask-box">
+                <h3>The Ask: Commitment to Improvement</h3>
+                <div class="amount">£15K</div>
+                <p>30-day validation to prove the opportunity with WWG's own data<br>
+                <strong>Decision gate after 4 weeks: proceed or stop based on evidence</strong></p>
+            </div>
+            
+            <div class="tagline">
+                "Visibility creates control. Control creates margin."
+            </div>
+        </div>
+    </div>
+</body>
+</html>
